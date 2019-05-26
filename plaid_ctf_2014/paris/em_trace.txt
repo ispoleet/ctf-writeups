@@ -1,0 +1,957 @@
+#  1	cmd: 1	addr:0x40247c	eip:0	nop
+#  2	cmd: 1	addr:0x40247c	eip:1	nop
+#  3	cmd: 1	addr:0x40247c	eip:2	nop
+#  4	cmd: 5	addr:0x40241c	eip:3	mov  $4[0], 0x3133
+#  5	cmd: 5	addr:0x40241c	eip:6	mov  $6[0], 0x0
+#  6	cmd: 5	addr:0x40241c	eip:9	mov  $8[e000], 0xff00
+#  7	cmd: 5	addr:0x40241c	eip:12	mov  $a[7efd], 0xff
+#  8	cmd: 4	addr:0x4020a1	eip:15	$0[ccd5] = psw[$6[0]]
+#  9	cmd: 2	addr:0x402323	eip:17	mov  $e[8], $0[22ff]
+# 10	cmd:18	addr:0x40234f	eip:19	xchg $e[22ff]
+# 11	cmd:11	addr:0x4023ff	eip:20	not  $e[ff22]
+# 12	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[dd] -> 0
+# 13	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+# 14	cmd: 2	addr:0x402323	eip:26	mov  $c[e3c8], $e[dd]
+# 15	cmd: 9	addr:0x40225f	eip:28	and  $c[dd], $8[ff00]
+# 16	cmd: 9	addr:0x40225f	eip:30	and  $e[dd], $a[ff]
+# 17	cmd:10	addr:0x40239d	eip:32	shr  $c[0], 8
+# 18	cmd: 8	addr:0x402290	eip:33	xor  $e[dd], $c[0]
+# 19	cmd: 5	addr:0x40241c	eip:35	mov  $c[0], 0x200
+# 20	cmd: 6	addr:0x4022f2	eip:38	add  $e[dd], $e[dd]
+# 21	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[1ba]
+# 22	cmd: 4	addr:0x4020a1	eip:42	$e[1ba] = psw[$c[3ba]]
+# 23	cmd:18	addr:0x40234f	eip:44	xchg $e[343b]
+# 24	cmd:17	addr:0x40215b	eip:45	pop  $c[3ba]
+# 25	cmd: 8	addr:0x402290	eip:46	xor  $e[3b34], $c[5a4d]
+# 26	cmd:16	addr:0x402196	eip:48	push $c[5a4d]
+# 27	cmd:16	addr:0x402196	eip:49	push $e[6179]
+# 28	cmd:19	addr:0x4021d4	eip:50	decr $6[0] 	5B  7 22 E6 E0 6A 4C  A  A B3 84  C 39 D3 27 A1 
+# 29	cmd:12	addr:0x4023e2	eip:51	inc  $6[0]
+# 30	cmd:14	addr:0x402450	eip:52	jmp  $15
+# 31	cmd: 4	addr:0x4020a1	eip:15	$0[ed] = psw[$6[1]]
+# 32	cmd: 2	addr:0x402323	eip:17	mov  $e[6179], $0[fe40]
+# 33	cmd:18	addr:0x40234f	eip:19	xchg $e[fe40]
+# 34	cmd:11	addr:0x4023ff	eip:20	not  $e[40fe]
+# 35	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[bf01] -> 0
+# 36	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+# 37	cmd: 2	addr:0x402323	eip:26	mov  $c[5a4d], $e[bf01]
+# 38	cmd: 9	addr:0x40225f	eip:28	and  $c[bf01], $8[ff00]
+# 39	cmd: 9	addr:0x40225f	eip:30	and  $e[bf01], $a[ff]
+# 40	cmd:10	addr:0x40239d	eip:32	shr  $c[bf00], 8
+# 41	cmd: 8	addr:0x402290	eip:33	xor  $e[1], $c[bf]
+# 42	cmd: 5	addr:0x40241c	eip:35	mov  $c[bf], 0x200
+# 43	cmd: 6	addr:0x4022f2	eip:38	add  $e[be], $e[be]
+# 44	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[17c]
+# 45	cmd: 4	addr:0x4020a1	eip:42	$e[17c] = psw[$c[37c]]
+# 46	cmd:18	addr:0x40234f	eip:44	xchg $e[6ccf]
+# 47	cmd:17	addr:0x40215b	eip:45	pop  $c[37c]
+# 48	cmd: 8	addr:0x402290	eip:46	xor  $e[cf6c], $c[6179]
+# 49	cmd:16	addr:0x402196	eip:48	push $c[6179]
+# 50	cmd:16	addr:0x402196	eip:49	push $e[ae15]
+# 51	cmd:19	addr:0x4021d4	eip:50	decr $6[1] 	76 2A  F CB CD 47 61 27 27 9E A9 21 14 FE  A 8C 
+# 52	cmd:12	addr:0x4023e2	eip:51	inc  $6[1]
+# 53	cmd:14	addr:0x402450	eip:52	jmp  $15
+# 54	cmd: 4	addr:0x4020a1	eip:15	$0[dc2e] = psw[$6[2]]
+# 55	cmd: 2	addr:0x402323	eip:17	mov  $e[ae15], $0[3f22]
+# 56	cmd:18	addr:0x40234f	eip:19	xchg $e[3f22]
+# 57	cmd:11	addr:0x4023ff	eip:20	not  $e[223f]
+# 58	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[ddc0] -> 0
+# 59	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+# 60	cmd: 2	addr:0x402323	eip:26	mov  $c[6179], $e[ddc0]
+# 61	cmd: 9	addr:0x40225f	eip:28	and  $c[ddc0], $8[ff00]
+# 62	cmd: 9	addr:0x40225f	eip:30	and  $e[ddc0], $a[ff]
+# 63	cmd:10	addr:0x40239d	eip:32	shr  $c[dd00], 8
+# 64	cmd: 8	addr:0x402290	eip:33	xor  $e[c0], $c[dd]
+# 65	cmd: 5	addr:0x40241c	eip:35	mov  $c[dd], 0x200
+# 66	cmd: 6	addr:0x4022f2	eip:38	add  $e[1d], $e[1d]
+# 67	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[3a]
+# 68	cmd: 4	addr:0x4020a1	eip:42	$e[3a] = psw[$c[23a]]
+# 69	cmd:18	addr:0x40234f	eip:44	xchg $e[a9bf]
+# 70	cmd:17	addr:0x40215b	eip:45	pop  $c[23a]
+# 71	cmd: 8	addr:0x402290	eip:46	xor  $e[bfa9], $c[ae15]
+# 72	cmd:16	addr:0x402196	eip:48	push $c[ae15]
+# 73	cmd:16	addr:0x402196	eip:49	push $e[11bc]
+# 74	cmd:19	addr:0x4021d4	eip:50	decr $6[2] 	84 D8 FD 39 3F B5 93 D5 D5 6C 5B D3 E6  C F8 7E 
+# 75	cmd:12	addr:0x4023e2	eip:51	inc  $6[2]
+# 76	cmd:14	addr:0x402450	eip:52	jmp  $15
+# 77	cmd: 4	addr:0x4020a1	eip:15	$0[1d10] = psw[$6[3]]
+# 78	cmd: 2	addr:0x402323	eip:17	mov  $e[11bc], $0[2143]
+# 79	cmd:18	addr:0x40234f	eip:19	xchg $e[2143]
+# 80	cmd:11	addr:0x4023ff	eip:20	not  $e[4321]
+# 81	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[bcde] -> 0
+# 82	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+# 83	cmd: 2	addr:0x402323	eip:26	mov  $c[ae15], $e[bcde]
+# 84	cmd: 9	addr:0x40225f	eip:28	and  $c[bcde], $8[ff00]
+# 85	cmd: 9	addr:0x40225f	eip:30	and  $e[bcde], $a[ff]
+# 86	cmd:10	addr:0x40239d	eip:32	shr  $c[bc00], 8
+# 87	cmd: 8	addr:0x402290	eip:33	xor  $e[de], $c[bc]
+# 88	cmd: 5	addr:0x40241c	eip:35	mov  $c[bc], 0x200
+# 89	cmd: 6	addr:0x4022f2	eip:38	add  $e[62], $e[62]
+# 90	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[c4]
+# 91	cmd: 4	addr:0x4020a1	eip:42	$e[c4] = psw[$c[2c4]]
+# 92	cmd:18	addr:0x40234f	eip:44	xchg $e[cf90]
+# 93	cmd:17	addr:0x40215b	eip:45	pop  $c[2c4]
+# 94	cmd: 8	addr:0x402290	eip:46	xor  $e[90cf], $c[11bc]
+# 95	cmd:16	addr:0x402196	eip:48	push $c[11bc]
+# 96	cmd:16	addr:0x402196	eip:49	push $e[8173]
+# 97	cmd:19	addr:0x4021d4	eip:50	decr $6[3] 	E9 B5 90 54 52 D8 FE B8 B8  1 36 BE 8B 61 95 13 
+# 98	cmd:12	addr:0x4023e2	eip:51	inc  $6[3]
+# 99	cmd:14	addr:0x402450	eip:52	jmp  $15
+#100	cmd: 4	addr:0x4020a1	eip:15	$0[ff31] = psw[$6[4]]
+#101	cmd: 2	addr:0x402323	eip:17	mov  $e[8173], $0[4202]
+#102	cmd:18	addr:0x40234f	eip:19	xchg $e[4202]
+#103	cmd:11	addr:0x4023ff	eip:20	not  $e[242]
+#104	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[fdbd] -> 0
+#105	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#106	cmd: 2	addr:0x402323	eip:26	mov  $c[11bc], $e[fdbd]
+#107	cmd: 9	addr:0x40225f	eip:28	and  $c[fdbd], $8[ff00]
+#108	cmd: 9	addr:0x40225f	eip:30	and  $e[fdbd], $a[ff]
+#109	cmd:10	addr:0x40239d	eip:32	shr  $c[fd00], 8
+#110	cmd: 8	addr:0x402290	eip:33	xor  $e[bd], $c[fd]
+#111	cmd: 5	addr:0x40241c	eip:35	mov  $c[fd], 0x200
+#112	cmd: 6	addr:0x4022f2	eip:38	add  $e[40], $e[40]
+#113	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[80]
+#114	cmd: 4	addr:0x4020a1	eip:42	$e[80] = psw[$c[280]]
+#115	cmd:18	addr:0x40234f	eip:44	xchg $e[774]
+#116	cmd:17	addr:0x40215b	eip:45	pop  $c[280]
+#117	cmd: 8	addr:0x402290	eip:46	xor  $e[7407], $c[8173]
+#118	cmd:16	addr:0x402196	eip:48	push $c[8173]
+#119	cmd:16	addr:0x402196	eip:49	push $e[f574]
+#120	cmd:19	addr:0x4021d4	eip:50	decr $6[4] 	C7 9B BE 7A 7C F6 D0 96 96 2F 18 90 A5 4F BB 3D 
+#121	cmd:12	addr:0x4023e2	eip:51	inc  $6[4]
+#122	cmd:14	addr:0x402450	eip:52	jmp  $15
+#123	cmd: 4	addr:0x4020a1	eip:15	$0[1ff0] = psw[$6[5]]
+#124	cmd: 2	addr:0x402323	eip:17	mov  $e[f574], $0[11a]
+#125	cmd:18	addr:0x40234f	eip:19	xchg $e[11a]
+#126	cmd:11	addr:0x4023ff	eip:20	not  $e[1a01]
+#127	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[e5fe] -> 0
+#128	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#129	cmd: 2	addr:0x402323	eip:26	mov  $c[8173], $e[e5fe]
+#130	cmd: 9	addr:0x40225f	eip:28	and  $c[e5fe], $8[ff00]
+#131	cmd: 9	addr:0x40225f	eip:30	and  $e[e5fe], $a[ff]
+#132	cmd:10	addr:0x40239d	eip:32	shr  $c[e500], 8
+#133	cmd: 8	addr:0x402290	eip:33	xor  $e[fe], $c[e5]
+#134	cmd: 5	addr:0x40241c	eip:35	mov  $c[e5], 0x200
+#135	cmd: 6	addr:0x4022f2	eip:38	add  $e[1b], $e[1b]
+#136	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[36]
+#137	cmd: 4	addr:0x4020a1	eip:42	$e[36] = psw[$c[236]]
+#138	cmd:18	addr:0x40234f	eip:44	xchg $e[dd24]
+#139	cmd:17	addr:0x40215b	eip:45	pop  $c[236]
+#140	cmd: 8	addr:0x402290	eip:46	xor  $e[24dd], $c[f574]
+#141	cmd:16	addr:0x402196	eip:48	push $c[f574]
+#142	cmd:16	addr:0x402196	eip:49	push $e[d1a9]
+#143	cmd:19	addr:0x4021d4	eip:50	decr $6[5] 	F3 AF 8A 4E 48 C2 E4 A2 A2 1B 2C A4 91 7B 8F  9 
+#144	cmd:12	addr:0x4023e2	eip:51	inc  $6[5]
+#145	cmd:14	addr:0x402450	eip:52	jmp  $15
+#146	cmd: 4	addr:0x4020a1	eip:15	$0[df08] = psw[$6[6]]
+#147	cmd: 2	addr:0x402323	eip:17	mov  $e[d1a9], $0[192d]
+#148	cmd:18	addr:0x40234f	eip:19	xchg $e[192d]
+#149	cmd:11	addr:0x4023ff	eip:20	not  $e[2d19]
+#150	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[d2e6] -> 0
+#151	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#152	cmd: 2	addr:0x402323	eip:26	mov  $c[f574], $e[d2e6]
+#153	cmd: 9	addr:0x40225f	eip:28	and  $c[d2e6], $8[ff00]
+#154	cmd: 9	addr:0x40225f	eip:30	and  $e[d2e6], $a[ff]
+#155	cmd:10	addr:0x40239d	eip:32	shr  $c[d200], 8
+#156	cmd: 8	addr:0x402290	eip:33	xor  $e[e6], $c[d2]
+#157	cmd: 5	addr:0x40241c	eip:35	mov  $c[d2], 0x200
+#158	cmd: 6	addr:0x4022f2	eip:38	add  $e[34], $e[34]
+#159	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[68]
+#160	cmd: 4	addr:0x4020a1	eip:42	$e[68] = psw[$c[268]]
+#161	cmd:18	addr:0x40234f	eip:44	xchg $e[8623]
+#162	cmd:17	addr:0x40215b	eip:45	pop  $c[268]
+#163	cmd: 8	addr:0x402290	eip:46	xor  $e[2386], $c[d1a9]
+#164	cmd:16	addr:0x402196	eip:48	push $c[d1a9]
+#165	cmd:16	addr:0x402196	eip:49	push $e[f22f]
+#166	cmd:19	addr:0x4021d4	eip:50	decr $6[6] 	59  5 20 E4 E2 68 4E  8  8 B1 86  E 3B D1 25 A3 
+#167	cmd:12	addr:0x4023e2	eip:51	inc  $6[6]
+#168	cmd:14	addr:0x402450	eip:52	jmp  $15
+#169	cmd: 4	addr:0x4020a1	eip:15	$0[f71b] = psw[$6[7]]
+#170	cmd: 2	addr:0x402323	eip:17	mov  $e[f22f], $0[2c1b]
+#171	cmd:18	addr:0x40234f	eip:19	xchg $e[2c1b]
+#172	cmd:11	addr:0x4023ff	eip:20	not  $e[1b2c]
+#173	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[e4d3] -> 0
+#174	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#175	cmd: 2	addr:0x402323	eip:26	mov  $c[d1a9], $e[e4d3]
+#176	cmd: 9	addr:0x40225f	eip:28	and  $c[e4d3], $8[ff00]
+#177	cmd: 9	addr:0x40225f	eip:30	and  $e[e4d3], $a[ff]
+#178	cmd:10	addr:0x40239d	eip:32	shr  $c[e400], 8
+#179	cmd: 8	addr:0x402290	eip:33	xor  $e[d3], $c[e4]
+#180	cmd: 5	addr:0x40241c	eip:35	mov  $c[e4], 0x200
+#181	cmd: 6	addr:0x4022f2	eip:38	add  $e[37], $e[37]
+#182	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[6e]
+#183	cmd: 4	addr:0x4020a1	eip:42	$e[6e] = psw[$c[26e]]
+#184	cmd:18	addr:0x40234f	eip:44	xchg $e[8da1]
+#185	cmd:17	addr:0x40215b	eip:45	pop  $c[26e]
+#186	cmd: 8	addr:0x402290	eip:46	xor  $e[a18d], $c[f22f]
+#187	cmd:16	addr:0x402196	eip:48	push $c[f22f]
+#188	cmd:16	addr:0x402196	eip:49	push $e[53a2]
+#189	cmd:19	addr:0x4021d4	eip:50	decr $6[7]	C 50 75 B1 B7 3D 1B 5D 5D E4 D3 5B 6E 84 70 F6 
+#190	cmd:12	addr:0x4023e2	eip:51	inc  $6[7]
+#191	cmd:14	addr:0x402450	eip:52	jmp  $15
+#192	cmd: 4	addr:0x4020a1	eip:15	$0[a09] = psw[$6[8]]
+#193	cmd: 2	addr:0x402323	eip:17	mov  $e[53a2], $0[1a02]
+#194	cmd:18	addr:0x40234f	eip:19	xchg $e[1a02]
+#195	cmd:11	addr:0x4023ff	eip:20	not  $e[21a]
+#196	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[fde5] -> 0
+#197	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#198	cmd: 2	addr:0x402323	eip:26	mov  $c[f22f], $e[fde5]
+#199	cmd: 9	addr:0x40225f	eip:28	and  $c[fde5], $8[ff00]
+#200	cmd: 9	addr:0x40225f	eip:30	and  $e[fde5], $a[ff]
+#201	cmd:10	addr:0x40239d	eip:32	shr  $c[fd00], 8
+#202	cmd: 8	addr:0x402290	eip:33	xor  $e[e5], $c[fd]
+#203	cmd: 5	addr:0x40241c	eip:35	mov  $c[fd], 0x200
+#204	cmd: 6	addr:0x4022f2	eip:38	add  $e[18], $e[18]
+#205	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[30]
+#206	cmd: 4	addr:0x4020a1	eip:42	$e[30] = psw[$c[230]]
+#207	cmd:18	addr:0x40234f	eip:44	xchg $e[3f6d]
+#208	cmd:17	addr:0x40215b	eip:45	pop  $c[230]
+#209	cmd: 8	addr:0x402290	eip:46	xor  $e[6d3f], $c[53a2]
+#210	cmd:16	addr:0x402196	eip:48	push $c[53a2]
+#211	cmd:16	addr:0x402196	eip:49	push $e[3e9d]
+#212	cmd:19	addr:0x4021d4	eip:50	decr $6[8] 	76 2A  F CB CD 47 61 27 27 9E A9 21 14 FE  A 8C 
+#213	cmd:12	addr:0x4023e2	eip:51	inc  $6[8]
+#214	cmd:14	addr:0x402450	eip:52	jmp  $15
+#215	cmd: 4	addr:0x4020a1	eip:15	$0[f7f0] = psw[$6[9]]
+#216	cmd: 2	addr:0x402323	eip:17	mov  $e[3e9d], $0[131]
+#217	cmd:18	addr:0x40234f	eip:19	xchg $e[131]
+#218	cmd:11	addr:0x4023ff	eip:20	not  $e[3101]
+#219	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[cefe] -> 0
+#220	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#221	cmd: 2	addr:0x402323	eip:26	mov  $c[53a2], $e[cefe]
+#222	cmd: 9	addr:0x40225f	eip:28	and  $c[cefe], $8[ff00]
+#223	cmd: 9	addr:0x40225f	eip:30	and  $e[cefe], $a[ff]
+#224	cmd:10	addr:0x40239d	eip:32	shr  $c[ce00], 8
+#225	cmd: 8	addr:0x402290	eip:33	xor  $e[fe], $c[ce]
+#226	cmd: 5	addr:0x40241c	eip:35	mov  $c[ce], 0x200
+#227	cmd: 6	addr:0x4022f2	eip:38	add  $e[30], $e[30]
+#228	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[60]
+#229	cmd: 4	addr:0x4020a1	eip:42	$e[60] = psw[$c[260]]
+#230	cmd:18	addr:0x40234f	eip:44	xchg $e[e744]
+#231	cmd:17	addr:0x40215b	eip:45	pop  $c[260]
+#232	cmd: 8	addr:0x402290	eip:46	xor  $e[44e7], $c[3e9d]
+#233	cmd:16	addr:0x402196	eip:48	push $c[3e9d]
+#234	cmd:16	addr:0x402196	eip:49	push $e[7a7a]
+#235	cmd:19	addr:0x4021d4	eip:50	decr $6[9] 	B5 E9 CC  8  E 84 A2 E4 E4 5D 6A E2 D7 3D C9 4F 
+#236	cmd:12	addr:0x4023e2	eip:51	inc  $6[9]
+#237	cmd:14	addr:0x402450	eip:52	jmp  $15
+#238	cmd: 4	addr:0x4020a1	eip:15	$0[df1f] = psw[$6[a]]
+#239	cmd: 2	addr:0x402323	eip:17	mov  $e[7a7a], $0[3036]
+#240	cmd:18	addr:0x40234f	eip:19	xchg $e[3036]
+#241	cmd:11	addr:0x4023ff	eip:20	not  $e[3630]
+#242	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[c9cf] -> 0
+#243	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#244	cmd: 2	addr:0x402323	eip:26	mov  $c[3e9d], $e[c9cf]
+#245	cmd: 9	addr:0x40225f	eip:28	and  $c[c9cf], $8[ff00]
+#246	cmd: 9	addr:0x40225f	eip:30	and  $e[c9cf], $a[ff]
+#247	cmd:10	addr:0x40239d	eip:32	shr  $c[c900], 8
+#248	cmd: 8	addr:0x402290	eip:33	xor  $e[cf], $c[c9]
+#249	cmd: 5	addr:0x40241c	eip:35	mov  $c[c9], 0x200
+#250	cmd: 6	addr:0x4022f2	eip:38	add  $e[6], $e[6]
+#251	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[c]
+#252	cmd: 4	addr:0x4020a1	eip:42	$e[c] = psw[$c[20c]]
+#253	cmd:18	addr:0x40234f	eip:44	xchg $e[d73d]
+#254	cmd:17	addr:0x40215b	eip:45	pop  $c[20c]
+#255	cmd: 8	addr:0x402290	eip:46	xor  $e[3dd7], $c[7a7a]
+#256	cmd:16	addr:0x402196	eip:48	push $c[7a7a]
+#257	cmd:16	addr:0x402196	eip:49	push $e[47ad]
+#258	cmd:19	addr:0x4021d4	eip:50	decr $6[a] 	21 7D 58 9C 9A 10 36 70 70 C9 FE 76 43 A9 5D DB 
+#259	cmd:12	addr:0x4023e2	eip:51	inc  $6[a]
+#260	cmd:14	addr:0x402450	eip:52	jmp  $15
+#261	cmd: 4	addr:0x4020a1	eip:15	$0[e24] = psw[$6[b]]
+#262	cmd: 2	addr:0x402323	eip:17	mov  $e[47ad], $0[34ff]
+#263	cmd:18	addr:0x40234f	eip:19	xchg $e[34ff]
+#264	cmd:11	addr:0x4023ff	eip:20	not  $e[ff34]
+#265	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[cb] -> 0
+#266	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#267	cmd: 2	addr:0x402323	eip:26	mov  $c[7a7a], $e[cb]
+#268	cmd: 9	addr:0x40225f	eip:28	and  $c[cb], $8[ff00]
+#269	cmd: 9	addr:0x40225f	eip:30	and  $e[cb], $a[ff]
+#270	cmd:10	addr:0x40239d	eip:32	shr  $c[0], 8
+#271	cmd: 8	addr:0x402290	eip:33	xor  $e[cb], $c[0]
+#272	cmd: 5	addr:0x40241c	eip:35	mov  $c[0], 0x200
+#273	cmd: 6	addr:0x4022f2	eip:38	add  $e[cb], $e[cb]
+#274	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[196]
+#275	cmd: 4	addr:0x4020a1	eip:42	$e[196] = psw[$c[396]]
+#276	cmd:18	addr:0x40234f	eip:44	xchg $e[960a]
+#277	cmd:17	addr:0x40215b	eip:45	pop  $c[396]
+#278	cmd: 8	addr:0x402290	eip:46	xor  $e[a96], $c[47ad]
+#279	cmd:16	addr:0x402196	eip:48	push $c[47ad]
+#280	cmd:16	addr:0x402196	eip:49	push $e[4d3b]
+#281	cmd:19	addr:0x4021d4	eip:50	decr $6[b] 	ED B1 94 50 56 DC FA BC BC  5 32 BA 8F 65 91 17 
+#282	cmd:12	addr:0x4023e2	eip:51	inc  $6[b]
+#283	cmd:14	addr:0x402450	eip:52	jmp  $15
+#284	cmd: 4	addr:0x4020a1	eip:15	$0[12ed] = psw[$6[c]]
+#285	cmd: 2	addr:0x402323	eip:17	mov  $e[4d3b], $0[fe3c]
+#286	cmd:18	addr:0x40234f	eip:19	xchg $e[fe3c]
+#287	cmd:11	addr:0x4023ff	eip:20	not  $e[3cfe]
+#288	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[c301] -> 0
+#289	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#290	cmd: 2	addr:0x402323	eip:26	mov  $c[47ad], $e[c301]
+#291	cmd: 9	addr:0x40225f	eip:28	and  $c[c301], $8[ff00]
+#292	cmd: 9	addr:0x40225f	eip:30	and  $e[c301], $a[ff]
+#293	cmd:10	addr:0x40239d	eip:32	shr  $c[c300], 8
+#294	cmd: 8	addr:0x402290	eip:33	xor  $e[1], $c[c3]
+#295	cmd: 5	addr:0x40241c	eip:35	mov  $c[c3], 0x200
+#296	cmd: 6	addr:0x4022f2	eip:38	add  $e[c2], $e[c2]
+#297	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[184]
+#298	cmd: 4	addr:0x4020a1	eip:42	$e[184] = psw[$c[384]]
+#299	cmd:18	addr:0x40234f	eip:44	xchg $e[262f]
+#300	cmd:17	addr:0x40215b	eip:45	pop  $c[384]
+#301	cmd: 8	addr:0x402290	eip:46	xor  $e[2f26], $c[4d3b]
+#302	cmd:16	addr:0x402196	eip:48	push $c[4d3b]
+#303	cmd:16	addr:0x402196	eip:49	push $e[621d]
+#304	cmd:19	addr:0x4021d4	eip:50	decr $6[c] 	4F 13 36 F2 F4 7E 58 1E 1E A7 90 18 2D C7 33 B5 
+#305	cmd:12	addr:0x4023e2	eip:51	inc  $6[c]
+#306	cmd:14	addr:0x402450	eip:52	jmp  $15
+#307	cmd: 4	addr:0x4020a1	eip:15	$0[dc2a] = psw[$6[d]]
+#308	cmd: 2	addr:0x402323	eip:17	mov  $e[621d], $0[3b01]
+#309	cmd:18	addr:0x40234f	eip:19	xchg $e[3b01]
+#310	cmd:11	addr:0x4023ff	eip:20	not  $e[13b]
+#311	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[fec4] -> 0
+#312	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#313	cmd: 2	addr:0x402323	eip:26	mov  $c[4d3b], $e[fec4]
+#314	cmd: 9	addr:0x40225f	eip:28	and  $c[fec4], $8[ff00]
+#315	cmd: 9	addr:0x40225f	eip:30	and  $e[fec4], $a[ff]
+#316	cmd:10	addr:0x40239d	eip:32	shr  $c[fe00], 8
+#317	cmd: 8	addr:0x402290	eip:33	xor  $e[c4], $c[fe]
+#318	cmd: 5	addr:0x40241c	eip:35	mov  $c[fe], 0x200
+#319	cmd: 6	addr:0x4022f2	eip:38	add  $e[3a], $e[3a]
+#320	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[74]
+#321	cmd: 4	addr:0x4020a1	eip:42	$e[74] = psw[$c[274]]
+#322	cmd:18	addr:0x40234f	eip:44	xchg $e[71dc]
+#323	cmd:17	addr:0x40215b	eip:45	pop  $c[274]
+#324	cmd: 8	addr:0x402290	eip:46	xor  $e[dc71], $c[621d]
+#325	cmd:16	addr:0x402196	eip:48	push $c[621d]
+#326	cmd:16	addr:0x402196	eip:49	push $e[be6c]
+#327	cmd:19	addr:0x4021d4	eip:50	decr $6[d] 	5E  2 27 E3 E5 6F 49  F  F B6 81  9 3C D6 22 A4 
+#328	cmd:12	addr:0x4023e2	eip:51	inc  $6[d]
+#329	cmd:14	addr:0x402450	eip:52	jmp  $15
+#330	cmd: 4	addr:0x4020a1	eip:15	$0[18ef] = psw[$6[e]]
+#331	cmd: 2	addr:0x402323	eip:17	mov  $e[be6c], $0[41]
+#332	cmd:18	addr:0x40234f	eip:19	xchg $e[41]
+#333	cmd:11	addr:0x4023ff	eip:20	not  $e[4100]
+#334	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[beff] -> 0
+#335	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#336	cmd: 2	addr:0x402323	eip:26	mov  $c[621d], $e[beff]
+#337	cmd: 9	addr:0x40225f	eip:28	and  $c[beff], $8[ff00]
+#338	cmd: 9	addr:0x40225f	eip:30	and  $e[beff], $a[ff]
+#339	cmd:10	addr:0x40239d	eip:32	shr  $c[be00], 8
+#340	cmd: 8	addr:0x402290	eip:33	xor  $e[ff], $c[be]
+#341	cmd: 5	addr:0x40241c	eip:35	mov  $c[be], 0x200
+#342	cmd: 6	addr:0x4022f2	eip:38	add  $e[41], $e[41]
+#343	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[82]
+#344	cmd: 4	addr:0x4020a1	eip:42	$e[82] = psw[$c[282]]
+#345	cmd:18	addr:0x40234f	eip:44	xchg $e[744]
+#346	cmd:17	addr:0x40215b	eip:45	pop  $c[282]
+#347	cmd: 8	addr:0x402290	eip:46	xor  $e[4407], $c[be6c]
+#348	cmd:16	addr:0x402196	eip:48	push $c[be6c]
+#349	cmd:16	addr:0x402196	eip:49	push $e[fa6b]
+#350	cmd:19	addr:0x4021d4	eip:50	decr $6[e] 	86 DA FF 3B 3D B7 91 D7 D7 6E 59 D1 E4  E FA 7C 
+#351	cmd:12	addr:0x4023e2	eip:51	inc  $6[e]
+#352	cmd:14	addr:0x402450	eip:52	jmp  $15
+#353	cmd: 4	addr:0x4020a1	eip:15	$0[de2f] = psw[$6[f]]
+#354	cmd: 2	addr:0x402323	eip:17	mov  $e[fa6b], $0[402d]
+#355	cmd:18	addr:0x40234f	eip:19	xchg $e[402d]
+#356	cmd:11	addr:0x4023ff	eip:20	not  $e[2d40]
+#357	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[d2bf] -> 0
+#358	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#359	cmd: 2	addr:0x402323	eip:26	mov  $c[be6c], $e[d2bf]
+#360	cmd: 9	addr:0x40225f	eip:28	and  $c[d2bf], $8[ff00]
+#361	cmd: 9	addr:0x40225f	eip:30	and  $e[d2bf], $a[ff]
+#362	cmd:10	addr:0x40239d	eip:32	shr  $c[d200], 8
+#363	cmd: 8	addr:0x402290	eip:33	xor  $e[bf], $c[d2]
+#364	cmd: 5	addr:0x40241c	eip:35	mov  $c[d2], 0x200
+#365	cmd: 6	addr:0x4022f2	eip:38	add  $e[6d], $e[6d]
+#366	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[da]
+#367	cmd: 4	addr:0x4020a1	eip:42	$e[da] = psw[$c[2da]]
+#368	cmd:18	addr:0x40234f	eip:44	xchg $e[7c6e]
+#369	cmd:17	addr:0x40215b	eip:45	pop  $c[2da]
+#370	cmd: 8	addr:0x402290	eip:46	xor  $e[6e7c], $c[fa6b]
+#371	cmd:16	addr:0x402196	eip:48	push $c[fa6b]
+#372	cmd:16	addr:0x402196	eip:49	push $e[9417]
+#373	cmd:19	addr:0x4021d4	eip:50	decr $6[f] 	3F 63 46 82 84  E 28 6E 6E D7 E0 68 5D B7 43 C5 
+#374	cmd:12	addr:0x4023e2	eip:51	inc  $6[f]
+#375	cmd:14	addr:0x402450	eip:52	jmp  $15
+#376	cmd: 4	addr:0x4020a1	eip:15	$0[1e1b] = psw[$6[10]]
+#377	cmd: 2	addr:0x402323	eip:17	mov  $e[9417], $0[2c02]
+#378	cmd:18	addr:0x40234f	eip:19	xchg $e[2c02]
+#379	cmd:11	addr:0x4023ff	eip:20	not  $e[22c]
+#380	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[fdd3] -> 0
+#381	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#382	cmd: 2	addr:0x402323	eip:26	mov  $c[fa6b], $e[fdd3]
+#383	cmd: 9	addr:0x40225f	eip:28	and  $c[fdd3], $8[ff00]
+#384	cmd: 9	addr:0x40225f	eip:30	and  $e[fdd3], $a[ff]
+#385	cmd:10	addr:0x40239d	eip:32	shr  $c[fd00], 8
+#386	cmd: 8	addr:0x402290	eip:33	xor  $e[d3], $c[fd]
+#387	cmd: 5	addr:0x40241c	eip:35	mov  $c[fd], 0x200
+#388	cmd: 6	addr:0x4022f2	eip:38	add  $e[2e], $e[2e]
+#389	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[5c]
+#390	cmd: 4	addr:0x4020a1	eip:42	$e[5c] = psw[$c[25c]]
+#391	cmd:18	addr:0x40234f	eip:44	xchg $e[cf2e]
+#392	cmd:17	addr:0x40215b	eip:45	pop  $c[25c]
+#393	cmd: 8	addr:0x402290	eip:46	xor  $e[2ecf], $c[9417]
+#394	cmd:16	addr:0x402196	eip:48	push $c[9417]
+#395	cmd:16	addr:0x402196	eip:49	push $e[bad8]
+#396	cmd:19	addr:0x4021d4	eip:50	decr $6[10] 	9A C6 E3 27 21 AB 8D CB CB 72 45 CD F8 12 E6 60 
+#397	cmd:12	addr:0x4023e2	eip:51	inc  $6[10]
+#398	cmd:14	addr:0x402450	eip:52	jmp  $15
+#399	cmd: 4	addr:0x4020a1	eip:15	$0[9f0] = psw[$6[11]]
+#400	cmd: 2	addr:0x402323	eip:17	mov  $e[bad8], $0[140]
+#401	cmd:18	addr:0x40234f	eip:19	xchg $e[140]
+#402	cmd:11	addr:0x4023ff	eip:20	not  $e[4001]
+#403	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[bffe] -> 0
+#404	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#405	cmd: 2	addr:0x402323	eip:26	mov  $c[9417], $e[bffe]
+#406	cmd: 9	addr:0x40225f	eip:28	and  $c[bffe], $8[ff00]
+#407	cmd: 9	addr:0x40225f	eip:30	and  $e[bffe], $a[ff]
+#408	cmd:10	addr:0x40239d	eip:32	shr  $c[bf00], 8
+#409	cmd: 8	addr:0x402290	eip:33	xor  $e[fe], $c[bf]
+#410	cmd: 5	addr:0x40241c	eip:35	mov  $c[bf], 0x200
+#411	cmd: 6	addr:0x4022f2	eip:38	add  $e[41], $e[41]
+#412	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[82]
+#413	cmd: 4	addr:0x4020a1	eip:42	$e[82] = psw[$c[282]]
+#414	cmd:18	addr:0x40234f	eip:44	xchg $e[c380]
+#415	cmd:17	addr:0x40215b	eip:45	pop  $c[282]
+#416	cmd: 8	addr:0x402290	eip:46	xor  $e[80c3], $c[bad8]
+#417	cmd:16	addr:0x402196	eip:48	push $c[bad8]
+#418	cmd:16	addr:0x402196	eip:49	push $e[3a1b]
+#419	cmd:19	addr:0x4021d4	eip:50	decr $6[11] 	6A 36 13 D7 D1 5B 7D 3B 3B 82 B5 3D  8 E2 16 90 
+#420	cmd:12	addr:0x4023e2	eip:51	inc  $6[11]
+#421	cmd:14	addr:0x402450	eip:52	jmp  $15
+#422	cmd: 4	addr:0x4020a1	eip:15	$0[df2e] = psw[$6[12]]
+#423	cmd: 2	addr:0x402323	eip:17	mov  $e[3a1b], $0[3f01]
+#424	cmd:18	addr:0x40234f	eip:19	xchg $e[3f01]
+#425	cmd:11	addr:0x4023ff	eip:20	not  $e[13f]
+#426	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[fec0] -> 0
+#427	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#428	cmd: 2	addr:0x402323	eip:26	mov  $c[bad8], $e[fec0]
+#429	cmd: 9	addr:0x40225f	eip:28	and  $c[fec0], $8[ff00]
+#430	cmd: 9	addr:0x40225f	eip:30	and  $e[fec0], $a[ff]
+#431	cmd:10	addr:0x40239d	eip:32	shr  $c[fe00], 8
+#432	cmd: 8	addr:0x402290	eip:33	xor  $e[c0], $c[fe]
+#433	cmd: 5	addr:0x40241c	eip:35	mov  $c[fe], 0x200
+#434	cmd: 6	addr:0x4022f2	eip:38	add  $e[3e], $e[3e]
+#435	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[7c]
+#436	cmd: 4	addr:0x4020a1	eip:42	$e[7c] = psw[$c[27c]]
+#437	cmd:18	addr:0x40234f	eip:44	xchg $e[dddd]
+#438	cmd:17	addr:0x40215b	eip:45	pop  $c[27c]
+#439	cmd: 8	addr:0x402290	eip:46	xor  $e[dddd], $c[3a1b]
+#440	cmd:16	addr:0x402196	eip:48	push $c[3a1b]
+#441	cmd:16	addr:0x402196	eip:49	push $e[e7c6]
+#442	cmd:19	addr:0x4021d4	eip:50	decr $6[12]	 88 D4 F1 35 33 B9 9F D9 D9 60 57 DF EA  0 F4 72 
+#443	cmd:12	addr:0x4023e2	eip:51	inc  $6[12]
+#444	cmd:14	addr:0x402450	eip:52	jmp  $15
+#445	cmd: 4	addr:0x4020a1	eip:15	$0[1cef] = psw[$6[13]]
+#446	cmd: 2	addr:0x402323	eip:17	mov  $e[e7c6], $0[2d]
+#447	cmd:18	addr:0x40234f	eip:19	xchg $e[2d]
+#448	cmd:11	addr:0x4023ff	eip:20	not  $e[2d00]
+#449	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[d2ff] -> 0
+#450	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#451	cmd: 2	addr:0x402323	eip:26	mov  $c[3a1b], $e[d2ff]
+#452	cmd: 9	addr:0x40225f	eip:28	and  $c[d2ff], $8[ff00]
+#453	cmd: 9	addr:0x40225f	eip:30	and  $e[d2ff], $a[ff]
+#454	cmd:10	addr:0x40239d	eip:32	shr  $c[d200], 8
+#455	cmd: 8	addr:0x402290	eip:33	xor  $e[ff], $c[d2]
+#456	cmd: 5	addr:0x40241c	eip:35	mov  $c[d2], 0x200
+#457	cmd: 6	addr:0x4022f2	eip:38	add  $e[2d], $e[2d]
+#458	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[5a]
+#459	cmd: 4	addr:0x4020a1	eip:42	$e[5a] = psw[$c[25a]]
+#460	cmd:18	addr:0x40234f	eip:44	xchg $e[c1c7]
+#461	cmd:17	addr:0x40215b	eip:45	pop  $c[25a]
+#462	cmd: 8	addr:0x402290	eip:46	xor  $e[c7c1], $c[e7c6]
+#463	cmd:16	addr:0x402196	eip:48	push $c[e7c6]
+#464	cmd:16	addr:0x402196	eip:49	push $e[2007]
+#465	cmd:19	addr:0x4021d4	eip:50	decr $6[13] 	4 58 7D B9 BF 35 13 55 55 EC DB 53 66 8C 78 FE 
+#466	cmd:12	addr:0x4023e2	eip:51	inc  $6[13]
+#467	cmd:14	addr:0x402450	eip:52	jmp  $15
+#468	cmd: 4	addr:0x4020a1	eip:15	$0[de1b] = psw[$6[14]]
+#469	cmd: 2	addr:0x402323	eip:17	mov  $e[2007], $0[2c0f]
+#470	cmd:18	addr:0x40234f	eip:19	xchg $e[2c0f]
+#471	cmd:11	addr:0x4023ff	eip:20	not  $e[f2c]
+#472	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[f0d3] -> 0
+#473	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#474	cmd: 2	addr:0x402323	eip:26	mov  $c[e7c6], $e[f0d3]
+#475	cmd: 9	addr:0x40225f	eip:28	and  $c[f0d3], $8[ff00]
+#476	cmd: 9	addr:0x40225f	eip:30	and  $e[f0d3], $a[ff]
+#477	cmd:10	addr:0x40239d	eip:32	shr  $c[f000], 8
+#478	cmd: 8	addr:0x402290	eip:33	xor  $e[d3], $c[f0]
+#479	cmd: 5	addr:0x40241c	eip:35	mov  $c[f0], 0x200
+#480	cmd: 6	addr:0x4022f2	eip:38	add  $e[23], $e[23]
+#481	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[46]
+#482	cmd: 4	addr:0x4020a1	eip:42	$e[46] = psw[$c[246]]
+#483	cmd:18	addr:0x40234f	eip:44	xchg $e[175d]
+#484	cmd:17	addr:0x40215b	eip:45	pop  $c[246]
+#485	cmd: 8	addr:0x402290	eip:46	xor  $e[5d17], $c[2007]
+#486	cmd:16	addr:0x402196	eip:48	push $c[2007]
+#487	cmd:16	addr:0x402196	eip:49	push $e[7d10]
+#488	cmd:19	addr:0x4021d4	eip:50	decr $6[14]	50  C 29 ED EB 61 47  1  1 B8 8F  7 32 D8 2C AA 
+#489	cmd:12	addr:0x4023e2	eip:51	inc  $6[14]
+#490	cmd:14	addr:0x402450	eip:52	jmp  $15
+#491	cmd: 4	addr:0x4020a1	eip:15	$0[9fd] = psw[$6[15]]
+#492	cmd: 2	addr:0x402323	eip:17	mov  $e[7d10], $0[e45]
+#493	cmd:18	addr:0x40234f	eip:19	xchg $e[e45]
+#494	cmd:11	addr:0x4023ff	eip:20	not  $e[450e]
+#495	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[baf1] -> 0
+#496	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#497	cmd: 2	addr:0x402323	eip:26	mov  $c[2007], $e[baf1]
+#498	cmd: 9	addr:0x40225f	eip:28	and  $c[baf1], $8[ff00]
+#499	cmd: 9	addr:0x40225f	eip:30	and  $e[baf1], $a[ff]
+#500	cmd:10	addr:0x40239d	eip:32	shr  $c[ba00], 8
+#501	cmd: 8	addr:0x402290	eip:33	xor  $e[f1], $c[ba]
+#502	cmd: 5	addr:0x40241c	eip:35	mov  $c[ba], 0x200
+#503	cmd: 6	addr:0x4022f2	eip:38	add  $e[4b], $e[4b]
+#504	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[96]
+#505	cmd: 4	addr:0x4020a1	eip:42	$e[96] = psw[$c[296]]
+#506	cmd:18	addr:0x40234f	eip:44	xchg $e[170c]
+#507	cmd:17	addr:0x40215b	eip:45	pop  $c[296]
+#508	cmd: 8	addr:0x402290	eip:46	xor  $e[c17], $c[7d10]
+#509	cmd:16	addr:0x402196	eip:48	push $c[7d10]
+#510	cmd:16	addr:0x402196	eip:49	push $e[7107]
+#511	cmd:19	addr:0x4021d4	eip:50	decr $6[15]		9B C7 E2 26 20 AA 8C CA CA 73 44 CC F9 13 E7 61 
+#512	cmd:12	addr:0x4023e2	eip:51	inc  $6[15]
+#513	cmd:14	addr:0x402450	eip:52	jmp  $15
+#514	cmd: 4	addr:0x4020a1	eip:15	$0[ec33] = psw[$6[16]]
+#515	cmd: 2	addr:0x402323	eip:17	mov  $e[7107], $0[4401]
+#516	cmd:18	addr:0x40234f	eip:19	xchg $e[4401]
+#517	cmd:11	addr:0x4023ff	eip:20	not  $e[144]
+#518	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[febb] -> 0
+#519	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#520	cmd: 2	addr:0x402323	eip:26	mov  $c[7d10], $e[febb]
+#521	cmd: 9	addr:0x40225f	eip:28	and  $c[febb], $8[ff00]
+#522	cmd: 9	addr:0x40225f	eip:30	and  $e[febb], $a[ff]
+#523	cmd:10	addr:0x40239d	eip:32	shr  $c[fe00], 8
+#524	cmd: 8	addr:0x402290	eip:33	xor  $e[bb], $c[fe]
+#525	cmd: 5	addr:0x40241c	eip:35	mov  $c[fe], 0x200
+#526	cmd: 6	addr:0x4022f2	eip:38	add  $e[45], $e[45]
+#527	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[8a]
+#528	cmd: 4	addr:0x4020a1	eip:42	$e[8a] = psw[$c[28a]]
+#529	cmd:18	addr:0x40234f	eip:44	xchg $e[2b40]
+#530	cmd:17	addr:0x40215b	eip:45	pop  $c[28a]
+#531	cmd: 8	addr:0x402290	eip:46	xor  $e[402b], $c[7107]
+#532	cmd:16	addr:0x402196	eip:48	push $c[7107]
+#533	cmd:16	addr:0x402196	eip:49	push $e[312c]
+#534	cmd:19	addr:0x4021d4	eip:50	decr $6[16]		C6 9A BF 7B 7D F7 D1 97 97 2E 19 91 A4 4E BA 3C 
+#535	cmd:12	addr:0x4023e2	eip:51	inc  $6[16]
+#536	cmd:14	addr:0x402450	eip:52	jmp  $15
+#537	cmd: 4	addr:0x4020a1	eip:15	$0[21ef] = psw[$6[17]]
+#538	cmd: 2	addr:0x402323	eip:17	mov  $e[312c], $0[41]
+#539	cmd:18	addr:0x40234f	eip:19	xchg $e[41]
+#540	cmd:11	addr:0x4023ff	eip:20	not  $e[4100]
+#541	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[beff] -> 0
+#542	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#543	cmd: 2	addr:0x402323	eip:26	mov  $c[7107], $e[beff]
+#544	cmd: 9	addr:0x40225f	eip:28	and  $c[beff], $8[ff00]
+#545	cmd: 9	addr:0x40225f	eip:30	and  $e[beff], $a[ff]
+#546	cmd:10	addr:0x40239d	eip:32	shr  $c[be00], 8
+#547	cmd: 8	addr:0x402290	eip:33	xor  $e[ff], $c[be]
+#548	cmd: 5	addr:0x40241c	eip:35	mov  $c[be], 0x200
+#549	cmd: 6	addr:0x4022f2	eip:38	add  $e[41], $e[41]
+#550	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[82]
+#551	cmd: 4	addr:0x4020a1	eip:42	$e[82] = psw[$c[282]]
+#552	cmd:18	addr:0x40234f	eip:44	xchg $e[9fdc]
+#553	cmd:17	addr:0x40215b	eip:45	pop  $c[282]
+#554	cmd: 8	addr:0x402290	eip:46	xor  $e[dc9f], $c[312c]
+#555	cmd:16	addr:0x402196	eip:48	push $c[312c]
+#556	cmd:16	addr:0x402196	eip:49	push $e[edb3]
+#557	cmd:19	addr:0x4021d4	eip:50	decr $6[17] 	DE 82 A7 63 65 EF C9 8F 8F 36  1 89 BC 56 A2 24 
+#558	cmd:12	addr:0x4023e2	eip:51	inc  $6[17]
+#559	cmd:14	addr:0x402450	eip:52	jmp  $15
+#560	cmd: 4	addr:0x4020a1	eip:15	$0[de2f] = psw[$6[18]]
+#561	cmd: 2	addr:0x402323	eip:17	mov  $e[edb3], $0[3ffe]
+#562	cmd:18	addr:0x40234f	eip:19	xchg $e[3ffe]
+#563	cmd:11	addr:0x4023ff	eip:20	not  $e[fe3f]
+#564	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[1c0] -> 0
+#565	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#566	cmd: 2	addr:0x402323	eip:26	mov  $c[312c], $e[1c0]
+#567	cmd: 9	addr:0x40225f	eip:28	and  $c[1c0], $8[ff00]
+#568	cmd: 9	addr:0x40225f	eip:30	and  $e[1c0], $a[ff]
+#569	cmd:10	addr:0x40239d	eip:32	shr  $c[100], 8
+#570	cmd: 8	addr:0x402290	eip:33	xor  $e[c0], $c[1]
+#571	cmd: 5	addr:0x40241c	eip:35	mov  $c[1], 0x200
+#572	cmd: 6	addr:0x4022f2	eip:38	add  $e[c1], $e[c1]
+#573	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[182]
+#574	cmd: 4	addr:0x4020a1	eip:42	$e[182] = psw[$c[382]]
+#575	cmd:18	addr:0x40234f	eip:44	xchg $e[a7e]
+#576	cmd:17	addr:0x40215b	eip:45	pop  $c[382]
+#577	cmd: 8	addr:0x402290	eip:46	xor  $e[7e0a], $c[edb3]
+#578	cmd:16	addr:0x402196	eip:48	push $c[edb3]
+#579	cmd:16	addr:0x402196	eip:49	push $e[93b9]
+#580	cmd:19	addr:0x4021d4	eip:50	decr $6[18] 	6 5A 7F BB BD 37 11 57 57 EE D9 51 64 8E 7A FC 
+#581	cmd:12	addr:0x4023e2	eip:51	inc  $6[18]
+#582	cmd:14	addr:0x402450	eip:52	jmp  $15
+#583	cmd: 4	addr:0x4020a1	eip:15	$0[1dec] = psw[$6[19]]
+#584	cmd: 2	addr:0x402323	eip:17	mov  $e[93b9], $0[fd3b]
+#585	cmd:18	addr:0x40234f	eip:19	xchg $e[fd3b]
+#586	cmd:11	addr:0x4023ff	eip:20	not  $e[3bfd]
+#587	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[c402] -> 0
+#588	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#589	cmd: 2	addr:0x402323	eip:26	mov  $c[edb3], $e[c402]
+#590	cmd: 9	addr:0x40225f	eip:28	and  $c[c402], $8[ff00]
+#591	cmd: 9	addr:0x40225f	eip:30	and  $e[c402], $a[ff]
+#592	cmd:10	addr:0x40239d	eip:32	shr  $c[c400], 8
+#593	cmd: 8	addr:0x402290	eip:33	xor  $e[2], $c[c4]
+#594	cmd: 5	addr:0x40241c	eip:35	mov  $c[c4], 0x200
+#595	cmd: 6	addr:0x4022f2	eip:38	add  $e[c6], $e[c6]
+#596	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[18c]
+#597	cmd: 4	addr:0x4020a1	eip:42	$e[18c] = psw[$c[38c]]
+#598	cmd:18	addr:0x40234f	eip:44	xchg $e[b514]
+#599	cmd:17	addr:0x40215b	eip:45	pop  $c[38c]
+#600	cmd: 8	addr:0x402290	eip:46	xor  $e[14b5], $c[93b9]
+#601	cmd:16	addr:0x402196	eip:48	push $c[93b9]
+#602	cmd:16	addr:0x402196	eip:49	push $e[870c]
+#603	cmd:19	addr:0x4021d4	eip:50	decr $6[19] 	7F 23  6 C2 C4 4E 68 2E 2E 97 A0 28 1D F7  3 85 
+#604	cmd:12	addr:0x4023e2	eip:51	inc  $6[19]
+#605	cmd:14	addr:0x402450	eip:52	jmp  $15
+#606	cmd: 4	addr:0x4020a1	eip:15	$0[db29] = psw[$6[1a]]
+#607	cmd: 2	addr:0x402323	eip:17	mov  $e[870c], $0[3a01]
+#608	cmd:18	addr:0x40234f	eip:19	xchg $e[3a01]
+#609	cmd:11	addr:0x4023ff	eip:20	not  $e[13a]
+#610	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[fec5] -> 0
+#611	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#612	cmd: 2	addr:0x402323	eip:26	mov  $c[93b9], $e[fec5]
+#613	cmd: 9	addr:0x40225f	eip:28	and  $c[fec5], $8[ff00]
+#614	cmd: 9	addr:0x40225f	eip:30	and  $e[fec5], $a[ff]
+#615	cmd:10	addr:0x40239d	eip:32	shr  $c[fe00], 8
+#616	cmd: 8	addr:0x402290	eip:33	xor  $e[c5], $c[fe]
+#617	cmd: 5	addr:0x40241c	eip:35	mov  $c[fe], 0x200
+#618	cmd: 6	addr:0x4022f2	eip:38	add  $e[3b], $e[3b]
+#619	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[76]
+#620	cmd: 4	addr:0x4020a1	eip:42	$e[76] = psw[$c[276]]
+#621	cmd:18	addr:0x40234f	eip:44	xchg $e[9ef3]
+#622	cmd:17	addr:0x40215b	eip:45	pop  $c[276]
+#623	cmd: 8	addr:0x402290	eip:46	xor  $e[f39e], $c[870c]
+#624	cmd:16	addr:0x402196	eip:48	push $c[870c]
+#625	cmd:16	addr:0x402196	eip:49	push $e[7492]
+#626	cmd:19	addr:0x4021d4	eip:50	decr $6[1a] 	20 7C 59 9D 9B 11 37 71 71 C8 FF 77 42 A8 5C DA 
+#627	cmd:12	addr:0x4023e2	eip:51	inc  $6[1a]
+#628	cmd:14	addr:0x402450	eip:52	jmp  $15
+#629	cmd: 4	addr:0x4020a1	eip:15	$0[17ef] = psw[$6[1b]]
+#630	cmd: 2	addr:0x402323	eip:17	mov  $e[7492], $0[ffef]
+#631	cmd:18	addr:0x40234f	eip:19	xchg $e[ffef]
+#632	cmd:11	addr:0x4023ff	eip:20	not  $e[efff]
+#633	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[1000] -> 0
+#634	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#635	cmd: 2	addr:0x402323	eip:26	mov  $c[870c], $e[1000]
+#636	cmd: 9	addr:0x40225f	eip:28	and  $c[1000], $8[ff00]
+#637	cmd: 9	addr:0x40225f	eip:30	and  $e[1000], $a[ff]
+#638	cmd:10	addr:0x40239d	eip:32	shr  $c[1000], 8
+#639	cmd: 8	addr:0x402290	eip:33	xor  $e[0], $c[10]
+#640	cmd: 5	addr:0x40241c	eip:35	mov  $c[10], 0x200
+#641	cmd: 6	addr:0x4022f2	eip:38	add  $e[10], $e[10]
+#642	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[20]
+#643	cmd: 4	addr:0x4020a1	eip:42	$e[20] = psw[$c[220]]
+#644	cmd:18	addr:0x40234f	eip:44	xchg $e[9019]
+#645	cmd:17	addr:0x40215b	eip:45	pop  $c[220]
+#646	cmd: 8	addr:0x402290	eip:46	xor  $e[1990], $c[7492]
+#647	cmd:16	addr:0x402196	eip:48	push $c[7492]
+#648	cmd:16	addr:0x402196	eip:49	push $e[6d02]
+#649	cmd:19	addr:0x4021d4	eip:50	decr $6[1b] 	1A 46 63 A7 A1 2B  D 4B 4B F2 C5 4D 78 92 66 E0 
+#650	cmd:12	addr:0x4023e2	eip:51	inc  $6[1b]
+#651	cmd:14	addr:0x402450	eip:52	jmp  $15
+#652	cmd: 4	addr:0x4020a1	eip:15	$0[dddd] = psw[$6[1c]]
+#653	cmd: 2	addr:0x402323	eip:17	mov  $e[6d02], $0[edce]
+#654	cmd:18	addr:0x40234f	eip:19	xchg $e[edce]
+#655	cmd:11	addr:0x4023ff	eip:20	not  $e[ceed]
+#656	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[3112] -> 0
+#657	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 0
+#658	cmd: 2	addr:0x402323	eip:26	mov  $c[7492], $e[3112]
+#659	cmd: 9	addr:0x40225f	eip:28	and  $c[3112], $8[ff00]
+#660	cmd: 9	addr:0x40225f	eip:30	and  $e[3112], $a[ff]
+#661	cmd:10	addr:0x40239d	eip:32	shr  $c[3100], 8
+#662	cmd: 8	addr:0x402290	eip:33	xor  $e[12], $c[31]
+#663	cmd: 5	addr:0x40241c	eip:35	mov  $c[31], 0x200
+#664	cmd: 6	addr:0x4022f2	eip:38	add  $e[23], $e[23]
+#665	cmd: 6	addr:0x4022f2	eip:40	add  $c[200], $e[46]
+#666	cmd: 4	addr:0x4020a1	eip:42	$e[46] = psw[$c[246]]
+#667	cmd:18	addr:0x40234f	eip:44	xchg $e[943]
+#668	cmd:17	addr:0x40215b	eip:45	pop  $c[246]
+#669	cmd: 8	addr:0x402290	eip:46	xor  $e[4309], $c[6d02]
+#670	cmd:16	addr:0x402196	eip:48	push $c[6d02]
+#671	cmd:16	addr:0x402196	eip:49	push $e[2e0b]
+#672	cmd:19	addr:0x4021d4	eip:50	decr $6[1c]	 F 53 76 B2 B4 3E 18 5E 5E E7 D0 58 6D 87 73 F5 
+#673	cmd:12	addr:0x4023e2	eip:51	inc  $6[1c]
+#674	cmd:14	addr:0x402450	eip:52	jmp  $15
+#675	cmd: 4	addr:0x4020a1	eip:15	$0[cbbc] = psw[$6[1d]]
+#676	cmd: 2	addr:0x402323	eip:17	mov  $e[2e0b], $0[ccce]
+#677	cmd:18	addr:0x40234f	eip:19	xchg $e[ccce]
+#678	cmd:11	addr:0x4023ff	eip:20	not  $e[cecc]
+#679	cmd:13	addr:0x4020e4	eip:21	cmp  $4[3133], $e[3133] -> 1
+#680	cmd:15	addr:0x4023c0	eip:23	jz   $55 -> 1
+#681	cmd: 8	addr:0x402290	eip:55	xor  $e[3133], $e[3133]
+#682	cmd: 5	addr:0x40241c	eip:57	mov  $4[3133], 0x100
+#683	cmd: 5	addr:0x40241c	eip:60	mov  $c[6d02], 0xaf21
+#684	cmd: 4	addr:0x4020a1	eip:63	$a[ff] = psw[$4[100]]
+#685	cmd:18	addr:0x40234f	eip:65	xchg $a[b2e]
+#686	cmd:12	addr:0x4023e2	eip:66	inc  $4[100]
+#687	cmd:12	addr:0x4023e2	eip:67	inc  $4[101]
+#688	cmd:17	addr:0x40215b	eip:68	pop  $6[1d]
+#689	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[2e0b] -> 0
+#690	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#691	cmd:13	addr:0x4020e4	eip:74	cmp  $6[2e0b], $a[2e0b] -> 1
+#692	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#693	cmd: 4	addr:0x4020a1	eip:63	$a[2e0b] = psw[$4[102]]
+#694	cmd:18	addr:0x40234f	eip:65	xchg $a[26d]
+#695	cmd:12	addr:0x4023e2	eip:66	inc  $4[102]
+#696	cmd:12	addr:0x4023e2	eip:67	inc  $4[103]
+#697	cmd:17	addr:0x40215b	eip:68	pop  $6[2e0b]
+#698	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[6d02] -> 0
+#699	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#700	cmd:13	addr:0x4020e4	eip:74	cmp  $6[6d02], $a[6d02] -> 1
+#701	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#702	cmd: 4	addr:0x4020a1	eip:63	$a[6d02] = psw[$4[104]]
+#703	cmd:18	addr:0x40234f	eip:65	xchg $a[9274]
+#704	cmd:12	addr:0x4023e2	eip:66	inc  $4[104]
+#705	cmd:12	addr:0x4023e2	eip:67	inc  $4[105]
+#706	cmd:17	addr:0x40215b	eip:68	pop  $6[6d02]
+#707	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[7492] -> 0
+#708	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#709	cmd:13	addr:0x4020e4	eip:74	cmp  $6[7492], $a[7492] -> 1
+#710	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#711	cmd: 4	addr:0x4020a1	eip:63	$a[7492] = psw[$4[106]]
+#712	cmd:18	addr:0x40234f	eip:65	xchg $a[c87]
+#713	cmd:12	addr:0x4023e2	eip:66	inc  $4[106]
+#714	cmd:12	addr:0x4023e2	eip:67	inc  $4[107]
+#715	cmd:17	addr:0x40215b	eip:68	pop  $6[7492]
+#716	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[870c] -> 0
+#717	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#718	cmd:13	addr:0x4020e4	eip:74	cmp  $6[870c], $a[870c] -> 1
+#719	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#720	cmd: 4	addr:0x4020a1	eip:63	$a[870c] = psw[$4[108]]
+#721	cmd:18	addr:0x40234f	eip:65	xchg $a[b993]
+#722	cmd:12	addr:0x4023e2	eip:66	inc  $4[108]
+#723	cmd:12	addr:0x4023e2	eip:67	inc  $4[109]
+#724	cmd:17	addr:0x40215b	eip:68	pop  $6[870c]
+#725	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[93b9] -> 0
+#726	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#727	cmd:13	addr:0x4020e4	eip:74	cmp  $6[93b9], $a[93b9] -> 1
+#728	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#729	cmd: 4	addr:0x4020a1	eip:63	$a[93b9] = psw[$4[10a]]
+#730	cmd:18	addr:0x40234f	eip:65	xchg $a[b3ed]
+#731	cmd:12	addr:0x4023e2	eip:66	inc  $4[10a]
+#732	cmd:12	addr:0x4023e2	eip:67	inc  $4[10b]
+#733	cmd:17	addr:0x40215b	eip:68	pop  $6[93b9]
+#734	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[edb3] -> 0
+#735	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#736	cmd:13	addr:0x4020e4	eip:74	cmp  $6[edb3], $a[edb3] -> 1
+#737	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#738	cmd: 4	addr:0x4020a1	eip:63	$a[edb3] = psw[$4[10c]]
+#739	cmd:18	addr:0x40234f	eip:65	xchg $a[2c31]
+#740	cmd:12	addr:0x4023e2	eip:66	inc  $4[10c]
+#741	cmd:12	addr:0x4023e2	eip:67	inc  $4[10d]
+#742	cmd:17	addr:0x40215b	eip:68	pop  $6[edb3]
+#743	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[312c] -> 0
+#744	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#745	cmd:13	addr:0x4020e4	eip:74	cmp  $6[312c], $a[312c] -> 1
+#746	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#747	cmd: 4	addr:0x4020a1	eip:63	$a[312c] = psw[$4[10e]]
+#748	cmd:18	addr:0x40234f	eip:65	xchg $a[771]
+#749	cmd:12	addr:0x4023e2	eip:66	inc  $4[10e]
+#750	cmd:12	addr:0x4023e2	eip:67	inc  $4[10f]
+#751	cmd:17	addr:0x40215b	eip:68	pop  $6[312c]
+#752	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[7107] -> 0
+#753	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#754	cmd:13	addr:0x4020e4	eip:74	cmp  $6[7107], $a[7107] -> 1
+#755	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#756	cmd: 4	addr:0x4020a1	eip:63	$a[7107] = psw[$4[110]]
+#757	cmd:18	addr:0x40234f	eip:65	xchg $a[107d]
+#758	cmd:12	addr:0x4023e2	eip:66	inc  $4[110]
+#759	cmd:12	addr:0x4023e2	eip:67	inc  $4[111]
+#760	cmd:17	addr:0x40215b	eip:68	pop  $6[7107]
+#761	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[7d10] -> 0
+#762	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#763	cmd:13	addr:0x4020e4	eip:74	cmp  $6[7d10], $a[7d10] -> 1
+#764	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#765	cmd: 4	addr:0x4020a1	eip:63	$a[7d10] = psw[$4[112]]
+#766	cmd:18	addr:0x40234f	eip:65	xchg $a[720]
+#767	cmd:12	addr:0x4023e2	eip:66	inc  $4[112]
+#768	cmd:12	addr:0x4023e2	eip:67	inc  $4[113]
+#769	cmd:17	addr:0x40215b	eip:68	pop  $6[7d10]
+#770	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[2007] -> 0
+#771	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#772	cmd:13	addr:0x4020e4	eip:74	cmp  $6[2007], $a[2007] -> 1
+#773	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#774	cmd: 4	addr:0x4020a1	eip:63	$a[2007] = psw[$4[114]]
+#775	cmd:18	addr:0x40234f	eip:65	xchg $a[c6e7]
+#776	cmd:12	addr:0x4023e2	eip:66	inc  $4[114]
+#777	cmd:12	addr:0x4023e2	eip:67	inc  $4[115]
+#778	cmd:17	addr:0x40215b	eip:68	pop  $6[2007]
+#779	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[e7c6] -> 0
+#780	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#781	cmd:13	addr:0x4020e4	eip:74	cmp  $6[e7c6], $a[e7c6] -> 1
+#782	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#783	cmd: 4	addr:0x4020a1	eip:63	$a[e7c6] = psw[$4[116]]
+#784	cmd:18	addr:0x40234f	eip:65	xchg $a[1b3a]
+#785	cmd:12	addr:0x4023e2	eip:66	inc  $4[116]
+#786	cmd:12	addr:0x4023e2	eip:67	inc  $4[117]
+#787	cmd:17	addr:0x40215b	eip:68	pop  $6[e7c6]
+#788	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[3a1b] -> 0
+#789	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#790	cmd:13	addr:0x4020e4	eip:74	cmp  $6[3a1b], $a[3a1b] -> 1
+#791	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#792	cmd: 4	addr:0x4020a1	eip:63	$a[3a1b] = psw[$4[118]]
+#793	cmd:18	addr:0x40234f	eip:65	xchg $a[d8ba]
+#794	cmd:12	addr:0x4023e2	eip:66	inc  $4[118]
+#795	cmd:12	addr:0x4023e2	eip:67	inc  $4[119]
+#796	cmd:17	addr:0x40215b	eip:68	pop  $6[3a1b]
+#797	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[bad8] -> 0
+#798	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#799	cmd:13	addr:0x4020e4	eip:74	cmp  $6[bad8], $a[bad8] -> 1
+#800	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#801	cmd: 4	addr:0x4020a1	eip:63	$a[bad8] = psw[$4[11a]]
+#802	cmd:18	addr:0x40234f	eip:65	xchg $a[1794]
+#803	cmd:12	addr:0x4023e2	eip:66	inc  $4[11a]
+#804	cmd:12	addr:0x4023e2	eip:67	inc  $4[11b]
+#805	cmd:17	addr:0x40215b	eip:68	pop  $6[bad8]
+#806	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[9417] -> 0
+#807	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#808	cmd:13	addr:0x4020e4	eip:74	cmp  $6[9417], $a[9417] -> 1
+#809	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#810	cmd: 4	addr:0x4020a1	eip:63	$a[9417] = psw[$4[11c]]
+#811	cmd:18	addr:0x40234f	eip:65	xchg $a[6bfa]
+#812	cmd:12	addr:0x4023e2	eip:66	inc  $4[11c]
+#813	cmd:12	addr:0x4023e2	eip:67	inc  $4[11d]
+#814	cmd:17	addr:0x40215b	eip:68	pop  $6[9417]
+#815	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[fa6b] -> 0
+#816	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#817	cmd:13	addr:0x4020e4	eip:74	cmp  $6[fa6b], $a[fa6b] -> 1
+#818	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#819	cmd: 4	addr:0x4020a1	eip:63	$a[fa6b] = psw[$4[11e]]
+#820	cmd:18	addr:0x40234f	eip:65	xchg $a[6cbe]
+#821	cmd:12	addr:0x4023e2	eip:66	inc  $4[11e]
+#822	cmd:12	addr:0x4023e2	eip:67	inc  $4[11f]
+#823	cmd:17	addr:0x40215b	eip:68	pop  $6[fa6b]
+#824	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[be6c] -> 0
+#825	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#826	cmd:13	addr:0x4020e4	eip:74	cmp  $6[be6c], $a[be6c] -> 1
+#827	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#828	cmd: 4	addr:0x4020a1	eip:63	$a[be6c] = psw[$4[120]]
+#829	cmd:18	addr:0x40234f	eip:65	xchg $a[1d62]
+#830	cmd:12	addr:0x4023e2	eip:66	inc  $4[120]
+#831	cmd:12	addr:0x4023e2	eip:67	inc  $4[121]
+#832	cmd:17	addr:0x40215b	eip:68	pop  $6[be6c]
+#833	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[621d] -> 0
+#834	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#835	cmd:13	addr:0x4020e4	eip:74	cmp  $6[621d], $a[621d] -> 1
+#836	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#837	cmd: 4	addr:0x4020a1	eip:63	$a[621d] = psw[$4[122]]
+#838	cmd:18	addr:0x40234f	eip:65	xchg $a[3b4d]
+#839	cmd:12	addr:0x4023e2	eip:66	inc  $4[122]
+#840	cmd:12	addr:0x4023e2	eip:67	inc  $4[123]
+#841	cmd:17	addr:0x40215b	eip:68	pop  $6[621d]
+#842	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[4d3b] -> 0
+#843	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#844	cmd:13	addr:0x4020e4	eip:74	cmp  $6[4d3b], $a[4d3b] -> 1
+#845	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#846	cmd: 4	addr:0x4020a1	eip:63	$a[4d3b] = psw[$4[124]]
+#847	cmd:18	addr:0x40234f	eip:65	xchg $a[ad47]
+#848	cmd:12	addr:0x4023e2	eip:66	inc  $4[124]
+#849	cmd:12	addr:0x4023e2	eip:67	inc  $4[125]
+#850	cmd:17	addr:0x40215b	eip:68	pop  $6[4d3b]
+#851	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[47ad] -> 0
+#852	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#853	cmd:13	addr:0x4020e4	eip:74	cmp  $6[47ad], $a[47ad] -> 1
+#854	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#855	cmd: 4	addr:0x4020a1	eip:63	$a[47ad] = psw[$4[126]]
+#856	cmd:18	addr:0x40234f	eip:65	xchg $a[7a7a]
+#857	cmd:12	addr:0x4023e2	eip:66	inc  $4[126]
+#858	cmd:12	addr:0x4023e2	eip:67	inc  $4[127]
+#859	cmd:17	addr:0x40215b	eip:68	pop  $6[47ad]
+#860	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[7a7a] -> 0
+#861	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#862	cmd:13	addr:0x4020e4	eip:74	cmp  $6[7a7a], $a[7a7a] -> 1
+#863	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#864	cmd: 4	addr:0x4020a1	eip:63	$a[7a7a] = psw[$4[128]]
+#865	cmd:18	addr:0x40234f	eip:65	xchg $a[9d3e]
+#866	cmd:12	addr:0x4023e2	eip:66	inc  $4[128]
+#867	cmd:12	addr:0x4023e2	eip:67	inc  $4[129]
+#868	cmd:17	addr:0x40215b	eip:68	pop  $6[7a7a]
+#869	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[3e9d] -> 0
+#870	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#871	cmd:13	addr:0x4020e4	eip:74	cmp  $6[3e9d], $a[3e9d] -> 1
+#872	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#873	cmd: 4	addr:0x4020a1	eip:63	$a[3e9d] = psw[$4[12a]]
+#874	cmd:18	addr:0x40234f	eip:65	xchg $a[a253]
+#875	cmd:12	addr:0x4023e2	eip:66	inc  $4[12a]
+#876	cmd:12	addr:0x4023e2	eip:67	inc  $4[12b]
+#877	cmd:17	addr:0x40215b	eip:68	pop  $6[3e9d]
+#878	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[53a2] -> 0
+#879	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#880	cmd:13	addr:0x4020e4	eip:74	cmp  $6[53a2], $a[53a2] -> 1
+#881	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#882	cmd: 4	addr:0x4020a1	eip:63	$a[53a2] = psw[$4[12c]]
+#883	cmd:18	addr:0x40234f	eip:65	xchg $a[2ff2]
+#884	cmd:12	addr:0x4023e2	eip:66	inc  $4[12c]
+#885	cmd:12	addr:0x4023e2	eip:67	inc  $4[12d]
+#886	cmd:17	addr:0x40215b	eip:68	pop  $6[53a2]
+#887	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[f22f] -> 0
+#888	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#889	cmd:13	addr:0x4020e4	eip:74	cmp  $6[f22f], $a[f22f] -> 1
+#890	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#891	cmd: 4	addr:0x4020a1	eip:63	$a[f22f] = psw[$4[12e]]
+#892	cmd:18	addr:0x40234f	eip:65	xchg $a[a9d1]
+#893	cmd:12	addr:0x4023e2	eip:66	inc  $4[12e]
+#894	cmd:12	addr:0x4023e2	eip:67	inc  $4[12f]
+#895	cmd:17	addr:0x40215b	eip:68	pop  $6[f22f]
+#896	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[d1a9] -> 0
+#897	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#898	cmd:13	addr:0x4020e4	eip:74	cmp  $6[d1a9], $a[d1a9] -> 1
+#899	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#900	cmd: 4	addr:0x4020a1	eip:63	$a[d1a9] = psw[$4[130]]
+#901	cmd:18	addr:0x40234f	eip:65	xchg $a[74f5]
+#902	cmd:12	addr:0x4023e2	eip:66	inc  $4[130]
+#903	cmd:12	addr:0x4023e2	eip:67	inc  $4[131]
+#904	cmd:17	addr:0x40215b	eip:68	pop  $6[d1a9]
+#905	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[f574] -> 0
+#906	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#907	cmd:13	addr:0x4020e4	eip:74	cmp  $6[f574], $a[f574] -> 1
+#908	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#909	cmd: 4	addr:0x4020a1	eip:63	$a[f574] = psw[$4[132]]
+#910	cmd:18	addr:0x40234f	eip:65	xchg $a[7381]
+#911	cmd:12	addr:0x4023e2	eip:66	inc  $4[132]
+#912	cmd:12	addr:0x4023e2	eip:67	inc  $4[133]
+#913	cmd:17	addr:0x40215b	eip:68	pop  $6[f574]
+#914	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[8173] -> 0
+#915	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#916	cmd:13	addr:0x4020e4	eip:74	cmp  $6[8173], $a[8173] -> 1
+#917	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#918	cmd: 4	addr:0x4020a1	eip:63	$a[8173] = psw[$4[134]]
+#919	cmd:18	addr:0x40234f	eip:65	xchg $a[bc11]
+#920	cmd:12	addr:0x4023e2	eip:66	inc  $4[134]
+#921	cmd:12	addr:0x4023e2	eip:67	inc  $4[135]
+#922	cmd:17	addr:0x40215b	eip:68	pop  $6[8173]
+#923	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[11bc] -> 0
+#924	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#925	cmd:13	addr:0x4020e4	eip:74	cmp  $6[11bc], $a[11bc] -> 1
+#926	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#927	cmd: 4	addr:0x4020a1	eip:63	$a[11bc] = psw[$4[136]]
+#928	cmd:18	addr:0x40234f	eip:65	xchg $a[15ae]
+#929	cmd:12	addr:0x4023e2	eip:66	inc  $4[136]
+#930	cmd:12	addr:0x4023e2	eip:67	inc  $4[137]
+#931	cmd:17	addr:0x40215b	eip:68	pop  $6[11bc]
+#932	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[ae15] -> 0
+#933	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#934	cmd:13	addr:0x4020e4	eip:74	cmp  $6[ae15], $a[ae15] -> 1
+#935	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#936	cmd: 4	addr:0x4020a1	eip:63	$a[ae15] = psw[$4[138]]
+#937	cmd:18	addr:0x40234f	eip:65	xchg $a[7961]
+#938	cmd:12	addr:0x4023e2	eip:66	inc  $4[138]
+#939	cmd:12	addr:0x4023e2	eip:67	inc  $4[139]
+#940	cmd:17	addr:0x40215b	eip:68	pop  $6[ae15]
+#941	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[6179] -> 0
+#942	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 0
+#943	cmd:13	addr:0x4020e4	eip:74	cmp  $6[6179], $a[6179] -> 1
+#944	cmd:15	addr:0x4023c0	eip:76	jz   $63 -> 1
+#945	cmd: 4	addr:0x4020a1	eip:63	$a[6179] = psw[$4[13a]]
+#946	cmd:18	addr:0x40234f	eip:65	xchg $a[21af]
+#947	cmd:12	addr:0x4023e2	eip:66	inc  $4[13a]
+#948	cmd:12	addr:0x4023e2	eip:67	inc  $4[13b]
+#949	cmd:17	addr:0x40215b	eip:68	pop  $6[6179]
+#950	cmd:13	addr:0x4020e4	eip:69	cmp  $c[af21], $a[af21] -> 1
+#951	cmd:15	addr:0x4023c0	eip:71	jz   $86 -> 1
+#952	cmd: 5	addr:0x40241c	eip:86	mov  $a[af21], 0x5a4d
+#953	cmd:13	addr:0x4020e4	eip:89	cmp  $a[5a4d], $6[5a4d] -> 1
+#954	cmd:15	addr:0x4023c0	eip:91	jz   $101 -> 1
+#955	cmd: 5	addr:0x40241c	eip:101	mov  $6[5a4d], 0xdead
+#956	cmd: 5	addr:0x40241c	eip:104	mov  $4[13c], 0xbeef
+#957	cmd:20	addr:0x402439	eip:107	halt
