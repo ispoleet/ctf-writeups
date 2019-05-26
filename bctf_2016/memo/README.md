@@ -11,14 +11,14 @@ This was another heap exploitation challenge. Binary was fairly easy to analyze.
 over a simple menu:
 
 ```
-	Welcome to simple memo manager.
-	choose an action:
-	1.show this page
-	2.edit this page
-	3.tear this page
-	4.change your name
-	5.change title
-	6.exit
+    Welcome to simple memo manager.
+    choose an action:
+    1.show this page
+    2.edit this page
+    3.tear this page
+    4.change your name
+    5.change title
+    6.exit
 ```
 
 The only limitation that we have is that we can delete a page up to 3 times:
@@ -130,17 +130,17 @@ Let's disable ASLR for now, in order to simplify exploiting process. During star
 layout of the heap is:
 
 ```
-		00603000  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
-name ->	00603010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		00603020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		00603030  00 00 00 00 00 00 00 00  81 00 00 00 00 00 00 00
+        00603000  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
+name -> 00603010  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        00603020  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        00603030  00 00 00 00 00 00 00 00  81 00 00 00 00 00 00 00
 page -> 00603040  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		........
-		006030A0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030B0  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
+        ........
+        006030A0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030B0  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
 title-> 006030C0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030D0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030E0  00 00 00 00 00 00 00 00  21 0F 02 00 00 00 00 00
+        006030D0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030E0  00 00 00 00 00 00 00 00  21 0F 02 00 00 00 00 00
 ```
 
 If we overflow the name buffer, we can modify the "size" of the chunk for page buffer. But we can
@@ -153,37 +153,37 @@ directly; However we can call it through realloc(). Let's take a look at its sou
 is to see if the new size is smaller than the old:
 
 ```c
-	if ((unsigned long)(oldsize) >= (unsigned long)(nb)) {
-		/* already big enough; split below */
-		newp = oldp;
-		newsize = oldsize;
-	}
-	else {
-		// more stuff
-	}
+    if ((unsigned long)(oldsize) >= (unsigned long)(nb)) {
+        /* already big enough; split below */
+        newp = oldp;
+        newsize = oldsize;
+    }
+    else {
+        // more stuff
+    }
 
-	/* If possible, free extra space in old or extended chunk */
+    /* If possible, free extra space in old or extended chunk */
 
-	assert((unsigned long)(newsize) >= (unsigned long)(nb));
+    assert((unsigned long)(newsize) >= (unsigned long)(nb));
 
-	remainder_size = newsize - nb;
+    remainder_size = newsize - nb;
 
-	if (remainder_size < MINSIZE) { /* not enough extra to split off */
-		set_head_size(newp, newsize | (av != &main_arena ? NON_MAIN_ARENA : 0));
-		set_inuse_bit_at_offset(newp, newsize);
-	}
-	else { /* split remainder */
-		remainder = chunk_at_offset(newp, nb);
-		set_head_size(newp, nb | (av != &main_arena ? NON_MAIN_ARENA : 0));
-		set_head(remainder, remainder_size | PREV_INUSE |
-		     (av != &main_arena ? NON_MAIN_ARENA : 0));
-		/* Mark remainder as inuse so free() won't complain */
-		set_inuse_bit_at_offset(remainder, remainder_size);
-		_int_free(av, remainder, 1);
-	}
+    if (remainder_size < MINSIZE) { /* not enough extra to split off */
+        set_head_size(newp, newsize | (av != &main_arena ? NON_MAIN_ARENA : 0));
+        set_inuse_bit_at_offset(newp, newsize);
+    }
+    else { /* split remainder */
+        remainder = chunk_at_offset(newp, nb);
+        set_head_size(newp, nb | (av != &main_arena ? NON_MAIN_ARENA : 0));
+        set_head(remainder, remainder_size | PREV_INUSE |
+             (av != &main_arena ? NON_MAIN_ARENA : 0));
+        /* Mark remainder as inuse so free() won't complain */
+        set_inuse_bit_at_offset(remainder, remainder_size);
+        _int_free(av, remainder, 1);
+    }
 
-	check_inuse_chunk(av, newp);
-	return chunk2mem(newp);
+    check_inuse_chunk(av, newp);
+    return chunk2mem(newp);
 ```
 
 By looking the above code, the attack plan is to enter the first if (the "else" branch is too big 
@@ -194,15 +194,15 @@ From there our goal is to "unlink" a chunk from free list to get an arbitrary wr
 _int_free() (https://github.com/lattera/glibc/blob/master/malloc/malloc.c#L3782), the first "if" 
 is false as we're dealing with small bins:
 ```c
-	if ((unsigned long)(size) <= (unsigned long)(get_max_fast ())
-	{
-		// ...
-	
+    if ((unsigned long)(size) <= (unsigned long)(get_max_fast ())
+    {
+        // ...
+    
 ```
 
 
 Because the previous chunk is in use (the one that will be returned by realloc() and the next
-is chunk is the wilderness chunk), we'll fall in this code:	
+is chunk is the wilderness chunk), we'll fall in this code: 
 ```c
     /*
       If the chunk borders the current high end of memory,
@@ -233,7 +233,7 @@ But most importantly after that, malloc_consolidate() is called:
 
     if ((unsigned long)(size) >= FASTBIN_CONSOLIDATION_THRESHOLD) {
       if (have_fastchunks(av))
-		malloc_consolidate(av);
+        malloc_consolidate(av);
 ```
 
 This is true because size increased with size of next chunk, which is the wilderness chunk,
@@ -246,12 +246,12 @@ tries to coalesce all free chunks in fastbins. The only free chunk in fastbins i
 be called which is our final goal:
 
 ```c
-	if (!prev_inuse(p)) {
-	        prevsize = p->prev_size;
-	        size += prevsize;
-	        p = chunk_at_offset(p, -((long) prevsize));
-	        unlink(av, p, bck, fwd);
-	}
+    if (!prev_inuse(p)) {
+            prevsize = p->prev_size;
+            size += prevsize;
+            p = chunk_at_offset(p, -((long) prevsize));
+            unlink(av, p, bck, fwd);
+    }
 ```
 
 
@@ -261,21 +261,21 @@ in .bss where we can find an address that points to the heap (we need to pass th
 && bk->fd = P).
 
 ```
-		00603000  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
-		00603010  00 00 00 00 00 00 00 00  20 00 00 00 00 00 00 00
-name ->	00603020  28 20 60 00 00 00 00 00  30 20 60 00 00 00 00 00
-		00603030  20 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00
-page ->	00603040  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
-		00603050  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
-		00603060  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
-		00603070  00 00 00 00 00 00 00 00  41 00 00 00 00 00 00 00
-title->	00603080  28 20 60 00 00 00 00 00  30 20 60 00 00 00 00 00
-		00603090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030A0  0A 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030B0  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
-		006030C0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030D0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030E0  00 00 00 00 00 00 00 00  21 0F 02 00 00 00 00 00
+        00603000  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
+        00603010  00 00 00 00 00 00 00 00  20 00 00 00 00 00 00 00
+name -> 00603020  28 20 60 00 00 00 00 00  30 20 60 00 00 00 00 00
+        00603030  20 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00
+page -> 00603040  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
+        00603050  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
+        00603060  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
+        00603070  00 00 00 00 00 00 00 00  41 00 00 00 00 00 00 00
+title-> 00603080  28 20 60 00 00 00 00 00  30 20 60 00 00 00 00 00
+        00603090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030A0  0A 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030B0  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
+        006030C0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030D0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030E0  00 00 00 00 00 00 00 00  21 0F 02 00 00 00 00 00
 ```
 
 After that, we realloc() the page to large size (500 bytes), and its new address will be at 0x6030F0.
@@ -286,31 +286,31 @@ In the above example we'll "unlink" a pointer at .bss (0x602028+0x18 = 0x602040)
 to the name. After realloc() the heap will be:
 
 ```
-		00603000  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
-		00603010  00 00 00 00 00 00 00 00  61 00 00 00 00 00 00 00
-name ->	00603020  78 66 DD F7 FF 7F 00 00  78 66 DD F7 FF 7F 00 00
-		00603030  20 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00
-		00603040  00 00 00 00 00 00 00 00  41 41 41 41 41 41 41 41
-page ->	00603050  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
-		00603060  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
-		00603070  60 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00
-		00603080  28 20 60 00 00 00 00 00  30 20 60 00 00 00 00 00
-		00603090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030A0  0A 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030B0  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
-title->	006030C0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030D0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		006030E0  00 00 00 00 00 00 00 00  A1 00 00 00 00 00 00 00
-new ->	006030F0  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
-page	00603100  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
-		00603110  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
-		00603120  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
-		00603130  0A 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		00603140  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		00603150  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		00603160  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		00603170  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
-		00603180  00 00 00 00 00 00 00 00  81 0E 02 00 00 00 00 00
+        00603000  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
+        00603010  00 00 00 00 00 00 00 00  61 00 00 00 00 00 00 00
+name -> 00603020  78 66 DD F7 FF 7F 00 00  78 66 DD F7 FF 7F 00 00
+        00603030  20 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00
+        00603040  00 00 00 00 00 00 00 00  41 41 41 41 41 41 41 41
+page -> 00603050  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
+        00603060  41 41 41 41 41 41 41 41  41 41 41 41 41 41 41 41
+        00603070  60 00 00 00 00 00 00 00  40 00 00 00 00 00 00 00
+        00603080  28 20 60 00 00 00 00 00  30 20 60 00 00 00 00 00
+        00603090  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030A0  0A 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030B0  00 00 00 00 00 00 00 00  31 00 00 00 00 00 00 00
+title-> 006030C0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030D0  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        006030E0  00 00 00 00 00 00 00 00  A1 00 00 00 00 00 00 00
+new ->  006030F0  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
+page    00603100  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
+        00603110  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
+        00603120  42 41 52 20 42 41 52 20  42 41 52 20 42 41 52 20
+        00603130  0A 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        00603140  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        00603150  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        00603160  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        00603170  00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
+        00603180  00 00 00 00 00 00 00 00  81 0E 02 00 00 00 00 00
 ```
 
 But the important thing is that the address of name in .bss will be 0x602028 which is an address within
