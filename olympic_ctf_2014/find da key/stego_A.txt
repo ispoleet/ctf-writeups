@@ -1,0 +1,131 @@
+Steganography is the art and science of
+ writing hidden messages in such a way that no one
+, apart from the sender and intended recipient, suspe
+cts the existence of the mess
+age, a form of security through obscurity. T
+he word steganography is of Greek origin and means "concea
+led writing" from the Greek words steganos meaning "co
+vered or protected", and graphein meaning "to w
+rite". The first recorded use of the term was in 1499 by Joh
+annes Trithemius in his Steganographia, a trea
+tise on cryptography and steganography disg
+uised as a book on magic. Generally, mess
+ages will appear to be something else: images, arti
+cles, shopping lists, or some ot
+her covertext and, classically, the hidden message may be in invi
+sible ink between the visible lines of a private letter.
+
+The
+ advantage of steganography, over cr
+yptography alone, is that messages do not attract attention
+ to themselves. Plainly visible encrypted messagesï¿½no matter 
+how unbreakableï¿½will arouse s
+uspicion, and may in themselves be incriminating 
+in countries where encryption is illegal. Therefore,
+ whereas cryptography protects the contents of
+ a message, steganography can be said to protect b
+oth messages and communicating parties.
+
+Steganography inclu
+des the concealment of information within com
+puter files. In digital steganography, electronic communication
+s may include steganographic coding insi
+de of a transport layer, such as a document file, image fil
+e, program or protocol. Media 
+files are ideal for steganographic transmissio
+n because of their large size. As 
+a simple example, a sender might start with a
+n innocuous image file and adjust the color of every 100th pixel 
+to correspond to a letter in the alphabet, a
+ change so subtle that someone not specifically looking f
+or it is unlikely to notice it.
+
+The
+ first recorded uses of steganography can be tr
+aced back to 440 BC when Herodotus mentions two examples o
+f steganography in The Histories of 
+Herodotus. Demaratus sent a warning about a 
+forthcoming attack to Greece by w
+riting it directly on the wooden backing of a wax tablet bef
+ore applying its beeswax surface. Wax tablets were in common use
+ then as reusable writing surfaces, sometime
+s used for shorthand. Another ancient example is that o
+f Histiaeus, who shaved the head of his most trusted s
+lave and tattooed a message on it. After his hair had g
+rown the message was hidden. The purpose was to
+ instigate a revolt against the Persians.
+
+Steganography has b
+een widely used, including in recent historical times and t
+he present day. Possible permutations are endless and
+ known examples include:
+* Hidden messages within wax ta
+blets: in ancient Greece, people wrote me
+ssages on the wood, then covered it with wax upon which an innocen
+t covering message was written
+.
+* Hidden messages on messenger's body: also used in ancien
+t Greece. Herodotus tells the story o
+f a message tattooed on a slave's shaved head, hidden by the
+ growth of his hair, and exposed by shaving his head
+ again. The message allegedly carried a warning to Greece abo
+ut Persian invasion plans. Th
+is method has obvious drawbacks,
+ such as delayed transmission while waiting for the s
+lave's hair to grow, and the restrictions o
+n the number and size of mess
+ages that can be encoded on one person
+'s scalp.
+* In WWII, the French Resistance sent some messages w
+ritten on the backs of couriers 
+using invisible ink.
+* Hidden messages on paper wr
+itten in secret inks, under other messages
+ or on the blank parts of other
+ messages.
+* Messages written in Morse code on knitting yarn and 
+then knitted into a piece of clothing wor
+n by a courier.
+* Messages written on the back o
+f postage stamps.
+* During and after
+ World War II, espionage agents used photographically p
+roduced microdots to send information back and
+ forth. Microdots were typically 
+minute, approximately less than the size of the period prod
+uced by a typewriter. WWII microdots needed to be embedded
+ in the paper and covered with an adhesive (such as collodion). T
+his was reflective and thus detectable 
+by viewing against glancing light. Alternative techniques included
+ inserting microdots into slits cut into the edge of
+ post cards.
+* During World War II, a spy for 
+Japan in New York City, Velvalee
+ Dickinson, sent information to accommodatio
+n addresses in neutral South Americ
+a. She was a dealer in dolls, and 
+her letters discussed how many of this or that doll
+ to ship. The stegotext was the doll orders, while the
+ concealed "plaintext" was itself enco
+ded and gave information about ship movements,
+ etc. Her case became somewhat fa
+mous and she became known as the
+ Doll Woman.
+* Cold War count
+er-propaganda. In 1968, crew membe
+rs of the USS Pueblo (AGER-2) intelligence ship held as pr
+isoners by North Korea, communicated in sign
+ language during staged photo opport
+unities, informing the United States they 
+were not defectors but rather were being held ca
+ptive by the North Koreans. In other photo
+s presented to the US, crew members gave "the finger" to 
+the unsuspecting North Koreans, in an attempt to 
+discredit photos that showed them smi
+ling and comfortable.
+
+--
+http://en.wikipedia.org
+/wiki/Steganography
+
+
