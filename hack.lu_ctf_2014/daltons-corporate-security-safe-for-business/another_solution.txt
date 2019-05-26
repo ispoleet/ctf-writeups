@@ -1,0 +1,45 @@
+//---------------------------------------------------------------------------------------
+URL: http://s0beit.me/ctf/hack-lu-writeup-dalton-security/
+//---------------------------------------------------------------------------------------
+HTMLCanvasElement.prototype.getContext2 = HTMLCanvasElement.prototype.getContext;
+ 
+var canvasCount = 0;
+var captchaElements = [];
+ 
+function solveCaptcha() {
+    captchaElements.sort(function(a, b) {
+        return a.n > b.n;
+    });
+ 
+    var captchaString = '';
+    for(var i = 0; i < captchaElements.length; i++) {
+        captchaString += captchaElements[i].t;
+    }
+ 
+    console.log(captchaString);
+ 
+    $('input[name="solution"]').val(captchaString);
+    $('form').submit();
+}
+ 
+HTMLCanvasElement.prototype.getContext = function(type) {
+    console.log('getContext(' + type + ')');
+    var returnValue = this.getContext2(type);
+    console.log('returnValue.fillText = ' + returnValue.fillText);
+    returnValue.fillText2 = returnValue.fillText;
+    returnValue.fillText = function(text, x, y) {
+        canvasCount++;
+        console.log('ft[' + x + '][' + canvasCount + ']: ' + text);
+        captchaElements.push({n:x, t:text});
+ 
+        if(canvasCount == 8) {
+            solveCaptcha();
+        }
+ 
+        return this.fillText2(text, x, y);
+    };
+ 
+    return returnValue;
+};
+//---------------------------------------------------------------------------------------
+
