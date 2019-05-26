@@ -1,0 +1,508 @@
+.text:0001    mem[ 0] = 0x6c 'l'
+.text:0003    mem[ 1] = 0x69 'i'
+.text:0005    mem[ 2] = 0x63 'c'
+.text:0007    mem[ 3] = 0x65 'e'
+.text:0009    mem[ 4] = 0x6e 'n'
+.text:000b    mem[ 5] = 0x73 's'
+.text:000d    mem[ 6] = 0x65 'e'
+.text:000f    mem[ 7] = 0x2e '.'
+.text:0011    mem[ 8] = 0x64 'd'
+.text:0013    mem[ 9] = 0x72 'r'
+.text:0015    mem[10] = 0x6d 'm'
+.text:0016    mem[11] = 0
+.text:0018    mem[12] = 0x0c '\x0c'
+.text:0019    fopen("license.drm", "r") (reg = -1)
+.text:001e    * decrypting VM code *
+.text:001f    mem[ 0] = fread() = '_' (0x5f)
+.text:0021    mem[ 0] ^= 0xaa
+.text:0022    mem[ 1] = fread() = "'" (0x27)
+.text:0024    mem[ 1] ^= 0xbb
+.text:0025    mem[ 2] = fread() = '\x8b' (0x8b)
+.text:0027    mem[ 2] ^= 0xcc
+.text:0029    mem[ 2] <-> mem[ 1]
+.text:002a    mem[ 3] = fread() = '\xdc' (0xdc)
+.text:002c    mem[ 3] ^= 0xdd
+.text:002e    mem[ 3] <-> mem[ 0]
+.text:0030    if (mem[ 3] = 0xf5) == 0xf5:
+.text:0032    jnz .text:003d    (EFLAGS: 1)
+.text:0034    if (mem[ 2] = 0x9c) == 0x9c:
+.text:0036    jnz .text:003e    (EFLAGS: 1)
+.text:0038    if (mem[ 1] = 0x47) == 0x47:
+.text:003a    jnz .text:003e    (EFLAGS: 1)
+.text:003c    if (mem[ 0] = 0x01) == 0x01:
+.text:003e    jz .text:0051    (EFLAGS: 1)
+.text:0053    mem[ 0] = 0x0a '\n'
+.text:0055    mem[ 1] = 0x3f '?'
+.text:0057    mem[ 2] = 0x74 't'
+.text:0059    mem[ 3] = 0x69 'i'
+.text:005b    mem[ 4] = 0x20 ' '
+.text:005d    mem[ 5] = 0x74 't'
+.text:005f    mem[ 6] = 0x27 "'"
+.text:0061    mem[ 7] = 0x6e 'n'
+.text:0063    mem[ 8] = 0x73 's'
+.text:0065    mem[ 9] = 0x61 'a'
+.text:0067    mem[10] = 0x77 'w'
+.text:0069    mem[11] = 0x20 ' '
+.text:006b    mem[12] = 0x2c ','
+.text:006d    mem[13] = 0x79 'y'
+.text:006f    mem[14] = 0x73 's'
+.text:0071    mem[15] = 0x61 'a'
+.text:0073    mem[16] = 0x65 'e'
+.text:0075    mem[17] = 0x20 ' '
+.text:0077    mem[18] = 0x73 's'
+.text:0079    mem[19] = 0x61 'a'
+.text:007b    mem[20] = 0x77 'w'
+.text:007d    mem[21] = 0x20 ' '
+.text:007f    mem[22] = 0x74 't'
+.text:0081    mem[23] = 0x61 'a'
+.text:0083    mem[24] = 0x68 'h'
+.text:0085    mem[25] = 0x54 'T'
+.text:0087    mem[26] = 0x20 ' '
+.text:0089    mem[27] = 0x21 '!'
+.text:008b    mem[28] = 0x65 'e'
+.text:008d    mem[29] = 0x74 't'
+.text:008f    mem[30] = 0x65 'e'
+.text:0091    mem[31] = 0x6c 'l'
+.text:0093    mem[32] = 0x70 'p'
+.text:0095    mem[33] = 0x6d 'm'
+.text:0097    mem[34] = 0x6f 'o'
+.text:0099    mem[35] = 0x63 'c'
+.text:009b    mem[36] = 0x20 ' '
+.text:009d    mem[37] = 0x31 '1'
+.text:009f    mem[38] = 0x20 ' '
+.text:00a1    mem[39] = 0x65 'e'
+.text:00a3    mem[40] = 0x67 'g'
+.text:00a5    mem[41] = 0x61 'a'
+.text:00a7    mem[42] = 0x74 't'
+.text:00a9    mem[43] = 0x53 'S'
+.text:00aa    print 'S'    (reg = 43)
+.text:00ab    print 't'    (reg = 42)
+.text:00ac    print 'a'    (reg = 41)
+.text:00ad    print 'g'    (reg = 40)
+.text:00ae    print 'e'    (reg = 39)
+.text:00af    print ' '    (reg = 38)
+.text:00b0    print '1'    (reg = 37)
+.text:00b1    print ' '    (reg = 36)
+.text:00b2    print 'c'    (reg = 35)
+.text:00b3    print 'o'    (reg = 34)
+.text:00b4    print 'm'    (reg = 33)
+.text:00b5    print 'p'    (reg = 32)
+.text:00b6    print 'l'    (reg = 31)
+.text:00b7    print 'e'    (reg = 30)
+.text:00b8    print 't'    (reg = 29)
+.text:00b9    print 'e'    (reg = 28)
+.text:00ba    print '!'    (reg = 27)
+.text:00bb    print ' '    (reg = 26)
+.text:00bc    print 'T'    (reg = 25)
+.text:00bd    print 'h'    (reg = 24)
+.text:00be    print 'a'    (reg = 23)
+.text:00bf    print 't'    (reg = 22)
+.text:00c0    print ' '    (reg = 21)
+.text:00c1    print 'w'    (reg = 20)
+.text:00c2    print 'a'    (reg = 19)
+.text:00c3    print 's'    (reg = 18)
+.text:00c4    print ' '    (reg = 17)
+.text:00c5    print 'e'    (reg = 16)
+.text:00c6    print 'a'    (reg = 15)
+.text:00c7    print 's'    (reg = 14)
+.text:00c8    print 'y'    (reg = 13)
+.text:00c9    print ','    (reg = 12)
+.text:00ca    print ' '    (reg = 11)
+.text:00cb    print 'w'    (reg = 10)
+.text:00cc    print 'a'    (reg = 9)
+.text:00cd    print 's'    (reg = 8)
+.text:00ce    print 'n'    (reg = 7)
+.text:00cf    print "'"    (reg = 6)
+.text:00d0    print 't'    (reg = 5)
+.text:00d1    print ' '    (reg = 4)
+.text:00d2    print 'i'    (reg = 3)
+.text:00d3    print 't'    (reg = 2)
+.text:00d4    print '?'    (reg = 1)
+.text:00d5    print '\n'    (reg = 0)
+.text:00da    * decrypting VM code *
+.text:00db    mem[ 0] = fread() = '\xe7' (0xe7)
+.text:00dc    ~ mem[ 0]: 0x18
+.text:00de    mem[ 0] ^= 0xee
+.text:00df    mem[ 1] = fread() = '\xee' (0xee)
+.text:00e0    ~ mem[ 1]: 0x11
+.text:00e2    mem[ 1] ^= 0xdd
+.text:00e3    mem[ 2] = fread() = 'f' (0x66)
+.text:00e4    ~ mem[ 2]: 0x99
+.text:00e6    mem[ 2] ^= 0xcc
+.text:00e7    mem[ 3] = fread() = 'R' (0x52)
+.text:00e8    ~ mem[ 3]: 0xad
+.text:00ea    mem[ 3] ^= 0xaa
+.text:00ec    mem[ 3] <-> mem[ 0]
+.text:00ee    mem[ 3] <-> mem[ 1]
+.text:00f0    mem[ 3] <-> mem[ 2]
+.text:00f2    if (mem[ 3] = 0x55) == 0x55:
+.text:00f4    jnz .text:00ff    (EFLAGS: 1)
+.text:00f6    if (mem[ 2] = 0xcc) == 0xcc:
+.text:00f8    jnz .text:0100    (EFLAGS: 1)
+.text:00fa    if (mem[ 1] = 0xf6) == 0xf6:
+.text:00fc    jnz .text:0100    (EFLAGS: 1)
+.text:00fe    if (mem[ 0] = 0x07) == 0x07:
+.text:0100    jz .text:0113    (EFLAGS: 1)
+.text:0115    mem[ 0] = 0x0a '\n'
+.text:0117    mem[ 1] = 0x21 '!'
+.text:0119    mem[ 2] = 0x67 'g'
+.text:011b    mem[ 3] = 0x6e 'n'
+.text:011d    mem[ 4] = 0x69 'i'
+.text:011f    mem[ 5] = 0x76 'v'
+.text:0121    mem[ 6] = 0x6f 'o'
+.text:0123    mem[ 7] = 0x6d 'm'
+.text:0125    mem[ 8] = 0x20 ' '
+.text:0127    mem[ 9] = 0x70 'p'
+.text:0129    mem[10] = 0x65 'e'
+.text:012b    mem[11] = 0x65 'e'
+.text:012d    mem[12] = 0x4b 'K'
+.text:012f    mem[13] = 0x20 ' '
+.text:0131    mem[14] = 0x21 '!'
+.text:0133    mem[15] = 0x65 'e'
+.text:0135    mem[16] = 0x74 't'
+.text:0137    mem[17] = 0x65 'e'
+.text:0139    mem[18] = 0x6c 'l'
+.text:013b    mem[19] = 0x70 'p'
+.text:013d    mem[20] = 0x6d 'm'
+.text:013f    mem[21] = 0x6f 'o'
+.text:0141    mem[22] = 0x63 'c'
+.text:0143    mem[23] = 0x20 ' '
+.text:0145    mem[24] = 0x32 '2'
+.text:0147    mem[25] = 0x20 ' '
+.text:0149    mem[26] = 0x65 'e'
+.text:014b    mem[27] = 0x67 'g'
+.text:014d    mem[28] = 0x61 'a'
+.text:014f    mem[29] = 0x74 't'
+.text:0151    mem[30] = 0x53 'S'
+.text:0152    print 'S'    (reg = 30)
+.text:0153    print 't'    (reg = 29)
+.text:0154    print 'a'    (reg = 28)
+.text:0155    print 'g'    (reg = 27)
+.text:0156    print 'e'    (reg = 26)
+.text:0157    print ' '    (reg = 25)
+.text:0158    print '2'    (reg = 24)
+.text:0159    print ' '    (reg = 23)
+.text:015a    print 'c'    (reg = 22)
+.text:015b    print 'o'    (reg = 21)
+.text:015c    print 'm'    (reg = 20)
+.text:015d    print 'p'    (reg = 19)
+.text:015e    print 'l'    (reg = 18)
+.text:015f    print 'e'    (reg = 17)
+.text:0160    print 't'    (reg = 16)
+.text:0161    print 'e'    (reg = 15)
+.text:0162    print '!'    (reg = 14)
+.text:0163    print ' '    (reg = 13)
+.text:0164    print 'K'    (reg = 12)
+.text:0165    print 'e'    (reg = 11)
+.text:0166    print 'e'    (reg = 10)
+.text:0167    print 'p'    (reg = 9)
+.text:0168    print ' '    (reg = 8)
+.text:0169    print 'm'    (reg = 7)
+.text:016a    print 'o'    (reg = 6)
+.text:016b    print 'v'    (reg = 5)
+.text:016c    print 'i'    (reg = 4)
+.text:016d    print 'n'    (reg = 3)
+.text:016e    print 'g'    (reg = 2)
+.text:016f    print '!'    (reg = 1)
+.text:0170    print '\n'    (reg = 0)
+.text:0175    * decrypting VM code *
+.text:0176    mem[ 0] = fread() = ':' (0x3a)
+.text:0177    REVERSE(mem[ 0]): 0x3a --> 0x5c
+.text:0178    ~ mem[ 0]: 0xa3
+.text:017a    mem[ 0] ^= 0xfe
+.text:017b    mem[ 1] = fread() = '\x86' (0x86)
+.text:017d    mem[ 1] ^= 0xe1
+.text:017e    REVERSE(mem[ 1]): 0x67 --> 0xe6
+.text:0180    mem[ 1] <-> mem[ 0]
+.text:0181    mem[ 2] = fread() = '\xbf' (0xbf)
+.text:0183    mem[ 2] ^= 0xde
+.text:0184    REVERSE(mem[ 2]): 0x61 --> 0x86
+.text:0185    mem[ 3] = fread() = '\xdb' (0xdb)
+.text:0187    mem[ 3] ^= 0xad
+.text:0188    REVERSE(mem[ 3]): 0x76 --> 0x6e
+.text:0189    ~ mem[ 3]: 0x91
+.text:018b    mem[ 3] <-> mem[ 1]
+.text:018d    mem[ 3] <-> mem[ 2]
+.text:018e    REVERSE(mem[ 3]): 0x86 --> 0x61
+.text:0190    mem[ 3] <-> mem[ 1]
+.text:0192    if (mem[ 3] = 0x91) == 0x91:
+.text:0194    jnz .text:019f    (EFLAGS: 1)
+.text:0196    if (mem[ 2] = 0x5d) == 0x5d:
+.text:0198    jnz .text:01a0    (EFLAGS: 1)
+.text:019a    if (mem[ 1] = 0x61) == 0x61:
+.text:019c    jnz .text:01a0    (EFLAGS: 1)
+.text:019e    if (mem[ 0] = 0xe6) == 0xe6:
+.text:01a0    jz .text:01b3    (EFLAGS: 1)
+.text:01b5    mem[ 0] = 0x0a '\n'
+.text:01b7    mem[ 1] = 0x21 '!'
+.text:01b9    mem[ 2] = 0x65 'e'
+.text:01bb    mem[ 3] = 0x72 'r'
+.text:01bd    mem[ 4] = 0x65 'e'
+.text:01bf    mem[ 5] = 0x68 'h'
+.text:01c1    mem[ 6] = 0x74 't'
+.text:01c3    mem[ 7] = 0x20 ' '
+.text:01c5    mem[ 8] = 0x79 'y'
+.text:01c7    mem[ 9] = 0x6c 'l'
+.text:01c9    mem[10] = 0x72 'r'
+.text:01cb    mem[11] = 0x61 'a'
+.text:01cd    mem[12] = 0x65 'e'
+.text:01cf    mem[13] = 0x6e 'n'
+.text:01d1    mem[14] = 0x20 ' '
+.text:01d3    mem[15] = 0x65 'e'
+.text:01d5    mem[16] = 0x72 'r'
+.text:01d7    mem[17] = 0x61 'a'
+.text:01d9    mem[18] = 0x20 ' '
+.text:01db    mem[19] = 0x75 'u'
+.text:01dd    mem[20] = 0x6f 'o'
+.text:01df    mem[21] = 0x59 'Y'
+.text:01e1    mem[22] = 0x20 ' '
+.text:01e3    mem[23] = 0x21 '!'
+.text:01e5    mem[24] = 0x65 'e'
+.text:01e7    mem[25] = 0x74 't'
+.text:01e9    mem[26] = 0x65 'e'
+.text:01eb    mem[27] = 0x6c 'l'
+.text:01ed    mem[28] = 0x70 'p'
+.text:01ef    mem[29] = 0x6d 'm'
+.text:01f1    mem[30] = 0x6f 'o'
+.text:01f3    mem[31] = 0x63 'c'
+.text:01f5    mem[32] = 0x20 ' '
+.text:01f7    mem[33] = 0x33 '3'
+.text:01f9    mem[34] = 0x20 ' '
+.text:01fb    mem[35] = 0x65 'e'
+.text:01fd    mem[36] = 0x67 'g'
+.text:01ff    mem[37] = 0x61 'a'
+.text:0201    mem[38] = 0x74 't'
+.text:0203    mem[39] = 0x53 'S'
+.text:0204    print 'S'    (reg = 39)
+.text:0205    print 't'    (reg = 38)
+.text:0206    print 'a'    (reg = 37)
+.text:0207    print 'g'    (reg = 36)
+.text:0208    print 'e'    (reg = 35)
+.text:0209    print ' '    (reg = 34)
+.text:020a    print '3'    (reg = 33)
+.text:020b    print ' '    (reg = 32)
+.text:020c    print 'c'    (reg = 31)
+.text:020d    print 'o'    (reg = 30)
+.text:020e    print 'm'    (reg = 29)
+.text:020f    print 'p'    (reg = 28)
+.text:0210    print 'l'    (reg = 27)
+.text:0211    print 'e'    (reg = 26)
+.text:0212    print 't'    (reg = 25)
+.text:0213    print 'e'    (reg = 24)
+.text:0214    print '!'    (reg = 23)
+.text:0215    print ' '    (reg = 22)
+.text:0216    print 'Y'    (reg = 21)
+.text:0217    print 'o'    (reg = 20)
+.text:0218    print 'u'    (reg = 19)
+.text:0219    print ' '    (reg = 18)
+.text:021a    print 'a'    (reg = 17)
+.text:021b    print 'r'    (reg = 16)
+.text:021c    print 'e'    (reg = 15)
+.text:021d    print ' '    (reg = 14)
+.text:021e    print 'n'    (reg = 13)
+.text:021f    print 'e'    (reg = 12)
+.text:0220    print 'a'    (reg = 11)
+.text:0221    print 'r'    (reg = 10)
+.text:0222    print 'l'    (reg = 9)
+.text:0223    print 'y'    (reg = 8)
+.text:0224    print ' '    (reg = 7)
+.text:0225    print 't'    (reg = 6)
+.text:0226    print 'h'    (reg = 5)
+.text:0227    print 'e'    (reg = 4)
+.text:0228    print 'r'    (reg = 3)
+.text:0229    print 'e'    (reg = 2)
+.text:022a    print '!'    (reg = 1)
+.text:022b    print '\n'    (reg = 0)
+.text:0230    * decrypting VM code *
+.text:0231    mem[ 0] = fread() = '0' (0x30)
+.text:0233    mem[ 0] ^= 0xde
+.text:0235    mem[ 0] flip 5-th bit
+.text:0237    mem[ 0] flip 3-th bit
+.text:0238    mem[ 1] = fread() = '9' (0x39)
+.text:023a    mem[ 1] ^= 0xad
+.text:023b    SWAP_NIBBLE(mem[ 1]): 0x49
+.text:023c    ~ mem[ 1]: 0xb6
+.text:023d    mem[ 2] = fread() = '\x00' (0x0)
+.text:023e    REVERSE(mem[ 2]): 0x00 --> 0x00
+.text:0240    mem[ 2] flip 2-th bit
+.text:0242    mem[ 2] flip 1-th bit
+.text:0244    mem[ 2] ^= 0xbe
+.text:0245    mem[ 3] = fread() = '\xeb' (0xeb)
+.text:0247    XCHG_NIBBLE(mem[ 3] <--> mem[ 1])
+.text:0249    mem[ 3] ^= 0xef
+.text:024a    ~ mem[ 3]: 0xf6
+.text:024c    mem[ 3] <-> mem[ 0]
+.text:024e    mem[ 3] <-> mem[ 1]
+.text:0250    mem[ 3] <-> mem[ 2]
+.text:0252    if (mem[ 3] = 0xb8) == 0xb8:
+.text:0254    jnz .text:025f    (EFLAGS: 1)
+.text:0256    if (mem[ 2] = 0xbb) == 0xbb:
+.text:0258    jnz .text:0260    (EFLAGS: 1)
+.text:025a    if (mem[ 1] = 0xc6) == 0xc6:
+.text:025c    jnz .text:0260    (EFLAGS: 1)
+.text:025e    if (mem[ 0] = 0xf6) == 0xf6:
+.text:0260    jz .text:0273    (EFLAGS: 1)
+.text:0275    mem[ 0] = 0x0a '\n'
+.text:0277    mem[ 1] = 0x0a '\n'
+.text:0279    mem[ 2] = 0x2e '.'
+.text:027b    mem[ 3] = 0x74 't'
+.text:027d    mem[ 4] = 0x69 'i'
+.text:027f    mem[ 5] = 0x20 ' '
+.text:0281    mem[ 6] = 0x64 'd'
+.text:0283    mem[ 7] = 0x65 'e'
+.text:0285    mem[ 8] = 0x6b 'k'
+.text:0287    mem[ 9] = 0x69 'i'
+.text:0289    mem[10] = 0x6c 'l'
+.text:028b    mem[11] = 0x20 ' '
+.text:028d    mem[12] = 0x75 'u'
+.text:028f    mem[13] = 0x6f 'o'
+.text:0291    mem[14] = 0x79 'y'
+.text:0293    mem[15] = 0x20 ' '
+.text:0295    mem[16] = 0x65 'e'
+.text:0297    mem[17] = 0x70 'p'
+.text:0299    mem[18] = 0x6f 'o'
+.text:029b    mem[19] = 0x48 'H'
+.text:029d    mem[20] = 0x20 ' '
+.text:029f    mem[21] = 0x21 '!'
+.text:02a1    mem[22] = 0x65 'e'
+.text:02a3    mem[23] = 0x74 't'
+.text:02a5    mem[24] = 0x65 'e'
+.text:02a7    mem[25] = 0x6c 'l'
+.text:02a9    mem[26] = 0x70 'p'
+.text:02ab    mem[27] = 0x6d 'm'
+.text:02ad    mem[28] = 0x6f 'o'
+.text:02af    mem[29] = 0x63 'c'
+.text:02b1    mem[30] = 0x20 ' '
+.text:02b3    mem[31] = 0x34 '4'
+.text:02b5    mem[32] = 0x20 ' '
+.text:02b7    mem[33] = 0x65 'e'
+.text:02b9    mem[34] = 0x67 'g'
+.text:02bb    mem[35] = 0x61 'a'
+.text:02bd    mem[36] = 0x74 't'
+.text:02bf    mem[37] = 0x53 'S'
+.text:02c0    print 'S'    (reg = 37)
+.text:02c1    print 't'    (reg = 36)
+.text:02c2    print 'a'    (reg = 35)
+.text:02c3    print 'g'    (reg = 34)
+.text:02c4    print 'e'    (reg = 33)
+.text:02c5    print ' '    (reg = 32)
+.text:02c6    print '4'    (reg = 31)
+.text:02c7    print ' '    (reg = 30)
+.text:02c8    print 'c'    (reg = 29)
+.text:02c9    print 'o'    (reg = 28)
+.text:02ca    print 'm'    (reg = 27)
+.text:02cb    print 'p'    (reg = 26)
+.text:02cc    print 'l'    (reg = 25)
+.text:02cd    print 'e'    (reg = 24)
+.text:02ce    print 't'    (reg = 23)
+.text:02cf    print 'e'    (reg = 22)
+.text:02d0    print '!'    (reg = 21)
+.text:02d1    print ' '    (reg = 20)
+.text:02d2    print 'H'    (reg = 19)
+.text:02d3    print 'o'    (reg = 18)
+.text:02d4    print 'p'    (reg = 17)
+.text:02d5    print 'e'    (reg = 16)
+.text:02d6    print ' '    (reg = 15)
+.text:02d7    print 'y'    (reg = 14)
+.text:02d8    print 'o'    (reg = 13)
+.text:02d9    print 'u'    (reg = 12)
+.text:02da    print ' '    (reg = 11)
+.text:02db    print 'l'    (reg = 10)
+.text:02dc    print 'i'    (reg = 9)
+.text:02dd    print 'k'    (reg = 8)
+.text:02de    print 'e'    (reg = 7)
+.text:02df    print 'd'    (reg = 6)
+.text:02e0    print ' '    (reg = 5)
+.text:02e1    print 'i'    (reg = 4)
+.text:02e2    print 't'    (reg = 3)
+.text:02e3    print '.'    (reg = 2)
+.text:02e4    print '\n'    (reg = 1)
+.text:02e5    print '\n'    (reg = 0)
+.text:02ea    * decrypting VM code *
+.text:02ec    mem[ 0] = 0x0a '\n'
+.text:02ee    mem[ 1] = 0x27 "'"
+.text:02f0    mem[ 2] = 0x4e 'N'
+.text:02f2    mem[ 3] = 0x75 'u'
+.text:02f4    mem[ 4] = 0x46 'F'
+.text:02f6    mem[ 5] = 0x5f '_'
+.text:02f8    mem[ 6] = 0x73 's'
+.text:02fa    mem[ 7] = 0x49 'I'
+.text:02fc    mem[ 8] = 0x5f '_'
+.text:02fe    mem[ 9] = 0x47 'G'
+.text:0300    mem[10] = 0x6e 'n'
+.text:0302    mem[11] = 0x49 'I'
+.text:0304    mem[12] = 0x73 's'
+.text:0306    mem[13] = 0x52 'R'
+.text:0308    mem[14] = 0x65 'e'
+.text:030a    mem[15] = 0x56 'V'
+.text:030c    mem[16] = 0x65 'e'
+.text:030e    mem[17] = 0x52 'R'
+.text:0310    mem[18] = 0x5f '_'
+.text:0312    mem[19] = 0x6d 'm'
+.text:0314    mem[20] = 0x56 'V'
+.text:0316    mem[21] = 0x27 "'"
+.text:0318    mem[22] = 0x20 ' '
+.text:031a    mem[23] = 0x3a ':'
+.text:031c    mem[24] = 0x79 'y'
+.text:031e    mem[25] = 0x65 'e'
+.text:0320    mem[26] = 0x6b 'k'
+.text:0322    mem[27] = 0x20 ' '
+.text:0324    mem[28] = 0x7a 'z'
+.text:0326    mem[29] = 0x61 'a'
+.text:0328    mem[30] = 0x68 'h'
+.text:032a    mem[31] = 0x20 ' '
+.text:032c    mem[32] = 0x6e 'n'
+.text:032e    mem[33] = 0x61 'a'
+.text:0330    mem[34] = 0x63 'c'
+.text:0332    mem[35] = 0x20 ' '
+.text:0334    mem[36] = 0x75 'u'
+.text:0336    mem[37] = 0x6f 'o'
+.text:0338    mem[38] = 0x79 'y'
+.text:033a    mem[39] = 0x20 ' '
+.text:033c    mem[40] = 0x77 'w'
+.text:033e    mem[41] = 0x6f 'o'
+.text:0340    mem[42] = 0x4e 'N'
+.text:0341    print 'N'    (reg = 42)
+.text:0342    print 'o'    (reg = 41)
+.text:0343    print 'w'    (reg = 40)
+.text:0344    print ' '    (reg = 39)
+.text:0345    print 'y'    (reg = 38)
+.text:0346    print 'o'    (reg = 37)
+.text:0347    print 'u'    (reg = 36)
+.text:0348    print ' '    (reg = 35)
+.text:0349    print 'c'    (reg = 34)
+.text:034a    print 'a'    (reg = 33)
+.text:034b    print 'n'    (reg = 32)
+.text:034c    print ' '    (reg = 31)
+.text:034d    print 'h'    (reg = 30)
+.text:034e    print 'a'    (reg = 29)
+.text:034f    print 'z'    (reg = 28)
+.text:0350    print ' '    (reg = 27)
+.text:0351    print 'k'    (reg = 26)
+.text:0352    print 'e'    (reg = 25)
+.text:0353    print 'y'    (reg = 24)
+.text:0354    print ':'    (reg = 23)
+.text:0355    print ' '    (reg = 22)
+.text:0356    print "'"    (reg = 21)
+.text:0357    print 'V'    (reg = 20)
+.text:0358    print 'm'    (reg = 19)
+.text:0359    print '_'    (reg = 18)
+.text:035a    print 'R'    (reg = 17)
+.text:035b    print 'e'    (reg = 16)
+.text:035c    print 'V'    (reg = 15)
+.text:035d    print 'e'    (reg = 14)
+.text:035e    print 'R'    (reg = 13)
+.text:035f    print 's'    (reg = 12)
+.text:0360    print 'I'    (reg = 11)
+.text:0361    print 'n'    (reg = 10)
+.text:0362    print 'G'    (reg = 9)
+.text:0363    print '_'    (reg = 8)
+.text:0364    print 'I'    (reg = 7)
+.text:0365    print 's'    (reg = 6)
+.text:0366    print '_'    (reg = 5)
+.text:0367    print 'F'    (reg = 4)
+.text:0368    print 'u'    (reg = 3)
+.text:0369    print 'N'    (reg = 2)
+.text:036a    print "'"    (reg = 1)
+.text:036b    print '\n'    (reg = 0)
+.text:036c    return 0
