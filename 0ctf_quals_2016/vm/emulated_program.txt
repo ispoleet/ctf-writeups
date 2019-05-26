@@ -1,0 +1,673 @@
+; -------------------------------------------------------------------------------------------------
+; Function 1
+;
+; seed(a, b) (function is invoked only once)
+; -------------------------------------------------------------------------------------------------
+0x400830:  add     r30, r30, #fffffff8h         ; r30 = 1234fc64 + fffffff8 = 1234fc5c
+0x400834:  str     r31, [r30, #4h]              ; *(r30+4) = r31        -> old fp
+0x400838:  mov     r31, r30                     ; r31 = 1234fc5c        -> r31 = sp
+0x40083c:  str     r5, [r31, #8h]               ; store local variables
+0x400840:  str     r6, [r31, #ch]               ;
+0x400844:  ldr     r4, [r31, #8h]               ; r4 = r5 = 12345678
+0x400848:  mov     r3, r4                       ; r3 = r4 = 12345678
+0x40084c:  lsl     r3, r3, #4h                  ; r3 = 23456780
+0x400850:  add     r3, r3, r4                   ; r4 = 12345678 + 23456780 = 3579bdf8
+0x400854:  add     r4, r3, #bch                 ; r4 = 3579bdf8 + bc = 3579beb4
+0x400858:  movt    r3, #41h                     ;
+0x40085c:  str     r4, [r3, #13b0h]             ; *4113b0 = 3579beb4
+0x400860:  ldr     r5, [r31, #ch]               ; r5 = r6 = fedcbca9
+0x400864:  mov     r4, r5                       ; r4 = r5
+0x400868:  lsl     r3, r4, #3h                  ; r3 = f6e5e548
+0x40086c:  mov     r4, r3                       ;
+0x400870:  lsl     r3, r4, #2h                  ; r3 = db979520
+0x400874:  sub     r3, r3, r4                   ; r3 = db979520 - f6e5e548 = e4b1afd8
+0x400878:  sub     r4, r3, r5                   ; r4 = e4b1afd8 - fedcbca9 = e5d4f32f
+0x40087c:  ldr     r3, [r31, #8h]               ; r3 = 12345678
+0x400880:  add     r3, r4, r3                   ; r3 = e5d4f32f + 12345678 = f80949a7 
+0x400884:  add     r4, r3, #bch                 ; r4 = f80949a7 + bc = f8094a63
+0x400888:  movt    r3, #41h                     ;
+0x40088c:  str     r4, [r3, #13b4h]             ; *4113b4 = f8094a63 
+0x400890:  mov     r30, r31                     ; (epilog)
+0x400894:  ldr     r31, [r30, #4h]              ;
+0x400898:  add     r30, r30, #8h                ;
+0x40089c:  retn    r32                          ; r32 = 400bc8 (set by call) (r32 = vm+0x80)
+0x4008a0:  mov     r2, r2                       ;
+
+
+; -------------------------------------------------------------------------------------------------
+; Function 2
+;
+; Pseudo random number generator
+; -------------------------------------------------------------------------------------------------
+0x4008a4:  add     r30, r30, #ffffffe8h         ; function prolog
+0x4008a8:  str     r31, [r30, #14h]             ;
+0x4008ac:  mov     r31, r30                     ;
+0x4008b0:  movt    r3, #41h                     ;
+0x4008b4:  add     r3, r3, #13b0h               ; 
+0x4008b8:  str     r3, [r31, #8h]               ; loc_8 = 4113b0
+0x4008bc:  movt    r3, #41h                     ;
+0x4008c0:  add     r3, r3, #13b4h               ;
+0x4008c4:  str     r3, [r31, #ch]               ; loc_c = 4113b4
+0x4008c8:  movt    r3, #41h                     ;
+0x4008cc:  ldr     r4, [r3, #13b0h]             ; r4 = *4113b0 = A
+0x4008d0:  movt    r3, #41h                     ;
+0x4008d4:  ldr     r3, [r3, #13b4h]             ; r3 = *4113b4 = B
+0x4008d8:  add     r4, r4, r3                   ; r4 = A + B
+0x4008dc:  mov     r3, r4                       ; 
+0x4008e0:  lsl     r3, r3, #4h                  ; r3 = (A + B) << 4
+0x4008e4:  add     r3, r3, r4                   ; r3 = ((A + B) << 4) + A + B = (A + B) * 0x11
+0x4008e8:  add     r5, r3, #ch                  ; r5 = (A + B) * 0x11 + 0xc = C
+0x4008ec:  movt    r3, #41h                     ;
+0x4008f0:  ldr     r6, [r3, #13b0h]             ; r6 = A
+0x4008f4:  movt    r3, #41h                     ;
+0x4008f8:  ldr     r4, [r3, #13b4h]             ; r4 = B
+0x4008fc:  movt    r3, #2492h                   ;
+0x400900:  or      r3, r3, #4925h               ; r3 = 24924925
+0x400904:  mul     r4, r3                       ; 
+0x400908:  mov_f1  r3                           ; r3 = 24924925*B >> 20 = x
+0x40090c:  sub     r4, r4, r3                   ;
+0x400910:  lsr     r4, r4, #1h                  ; r4 = (B - x) >> 1
+0x400914:  add     r3, r3, r4                   ; r3 = ((B - x) >> 1) + x
+0x400918:  lsr     r3, r3, #2h                  ; r3 = (((B - x) >> 1) + x) >> 2
+0x40091c:  sub     r4, r6, r3                   ; r4 = A - ((((B - x) >> 1) + x) >> 2) = D
+0x400920:  movt    r3, #41h                     ;
+0x400924:  ldr     r6, [r3, #13b4h]             ; r6 = B
+0x400928:  movt    r3, #41h                     ;
+0x40092c:  ldr     r3, [r3, #13b0h]             ; r3 = A
+0x400930:  xor     r6, r6, r3                   ; r6 = B ^ A
+0x400934:  movt    r3, #aaaah                   ;
+0x400938:  or      r3, r3, #aaabh               ; r3 = aaaaaaab
+0x40093c:  mul     r6, r3                       ; 
+0x400940:  mov_f1  r3                           ; r3 = aaaaaaab*(A ^ B) >> 20
+0x400944:  lsr     r3, r3, #3h                  ; r3 = (aaaaaaab*(A ^ B) >> 20) >> 3 = E
+0x400948:  add     r4, r4, r3                   ; r4 = D + E
+0x40094c:  movt    r3, #41h                     ;
+0x400950:  ldr     r3, [r3, #13b4h]             ; r3 = B
+0x400954:  sub     r4, r4, r3                   ; r4 = D + E - B
+0x400958:  movt    r3, #41h                     ;
+0x40095c:  ldr     r6, [r3, #13b0h]             ; r6 = A
+0x400960:  movt    r3, #41h                     ;
+0x400964:  ldr     r3, [r3, #13b4h]             ; r3 = B
+0x400968:  smul    r6, r3                       ;
+0x40096c:  mov_f2  r3                           ; r3 = (A * B) & ffffffff
+0x400970:  add     r3, r4, r3                   ; r3 = ((A * B) & ffffffff) + D + E - B = F
+0x400974:  xor     r4, r5, r3                   ; r4 = C ^ F
+0x400978:  movt    r3, #41h                     ;
+0x40097c:  str     r4, [r3, #13b0h]             ; A = C ^ F
+0x400980:  movt    r3, #41h                     ;
+0x400984:  ldr     r3, [r3, #13b4h]             ; r3 = B
+0x400988:  be      r3, #4009f4h                 ; if B == 0 then goto SKIP
+0x40098c:  mov     r2, r2                       ;
+
+0x400990:  movt    r3, #41h                     ; (if)
+0x400994:  ldr     r4, [r3, #13b0h]             ; 
+0x400998:  mov     r3, r4                       ;
+0x40099c:  lsl     r3, r3, #1h                  ; r3 = A << 1 
+0x4009a0:  add     r4, r3, r4                   ; r4 = (A << 1) + A = A*3
+0x4009a4:  movt    r3, #41h                     ;
+0x4009a8:  ldr     r3, [r3, #13b4h]             ; r3 = B
+0x4009ac:  add     r4, r4, r3                   ; r4 = A*3 + B
+0x4009b0:  movt    r3, #1357h                   ;
+0x4009b4:  or      r3, r3, #2468h               ; r3 = 13572468
+0x4009b8:  muls    r4, r3                       ; 13572468*(A*3 + B)
+0x4009bc:  mov_f2  r3                           ; r3 = (13572468*(A*3 + B)) & ffffffff = G
+0x4009c0:  movt    r4, #41h                     ;
+0x4009c4:  ldr     r5, [r4, #13b0h]             ; r5 = A
+0x4009c8:  movt    r4, #41h                     ;
+0x4009cc:  ldr     r4, [r4, #13b4h]             ; r4 = B
+0x4009d0:  div     r5, r4                       ; 
+0x4009d4:  nop     r4, r1, #7h                  ; -
+0x4009d8:  mov_f1  r4                           ; r4 = A % B
+0x4009dc:  sub     r3, r3, r4                   ; r3 = G - (A % B)
+0x4009e0:  add     r4, r3, #bch                 ; r4 = G - (A % B) + bc
+0x4009e4:  movt    r3, #41h                     ;
+0x4009e8:  str     r4, [r3, #13b4h]             ; B = G - (A % B) + bc
+0x4009ec:  b       #400ab4h                     ;
+0x4009f0:  mov     r2, r2                       ; 
+
+0x4009f4:  movt    r3, #41h                     ; SKIP (else)
+0x4009f8:  ldr     r3, [r3, #13b0h]             ;
+0x4009fc:  be      r3, #400a70h                 ; if A == 0 then goto SKIP2
+0x400a00:  mov     r2, r2                       ;
+0x400a04:  movt    r3, #41h                     ;
+0x400a08:  ldr     r4, [r3, #13b0h]             ; r4 = A
+0x400a0c:  mov     r3, r4                       ;
+0x400a10:  lsl     r3, r3, #1h                  ; r3 = A << 1
+0x400a14:  add     r4, r3, r4                   ; r4 = (A << 1) + A = A*3
+0x400a18:  novt    r3, #41h                     ;
+0x400a1c:  ldr     r3, [r3, #13b4h]             ; r3 = B
+0x400a20:  add     r5, r4, r3                   ; r5 = A*3 + B
+0x400a24:  mov     r4, r5                       ; 
+0x400a28:  lsl     r3, r4, #3h                  ; r3 = (A*3 + B) << 3
+0x400a2c:  mov     r4, r3                       ; r4 = (A*3 + B)*8
+0x400a30:  lsl     r3, r4, #2h                  ; r3 = (A*3 + B)*8*4 = (A*3 + B)*32
+0x400a34:  sub     r3, r3, r4                   ; r3 = (A*3 + B)*32 - (A*3 + B)*8 = (A*3 + B)*24
+0x400a38:  sub     r3, r3, r5                   ; r3 = (A*3 + B)*24 - (A*3 + B) = (A*3 + B)*23
+0x400a3c:  novt    r4, #41h                     ;
+0x400a40:  ldr     r5, [r4, #13b4h]             ; r5 = B
+0x400a44:  movt    r4, #41h                     ;
+0x400a48:  ldr     r4, [r4, #13b0h]             ; r4 = A
+0x400a4c:  div     r5, r4                       ; 
+0x400a50:  nop     r4, r1, #7h                  ;
+0x400a54:  mov_f1  r4                           ; r4 = B % A
+0x400a58:  sub     r3, r3, r4                   ; r3 = (A*3 + B)*23 - B % A
+0x400a5c:  add     r4, r3, #bch                 ; r4 = (A*3 + B)*23 - B % A + bc
+0x400a60:  movt    r3, #41h                     ;
+0x400a64:  str     r4, [r3, #13b4h]             ; B = (A*3 + B)*23 - B % A + bc 
+0x400a68:  b       #400ab4h                     ;
+0x400a6c:  mov     r2, r2                       ;
+
+0x400a70:  movt    r3, #41h                     ; SKIP2
+0x400a74:  ldr     r4, [r3, #13b0h]             ;
+0x400a78:  mov     r3, r4                       ; r3 = A
+0x400a7c:  lsl     r3, r3, #1h                  ;
+0x400a80:  add     r4, r3, r4                   ; r4 = A*3
+0x400a84:  movt    r3, #41h                     ;
+0x400a88:  ldr     r3, [r3, #13b4h]             ; r3 = B
+0x400a8c:  add     r5, r4, r3                   ; r5 = A*3 + B
+0x400a90:  mov     r4, r5                       ; 
+0x400a94:  lsl     r3, r4, #3h                  ; r3 = (A*3 + B)*8
+0x400a98:  mov     r4, r3                       ;
+0x400a9c:  lsl     r3, r4, #2h                  ; r3 = (A*3 + B)*32
+0x400aa0:  sub     r3, r3, r4                   ; r3 = (A*3 + B)*24
+0x400aa4:  sub     r3, r3, r5                   ; r3 = (A*3 + B)*23
+0x400aa8:  add     r4, r3, #bch                 ; r4 = (A*3 + B)*23 + bc
+0x400aac:  movt    r3, #41h                     ;
+0x400ab0:  str     r4, [r3, #13b4h]             ; B = (A*3 + B)*23 + bc
+
+; -----------------------------------------------------------------------------
+0x400ab4:  ldr     r3, [r31, #ch]               ; 
+0x400ab8:  ldr     r4, [r3, #0h]                ; r4 = B
+0x400abc:  ldr     r3, [r31, #8h]               ;
+0x400ac0:  ldr     r3, [r3, #0h]                ; r3 = A
+0x400ac4:  nor     r3, r1, r3                   ; r3 = ~A
+0x400ac8:  xor     r4, r4, r3                   ; r4 = B ^ ~A
+0x400acc:  ldr     r3, [r31, #8h]               ;
+0x400ad0:  ldr     r5, [r3, #0h]                ; r5 = A
+0x400ad4:  ldr     r3, [r31, #ch]               ;
+0x400ad8:  ldr     r3, [r3, #0h]                ; r3 = B
+0x400adc:  or      r3, r5, r3                   ; r3 = B | A
+0x400ae0:  xor     r4, r4, r3                   ; r4 = (B ^ ~A) ^ (B | A) = H
+0x400ae4:  ldr     r3, [r31, #ch]               ; 
+0x400ae8:  ldr     r5, [r3, #0h]                ; r5 = B
+0x400aec:  ldr     r3, [r31, #8h]               ;
+0x400af0:  ldr     r3, [r3, #0h]                ; r3 = A
+0x400af4:  or      r5, r5, r3                   ; r5 = A | B
+0x400af8:  ldr     r3, [r31, #8h]               ;
+0x400afc:  ldr     r6, [r3, #0h]                ; r6 = A
+0x400b00:  ldr     r3, [r31, #ch]               ;
+0x400b04:  ldr     r3, [r3, #0h]                ;
+0x400b08:  nor     r3, r1, r3                   ; r3 = ~B
+0x400b0c:  or      r3, r6, r3                   ; r3 = A | ~B
+0x400b10:  xor     r5, r5, r3                   ; r5 = (A | B) ^ (A | ~B) = I
+0x400b14:  ldr     r3, [r31, #ch]               ;
+0x400b18:  ldr     r6, [r3, #0h]                ; r6 = B
+0x400b1c:  ldr     r3, [r31, #8h]               ;
+0x400b20:  ldr     r3, [r3, #0h]                ; r3 = A
+0x400b24:  or      r3, r6, r3                   ;
+0x400b28:  nor     r3, r1, r3                   ; r3 = ~(B | A) = J
+0x400b2c:  xor     r3, r5, r3                   ; r3 = I ^ J
+0x400b30:  xor     r3, r4, r3                   ; r3 = I ^ J ^ H
+0x400b34:  mov     r30, r31                     ; epilog
+0x400b38:  ldr     r31, [r30, #14h]             ;
+0x400b3c:  add     r30, r30, #18h               ;
+0x400b40:  retn    r32                          ;
+0x400b44:  mov     r2, r2                       ;
+
+
+; -------------------------------------------------------------------------------------------------
+; Bad boy function 
+; -------------------------------------------------------------------------------------------------
+0x400b48:  add     r30, r30, #ffffffe0h         ;
+0x400b4c:  str     r32, [r30, #1ch]             ;
+0x400b50:  str     r31, [r30, #18h]             ;
+0x400b54:  mov     r31, r30                     ;
+0x400b58:  movt    r29, #42h                    ;
+0x400b5c:  add     r29, r29, #ffff9330h         ;
+0x400b60:  str     r29, [r30, #10h]             ;
+0x400b64:  movt    r3, #40h                     ;
+0x400b68:  add     r5, r3, #11c0h               ;
+0x400b6c:  ldr     r3, [r29, #ffff8034h]        ;
+0x400b70:  mov     r26, r3                      ;
+0x400b74:  libcall r26                          ;
+0x400b78:  mov     r2, r2                       ; puts("Error!")
+0x400b7c:  ldr     r29, [r31, #10h]             ;
+0x400b80:  add     r5, r1, #1h                  ;
+0x400b84:  ldr     r3, [r29, #ffff8030h]        ;
+0x400b88:  mov     r26, r3                      ;
+0x400b8c:  libcall r26                          ; exit()
+0x400b90:  mov     r2, r2                       ;
+
+
+; -------------------------------------------------------------------------------------------------
+; Entry point
+; -------------------------------------------------------------------------------------------------
+0x400b94:  add     r30, r30, #fffffdd0h         ; r30 = 1234FE94 + fffffdd0 = 1234fc64
+0x400b98:  str     r32, [r30, #22ch]            ; *1234fe90 = 0
+0x400b9c:  str     r31, [r30, #228h]            ; *1234fe8c = 0
+0x400ba0:  mov     r31, r30                     ; r31 = 1234fc64
+0x400ba4:  movt    r29, #42h                    ;
+0x400ba8:  add     r29, r29, #ffff9330h         ; r29 = 419330
+0x400bac:  str     r29, [r30, #10h]             ;
+0x400bb0:  movt    r3, #1234h                   ;
+0x400bb4:  or      r5, r3, #5678h               ; r5 = 12345678
+0x400bb8:  movt    r3, #fedch                   ; r3 = fedc0000
+0x400bbc:  or      r6, r3, #bca9h               ; r6 = fedcbca9
+0x400bc0:  call    #400830h                     ; f1(r5, r6) = f1(12345678, fedcbca9)
+0x400bc4:  mov     r2, r2                       ;
+0x400bc8:  ldr     r29, [r31, #10h]             ; r29 = 419330 = &libc_sym
+0x400bcc:  movt    r3, #40h                     ;
+0x400bd0:  add     r5, r3, #11c8h               ; r5 = 4011c8 = &"Input the flag, please:"
+0x400bd4:  ldr     r3, [r29, #ffff803ch]        ; r3 = *41136c = &printf
+0x400bd8:  mov     r26, r3                      ;
+0x400bdc:  libcall r26                          ; printf("Input the flag, please:")
+0x400be0:  mov     r2, r2                       ;
+0x400be4:  ldr     r29, [r31, #10h]             ; r29 = 419330 = &libc_sym
+0x400be8:  ldr     r3, [r29, #ffff8038h]        ; r3 = *411368 = &stdin
+0x400bec:  ldr     r3, [r3, #0h]                ; r3 = stdin
+0x400bf0:  add     r4, r31, #28h                ; r4 = 1234fc64 + 28 = 1234fc8c
+0x400bf4:  mov     r5, r4                       ; r5 = 1234fc8c = &flag
+0x400bf8:  add     r6, r1, #21h                 ; r6 = 21 
+0x400bfc:  mov     r7, r3                       ; r7 = stdin
+0x400c00:  ldr     r3, [r29, #ffff8050h]        ; r3 = *411380 = &fgets
+0x400c04:  mov     r26, r3                      ;
+0x400c08:  libcall r26                          ; fgets(flag, 21, stdin)
+0x400c0c:  mov     r2, r2                       ;
+0x400c10:  ldr     r29, [r31, #10h]             ; r29 = &libc_sym
+0x400c14:  ldrb    r4, [r31, #47h]              ; r4 = 1234fc64 + 47 = flag[1f]
+0x400c18:  add     r3, r1, #ah                  ; r3 = \n
+0x400c1c:  cbnz    r4, r3, #400c28h             ; if flag[1f] != \n skip
+0x400c20:  mov     r2, r2                       ;
+0x400c24:  strb    r1, [r31, #47h]              ; flag[1f] = 0 
+
+0x400c28:  add     r3, r31, #28h                ; r3 = 1234fc8c = &flag
+0x400c2c:  mov     r5, r3                       ; r5 = &flag
+0x400c30:  ldr     r3, [r29, #ffff8040h]        ; r3 = *411370 = &strlen
+0x400c34:  mov     r26, r3                      ;
+0x400c38:  libcall r26                          ; strlen(flag)
+0x400c3c:  mov     r2, r2                       ; 
+0x400c40:  ldr     r29, [r31, #10h]             ; r29 = &libc_sym
+0x400c44:  mov     r4, r3                       ; r3 = strlen(flag) (retval)
+0x400c48:  add     r3, r1, #1fh                 ; r3 = 1f
+0x400c4c:  cbz     r4, r3, #400c60h             ; if strlen(flag) == 1f then skip
+0x400c50:  mov     r2, r2                       ;
+0x400c54:  call    #400b48h                     ; bad_boy()
+0x400c58:  mov     r2, r2                       ;
+0x400c5c:  ldr     r29, [r31, #10h]             ; -
+
+; -----------------------------------------------------------------------------
+; for(loc_18=0; loc_18<0x80; ++loc_18)
+; -----------------------------------------------------------------------------
+0x400c60:  str     r1, [r31, #18h]              ; loc_18 = 0
+0x400c64:  b       #400fb8h                     ;
+
+0x400c68:  mov     r2, r2                       ;
+0x400c6c:  call    #4008a4h                     ;
+0x400c70:  mov     r2, r2                       ; r3 = retval
+0x400c74:  ldr     r29, [r31, #10h]             ; r29 = loc_10
+0x400c78:  lsr     r3, r3, #ah                  ; 
+0x400c7c:  and     r3, r3, #7h                  ;
+0x400c80:  str     r3, [r31, #20h]              ; loc_20 = (retval >> a) & 7
+0x400c84:  call    #4008a4h                     ;
+0x400c88:  mov     r2, r2                       ;
+0x400c8c:  ldr     r29, [r31, #10h]             ;
+0x400c90:  and     r3, r3, #1fh                 ;
+0x400c94:  str     r3, [r31, #24h]              ; loc_24 = retval & 1f
+0x400c98:  call    #4008a4h                     ;
+0x400c9c:  mov     r2, r2                       ;
+0x400ca0:  ldr     r29, [r31, #10h]             ;
+0x400ca4:  and     r3, r3, #1fh                 ;
+0x400ca8:  str     r3, [r31, #1ch]              ; loc_1c = retval & 1f
+0x400cac:  b       #400cc8h                     ;
+0x400cb0:  mov     r2, r2                       ;
+ 
+0x400cb4:  call    #4008a4h                     ; CHANGE
+0x400cb8:  mov     r2, r2                       ;
+0x400cbc:  ldr     r29, [r31, #10h]             ;
+0x400cc0:  and     r3, r3, #1fh                 ;
+0x400cc4:  str     r3, [r31, #1ch]              ; loc_1c = retval & 1f
+
+0x400cc8:  ldr     r4, [r31, #1ch]              ; r4 = loc_1c
+0x400ccc:  ldr     r3, [r31, #24h]              ; r3 = loc_24
+0x400cd0:  cbz     r4, r3, #400cb4h             ; if loc_1c == loc_24 then goto CHANGE
+0x400cd4:  mov     r2, r2                       ;
+
+0x400cd8:  ldr     r3, [r31, #20h]              ; r3 = loc_20
+0x400cdc:  cmp?    r3, r3, #8h                  ;
+0x400ce0:  be      r3, #400fach                 ; goto loop end
+0x400ce4:  mov     r2, r2                       ;
+
+0x400ce8:  ldr     r3, [r31, #20h]              ;
+0x400cec:  lsl     r4, r3, #2h                  ; r4 = loc_20 << 2
+0x400cf0:  movt    r3, #40h                     ;
+0x400cf4:  add     r3, r3, #121ch               ; 
+0x400cf8:  add     r3, r4, r3                   ; r3 = 40121c[loc_20] (int32)
+0x400cfc:  ldr     r3, [r3, #0h]                ;
+0x400d00:  retn    r3                           ; switch!
+0x400d04:  mov     r2, r2                       ;
+
+; -----------------------------------------------------------------------------
+; loc_20 == 0
+; -----------------------------------------------------------------------------
+0x400d08:  add     r4, r31, #28h                ; r4 = &flag
+0x400d0c:  ldr     r3, [r31, #24h]              ; r3 = loc_24
+0x400d10:  add     r3, r4, r3                   ; 
+0x400d14:  ldrb    r3, [r3, #0h]                ;
+0x400d18:  and     r4, r3, #ffh                 ; r4 = flag[loc_24]
+0x400d1c:  add     r5, r31, #28h                ; r5 = &flag
+0x400d20:  ldr     r3, [r31, #1ch]              ; 
+0x400d24:  add     r3, r5, r3                   ; 
+0x400d28:  ldrb    r3, [r3, #0h]                ;
+0x400d2c:  and     r3, r3, #ffh                 ; r3 = flag[loc_1c]
+0x400d30:  add     r3, r4, r3                   ; 
+0x400d34:  and     r3, r3, #ffh                 ; r3 = flag[loc_1c] + flag[loc_24]
+0x400d38:  lsl     r4, r3, #18h                 ;
+0x400d3c:  asr     r4, r4, #18h                 ; r4 = flag[loc_1c] + flag[loc_24]
+0x400d40:  add     r5, r31, #28h                ; 
+0x400d44:  ldr     r3, [r31, #24h]              ; 
+0x400d48:  add     r3, r5, r3                   ; r3 = flag[loc_24]
+0x400d4c:  strb    r4, [r3, #0h]                ; flag[loc_24] += flag[loc_1c]
+0x400d50:  b       #400fach                     ;
+0x400d54:  mov     r2, r2                       ;
+
+; -----------------------------------------------------------------------------
+; loc_20 == 1
+; -----------------------------------------------------------------------------
+0x400d58:  add     r4, r31, #28h                ;
+0x400d5c:  ldr     r3, [r31, #24h]              ;
+0x400d60:  add     r3, r4, r3                   ;
+0x400d64:  ldrb    r3, [r3, #0h]                ;
+0x400d68:  and     r4, r3, #ffh                 ; r4 = flag[loc_24]
+0x400d6c:  ldr     r3, [r31, #1ch]              ;
+0x400d70:  and     r3, r3, #ffh                 ; r3 = loc_1c & ff
+0x400d74:  add     r3, r4, r3                   ;
+0x400d78:  and     r3, r3, #ffh                 ; r3 = (flag[loc_24] + loc_1c) & ff
+0x400d7c:  lsl     r4, r3, #18h                 ; 
+0x400d80:  asr     r4, r4, #18h                 ; r4 = (flag[loc_24] + loc_1c) & ff
+0x400d84:  add     r5, r31, #28h                ; 
+0x400d88:  ldr     r3, [r31, #24h]              ;
+0x400d8c:  add     r3, r5, r3                   ;
+0x400d90:  strb    r4, [r3, #0h]                ; flag[loc_24] = (flag[loc_24] + loc_1c) & ff
+0x400d94:  b       #400fach                     ;
+0x400d98:  mov     r2, r2                       ; flag[loc_24] += loc_1c
+
+; -----------------------------------------------------------------------------
+; loc_20 == 2
+; -----------------------------------------------------------------------------
+0x400d9c:  add     r4, r31, #28h                ;
+0x400da0:  ldr     r3, [r31, #24h]              ;
+0x400da4:  add     r3, r4, r3                   ; 
+0x400da8:  ldrb    r3, [r3, #0h]                ;
+0x400dac:  and     r4, r3, #ffh                 ; r4 = flag[loc_24] 
+0x400db0:  add     r5, r31, #28h                ;
+0x400db4:  ldr     r3, [r31, #1ch]              ;
+0x400db8:  add     r3, r5, r3                   ;
+0x400dbc:  ldrb    r3, [r3, #0h]                ;
+0x400dc0:  and     r3, r3, #ffh                 ; r3 = flag[loc_1c]
+0x400dc4:  sub     r3, r4, r3                   ; 
+0x400dc8:  and     r3, r3, #ffh                 ; r3 = (flag[loc_24] - flag[loc_1c]) & ff
+0x400dcc:  lsl     r4, r3, #18h                 ;
+0x400dd0:  asr     r4, r4, #18h                 ;
+0x400dd4:  add     r5, r31, #28h                ;
+0x400dd8:  ldr     r3, [r31, #24h]              ;
+0x400ddc:  add     r3, r5, r3                   ;
+0x400de0:  strb    r4, [r3, #0h]                ; flag[loc_24] -= flag[loc_1c]
+0x400de4:  b       #400fach                     ;
+0x400de8:  mov     r2, r2                       ;
+
+; -----------------------------------------------------------------------------
+; loc_20 == 3
+; -----------------------------------------------------------------------------
+0x400dec:  add     r4, r31, #28h                ;
+0x400df0:  ldr     r3, [r31, #24h]              ;
+0x400df4:  add     r3, r4, r3                   ;
+0x400df8:  ldrb    r3, [r3, #0h]                ;
+0x400dfc:  and     r4, r3, #ffh                 ; r4 = flag[loc_24]
+0x400e00:  ldr     r3, [r31, #1ch]              ;
+0x400e04:  and     r3, r3, #ffh                 ;
+0x400e08:  sub     r3, r4, r3                   ;
+0x400e0c:  and     r3, r3, #ffh                 ; r3 = (flag[loc_24] - loc_1c) & ff
+0x400e10:  lsl     r4, r3, #18h                 ;
+0x400e14:  asr     r4, r4, #18h                 ;
+0x400e18:  add     r5, r31, #28h                ;
+0x400e1c:  ldr     r3, [r31, #24h]              ; 
+0x400e20:  add     r3, r5, r3                   ; r3 = flag[loc_24]
+0x400e24:  strb    r4, [r3, #0h]                ; flag[loc_24] -= loc_1c
+0x400e28:  b       #400fach                     ;
+0x400e2c:  mov     r2, r2                       ;
+
+; -----------------------------------------------------------------------------
+; loc_20 == 4
+; -----------------------------------------------------------------------------
+0x400e30:  add     r4, r31, #28h                ;
+0x400e34:  ldr     r3, [r31, #24h]              ;
+0x400e38:  add     r3, r4, r3                   ;
+0x400e3c:  ldrb    r4, [r3, #0h]                ; r4 = flag[loc_24]
+0x400e40:  add     r5, r31, #28h                ;
+0x400e44:  ldr     r3, [r31, #1ch]              ;
+0x400e48:  add     r3, r5, r3                   ;
+0x400e4c:  ldrb    r3, [r3, #0h]                ; r3 = flag[loc_1c]
+0x400e50:  xor     r3, r4, r3                   ; r3 = flag[loc_24] ^ flag[loc_1c]
+0x400e54:  lsl     r4, r3, #18h                 ;
+0x400e58:  asr     r4, r4, #18h                 ;
+0x400e5c:  add     r5, r31, #28h                ;
+0x400e60:  ldr     r3, [r31, #24h]              ;
+0x400e64:  add     r3, r5, r3                   ;
+0x400e68:  strb    r4, [r3, #0h]                ; flag[loc_24] ^= flag[loc_1c]
+0x400e6c:  b       #400fach                     ;
+0x400e70:  mov     r2, r2                       ;
+
+; -----------------------------------------------------------------------------
+; loc_20 == 5
+; -----------------------------------------------------------------------------
+0x400e74:  add     r4, r31, #28h                ; 
+0x400e78:  ldr     r3, [r31, #24h]              ;
+0x400e7c:  add     r3, r4, r3                   ;
+0x400e80:  ldrb    r3, [r3, #0h]                ;
+0x400e84:  and     r4, r3, #ffh                 ; r4 = flag[loc_24]
+0x400e88:  ldr     r3, [r31, #1ch]              ;
+0x400e8c:  and     r3, r3, #ffh                 ; r3 = loc_1c
+0x400e90:  xor     r3, r4, r3                   ;
+0x400e94:  and     r3, r3, #ffh                 ; r3 = flag[loc_24] ^ loc_1c
+0x400e98:  lsl     r4, r3, #18h                 ;
+0x400e9c:  asr     r4, r4, #18h                 ;
+0x400ea0:  add     r5, r31, #28h                ;
+0x400ea4:  ldr     r3, [r31, #24h]              ;
+0x400ea8:  add     r3, r5, r3                   ;
+0x400eac:  strb    r4, [r3, #0h]                ; flag[loc_24] ^= loc_1c
+0x400eb0:  b       #400fach                     ;
+0x400eb4:  mov     r2, r2                       ;
+
+; -----------------------------------------------------------------------------
+; loc_20 == 6
+; -----------------------------------------------------------------------------
+0x400eb8:  add     r4, r31, #28h                ;
+0x400ebc:  ldr     r3, [r31, #24h]              ;
+0x400ec0:  add     r3, r4, r3                   ;
+0x400ec4:  ldrb    r3, [r3, #0h]                ;
+0x400ec8:  and     r3, r3, #ffh                 ;
+0x400ecc:  add     r3, r3, #1h                  ;
+0x400ed0:  and     r3, r3, #ffh                 ; r3 = flag[loc_24] + 1
+0x400ed4:  lsl     r4, r3, #18h                 ;
+0x400ed8:  asr     r4, r4, #18h                 ;
+0x400edc:  add     r5, r31, #28h                ;
+0x400ee0:  ldr     r3, [r31, #24h]              ;
+0x400ee4:  add     r3, r5, r3                   ;
+0x400ee8:  strb    r4, [r3, #0h]                ; flag[loc_24] += 1
+0x400eec:  b       #400fach                     ;
+0x400ef0:  mov     r2, r2                       ;
+
+; -----------------------------------------------------------------------------
+; loc_20 == 7
+; -----------------------------------------------------------------------------
+0x400ef4:  add     r4, r31, #28h                ;
+0x400ef8:  ldr     r3, [r31, #24h]              ;
+0x400efc:  add     r3, r4, r3                   ;
+0x400f00:  ldrb    r4, [r3, #0h]                ; r4 = flag[loc_24]
+0x400f04:  add     r5, r31, #28h                ;
+0x400f08:  ldr     r3, [r31, #1ch]              ;
+0x400f0c:  add     r3, r5, r3                   ;
+0x400f10:  ldrb    r3, [r3, #0h]                ; r3 = flag[loc_1c]
+0x400f14:  xor     r3, r4, r3                   ; r3 = flag[loc_24] ^ flag[loc_1c]
+0x400f18:  lsl     r4, r3, #18h                 ;
+0x400f1c:  asr     r4, r4, #18h                 ; r4 = flag[loc_24] ^ flag[loc_1c]
+0x400f20:  add     r5, r31, #28h                ;
+0x400f24:  ldr     r3, [r31, #24h]              ; 
+0x400f28:  add     r3, r5, r3                   ;
+0x400f2c:  strb    r4, [r3, #0h]                ; flag[loc_24] ^= flag[loc_1c]
+0x400f30:  add     r4, r31, #28h                ;
+0x400f34:  ldr     r3, [r31, #1ch]              ; 
+0x400f38:  add     r3, r4, r3                   ;
+0x400f3c:  ldrb    r4, [r3, #0h]                ; r4 = flag[loc_1c]
+0x400f40:  add     r5, r31, #28h                ;
+0x400f44:  ldr     r3, [r31, #24h]              ;
+0x400f48:  add     r3, r5, r3                   ;
+0x400f4c:  ldrb    r3, [r3, #0h]                ; r3 = flag[loc_24]
+0x400f50:  xor     r3, r4, r3                   ;
+0x400f54:  lsl     r4, r3, #18h                 ;
+0x400f58:  asr     r4, r4, #18h                 ;
+0x400f5c:  add     r5, r31, #28h                ;
+0x400f60:  ldr     r3, [r31, #1ch]              ;
+0x400f64:  add     r3, r5, r3                   ;
+0x400f68:  strb    r4, [r3, #0h]                ; flag[loc_1c] ^= flag[loc_24]
+0x400f6c:  add     r4, r31, #28h                ;
+0x400f70:  ldr     r3, [r31, #24h]              ;
+0x400f74:  add     r3, r4, r3                   ;
+0x400f78:  ldrb    r4, [r3, #0h]                ; r4 = flag[loc_24]
+0x400f7c:  add     r5, r31, #28h                ; 
+0x400f80:  ldr     r3, [r31, #1ch]              ;
+0x400f84:  add     r3, r5, r3                   ;
+0x400f88:  ldrb    r3, [r3, #0h]                ; r3 = flag[loc_1c]
+0x400f8c:  xor     r3, r4, r3                   ;
+0x400f90:  lsl     r4, r3, #18h                 ;
+0x400f94:  asr     r4, r4, #18h                 ;
+0x400f98:  add     r5, r31, #28h                ;
+0x400f9c:  ldr     r3, [r31, #24h]              ;
+0x400fa0:  add     r3, r5, r3                   ;
+0x400fa4:  strb    r4, [r3, #0h]                ; flag[loc_24] ^= flag[loc_1c]
+0x400fa8:  mov     r2, r2                       ; => swap values of flag[loc_24] and flag[loc_1c]
+
+; -----------------------------------------------------------------------------
+0x400fac:  ldr     r3, [r31, #18h]              ;
+0x400fb0:  add     r3, r3, #1h                  ; ++loc_18
+0x400fb4:  str     r3, [r31, #18h]              ;
+
+0x400fb8:  ldr     r3, [r31, #18h]              ;
+0x400fbc:  tstl    r3, r3, #80h                 ; if loc_18 < 80 then loop
+0x400fc0:  bne     r3, #400c6ch                 ;
+
+
+; -----------------------------------------------------------------------------
+0x400fc4:  mov     r2, r2                       ;
+0x400fc8:  add     r3, r31, #28h                ;
+0x400fcc:  mov     r5, r3                       ; r5 = flag (arg1)
+0x400fd0:  movt    r3, #40h                     ;
+0x400fd4:  add     r6, r3, #11e0h               ; r6 = 4011e0 = encflag (arg2)
+0x400fd8:  add     r7, r1, #20h                 ; r7 = 20 (arg3)
+0x400fdc:  ldr     r3, [r29, #ffff805ch]        ;
+0x400fe0:  mov     r26, r3                      ;
+0x400fe4:  libcall r26                          ; memcmp(flag, encflag, 0x20)
+0x400fe8:  mov     r2, r2                       ;
+0x400fec:  ldr     r29, [r31, #10h]             ;
+0x400ff0:  bne     r3, #401028h                 ; if flag != encflag then goto BAD
+0x400ff4:  mov     r2, r2                       ;
+0x400ff8:  movt    r3, #40h                     ;
+0x400ffc:  add     r5, r3, #1204h               ; r5 = 401204 = "Good! Submit your flag!"
+0x401000:  ldr     r3, [r29, #ffff8034h]        ;
+0x401004:  mov     r26, r3                      ;
+0x401008:  libcall r26                          ; puts("Good! Submit your flag!")
+0x40100c:  mov     r2, r2                       ;
+0x401010:  ldr     r29, [r31, #10h]             ;
+0x401014:  add     r5, r1, #1h                  ; r5 = 1 (arg1)
+0x401018:  ldr     r3, [r29, #ffff8030h]        ;
+0x40101c:  mov     r26, r3                      ;
+0x401020:  libcall r26                          ; exit(1)
+0x401024:  mov     r2, r2                       ;
+
+0x401028:  call    #400b48h                     ; BAD
+0x40102c:  mov     r2, r2
+
+0x401030:  ldr     r29, [r31, #10h]             ; (dead code)
+0x401034:  mov     r3, r1                       ; (dead code)
+0x401038:  mov     r30, r31                     ; (dead code)
+0x40103c:  ldr     r32, [r30, #22ch]            ; (dead code)
+0x401040:  ldr     r31, [r30, #228h]            ; (dead code)
+0x401044:  add     r30, r30, #230h              ; (dead code)
+0x401048:  retn    r32                          ; (dead code)
+0x40104c:  mov     r2, r2                       ; (dead code)
+0x401050:  movt    r29, #2h                     ; (dead code)
+0x401054:  add     r29, r29, #ffff82e0h         ; (dead code)
+0x401058:  add     r29, r29, r26                ; (dead code)
+0x40105c:  add     r30, r30, #ffffffc8h         ; (dead code)
+0x401060:  ldr     r26, [r29, #ffff8024h]       ; (dead code)
+0x401064:  str     r29, [r30, #10h]             ; (dead code)
+0x401068:  str     r22, [r30, #30h]             ; (dead code)
+0x40106c:  str     r21, [r30, #2ch]             ; (dead code)
+0x401070:  str     r20, [r30, #28h]             ; (dead code)
+0x401074:  str     r19, [r30, #24h]             ; (dead code)
+0x401078:  str     r18, [r30, #20h]             ; (dead code)
+0x40107c:  str     r32, [r30, #34h]             ; (dead code)
+0x401080:  str     r17, [r30, #1ch]             ; (dead code)
+0x401084:  mov     r20, r5                      ; (dead code)
+0x401088:  mov     r21, r6                      ; (dead code)
+0x40108c:  libcall r26                          ; (dead code)
+0x401090:  mov     r22, r7                      ; (dead code)
+0x401094:  ldr     r29, [r30, #10h]             ; (dead code)
+0x401098:  ldr     r18, [r29, #ffff8028h]       ; (dead code)
+0x40109c:  ldr     r19, [r29, #ffff802ch]       ; (dead code)
+0x4010a0:  sub     r19, r19, r18                ; (dead code)
+0x4010a4:  asr     r19, r19, #2h                ; (dead code)
+0x4010a8:  be      r19, #4010d0h                ; (dead code)
+0x4010ac:  mov     r17, r1                      ; (dead code)
+0x4010b0:  ldr     r26, [r18, #0h]              ; (dead code)
+0x4010b4:  mov     r5, r20                      ; (dead code)
+0x4010b8:  mov     r6, r21                      ; (dead code)
+0x4010bc:  mov     r7, r22                      ; (dead code)
+0x4010c0:  libcall r26                          ; (dead code)
+0x4010c4:  add     r17, r17, #1h                ; (dead code)
+0x4010c8:  cbnz    r17, r19, #4010b0h           ; (dead code)
+0x4010cc:  add     r18, r18, #4h                ; (dead code)
+0x4010d0:  ldr     r32, [r30, #34h]             ; (dead code)
+0x4010d4:  ldr     r22, [r30, #30h]             ; (dead code)
+0x4010d8:  ldr     r21, [r30, #2ch]             ; (dead code)
+0x4010dc:  ldr     r20, [r30, #28h]             ; (dead code)
+0x4010e0:  ldr     r19, [r30, #24h]             ; (dead code)
+0x4010e4:  ldr     r18, [r30, #20h]             ; (dead code)
+0x4010e8:  ldr     r17, [r30, #1ch]             ; (dead code)
+0x4010ec:  retn    r32                          ; (dead code)
+0x4010f0:  add     r30, r30, #38h               ; (dead code)
+0x4010f4:  retn    r32                          ; (dead code)
+0x4010f8:  mov     r2, r2                       ; (dead code)
+0x4010fc:  mov     r2, r2                       ; (dead code)
+0x401100:  ldr     r26, [r29, #ffff8010h]       ; (dead code)
+0x401104:  mov     r16, r32                     ; (dead code)
+0x401108:  libcall r26                          ; (dead code)
+0x40110c:  add     r25, r1, #13h                ; (dead code)
+0x401110:  ldr     r26, [r29, #ffff8010h]       ; (dead code)
+0x401114:  mov     r16, r32                     ; (dead code)
+0x401118:  libcall r26                          ; (dead code)
+0x40111c:  add     r25, r1, #10h                ; (dead code)
+0x401120:  ldr     r26, [r29, #ffff8010h]       ; (dead code)
+0x401124:  mov     r16, r32                     ; (dead code)
+0x401128:  libcall r26                          ; (dead code)
+0x40112c:  add     r25, r1, #fh                 ; (dead code)
+0x401130:  ldr     r26, [r29, #ffff8010h]       ; (dead code)
+0x401134:  mov     r16, r32                     ; (dead code)
+0x401138:  libcall r26                          ; (dead code)
+0x40113c:  add     r25, r1, #ch                 ; (dead code)
+0x401140:  ldr     r26, [r29, #ffff8010h]       ; (dead code)
+0x401144:  mov     r16, r32                     ; (dead code)
+0x401148:  libcall r26                          ; (dead code)
+0x40114c:  add     r25, r1, #bh                 ; (dead code)
+0x401150:  ldr     r26, [r29, #ffff8010h]       ; (dead code)
+0x401154:  mov     r16, r32                     ; (dead code)
+0x401158:  libcall r26                          ; (dead code)
+0x40115c:  add     r25, r1, #9h                 ; (dead code)
+0x401160:  ldr     r26, [r29, #ffff8010h]       ; (dead code)
+0x401164:  mov     r16, r32                     ; (dead code)
+0x401168:  libcall r26                          ; (dead code)
+0x40116c:  add     r25, r1, #8h                 ; (dead code)
+
+; -------------------------------------------------------------------------------------------------
+; End
+; -------------------------------------------------------------------------------------------------
