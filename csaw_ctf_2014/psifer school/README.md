@@ -1,0 +1,72 @@
+## CSAW CTF Qualification Round 2014 - Psifer School (Crypto 200)
+##### 9-21/09/2014 (48hr)
+___
+
+### Description: 
+There's no heartbleed here. Why don't we use these ciphers?
+
+nc 54.209.5.48 12345
+
+___
+### Soluction
+
+```
+root@nogirl:~# python crypto200.py 
+    Welcome to psifer school v0.002
+	Your exam begins now. You have 10 seconds, work fast.
+    
+
+	Here is your first psifer text, a famous ancient roman would be proud if you solve it.
+	psifer text: gur nafjre gb guvf fgntr vf rnflnfnop
+	-------------------------------------
+	extract cipher: gur nafjre gb guvf fgntr vf rnflnfnop
+	plaintext 1: easyasabc
+
+	Congratulations, you have solved stage 1. You have 9 seconds left.
+	Now it's time for something slightly more difficult. Hint, everybody knows it's not length that
+	matters.
+
+	psifer text: I nfo Iefuht o o lrwpsotiehtsl os lyu i olosgudf e   "tdbbw oeaian snn'finotacit i
+	nhhrcgealr rvyyf e poc strhato a r.tlpa hlriTeeogh nbhewglt iee mn!mfa". og.wri iwcFta ohrpr dh
+	t ryhiaoifsus er y  cofehuofa rflh olayrevotneusg r,ed  .oey
+
+	i: 5  ---  I hope you don't have a problem rco  au ooflvu,. It should be fairly straight
+ 	foiFhdrosyfflaoseone lots of basic crypto. The mag trhyi  eahytgdefforts is "winning for the 
+	win".iap hfe h  rn  you will get another challenge!.ww rtisrcuroeer 
+	plaintext 2:  winning for the win
+
+
+	Congratulations, you have solved stage 2. You have 3 seconds left.
+	Last one.
+	psifer text: TYMWT AKENI AIDJG ZZIYG SMFVI PDYIE XIXLR ONSVK OGTYC SUOGL CTVOT YBCCJ IFBTY EXHST
+	IEKIX LPATS RTWLT KLETA QAJGM IEYKV WXHAQ OEIQO JCSFP ZATJE ZXAOM JDSIW ODTAS PIWAR HFYXT ZYTSY 
+	XWWUI CPQAC CSLVI TGEIM IPOLQ OWXIX LHUJX XOEYK VWYRW RHRXA EUYNY ERDDC IKMAO FBEIL SWESC YAMLD
+	ZEIIU UAPEU PITKN UKXLE EYGZG THJYS VJSRL FEEIB TDCVV PMNLF EDMHD DCRZK LTZCR VRSRE YLNSV DKMKE
+	SAMGP EKIBT LMMRO ISMPE KLETA RIJWS LNYBC IMSZM UCHTR GZASP CJMQT GYXIF QODIR UJQEI CVHQK EFVWO
+	ECTYM RGEYR PLEDS JIKXP EDYMS PMTLJ ECEQB DGTKP ILSKB DEVYZ YDRPM TLJEC EQBOF OJIJL WCZVA ESOFI
+	KIESK LONMH OFRWR RXTGK ABIXH AQHRV HEJRH RRMTF CEUWX OTCIW CSUNC SFPZE VYLFX SFKGM GPICJ WPKSG
+	HSJLV RKEKW OLTVO TYBCC ELJCA UCLAN CTYIG OVCAE HAIDJ BIIIZ WPIXL XTZPO LKLIL GFZXL EDNSD SWTGD
+	TYITL SGNKI BTAQS KEXIU YTVEG HGDTY IPENC LJMQN GRADE WOUFI JXXHW DUERC TZGNX MWTZY TUITE FBIEK
+	SNOFI TLVAF BODOI YQMUX IXTZY TGSIM EGGYX FEWVA TXPYL FEIMK HLMFW WITLM SLGGE KQF
+
+	AREEASYAREEASYAREEASYAREEAS
+	length found. Key: AREEASY
+	l: 7
+	THISTIMEWEWILLGIVEYOUMOREPLAINTEXTTOWORKWITHYOUWILLPROBABLYFINDTHATHAVINGEXTRACONTENTTHATIS
+	ASCIIMAKESTHISONEMORESOLVABLEITWOULDBESOLVABLEWITHOUTTHATBUTWEWILLMAKESURETOGIVELOTSOFTEXTJ
+	USTTOMAKESURETHATWECANHANDLEITIWONDERHOWMUCHWILLBEREQUIREDLETSPUTTHEMAGICPHRASEFORTHENEXTLE
+	VELINTHEMIDDLERIGHTHERENORMALWORDSOKNOWMORETEXTTOMAKESURETHATITISSOLVABLEISHOULDPROBABLYJUS
+	TPUTINSOMENURSERYRHYMEORSOMETHINGMARYHADALITTLELAMBLITTLELAMBLITTLELAMBMARYHADALITTLELAMBWH
+	OSEFLEEZEWASWHITEASSNOWIDONTWANTTOMAKETHISHARDERTHANITNEEDSTOBEIFYOUVESOLVEDALOTOFSIMPLECRY
+	PTOCHALLENGESYOUPROBABLYALREADYHAVETHECODEANDWILLBREEZERIGHTTHROUGHITIFITHELPSMOSTOFTHEPLAI
+	NTEXTISSTATICATEACHOFTHELEVELSIMNOTAMASOCHISTTHEFUNNYTHINGISTHATDEPENDINGONWHICHRANDOMKEYYO
+	UGETTHATPOEMMIGHTBEEXACTLYTHERIGHTOFFSETTOSUCCESSF
+	plaintext 3:  NORMALWORDS
+	NORMALWORDS
+	LP PYEMU EXENS RTRGO WWJLJ IILAR TCIFI LKOII PILRL VFMTE MRVXL EJC
+
+	Congratulations, you have solved stage 3. The flag is: 
+		flag{IGraduatedPsiferSchoolAndAllIGotWasThisLousyFlag}.
+```
+
+___
