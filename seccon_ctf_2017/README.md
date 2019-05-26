@@ -1,0 +1,5 @@
+## SECCON CTF 2017
+### 09/12 - 10/12/2017 (24hr)
+
+
+**PASSWORD FOR ZIP FILES: seccon2017**
