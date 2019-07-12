@@ -6,7 +6,7 @@ ___
 We provided you with a free proxy so you can escape the NSA!
 nc pwnxy.haxdump.com 1337
 ___
-### Soluction
+### Solution
 
 (NOTE: if you want to execute the perl commands, remove the backslashes and run that command as
 	one line. Otherwise you may not get the right output) 
