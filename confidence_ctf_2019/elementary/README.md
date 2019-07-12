@@ -376,7 +376,7 @@ instructions executed using PIN. The more instructions we count during execution
 the control flow entered inside `checkFlag`, which means that we can infer which bit value was
 the correct one. We do this for each bit position and we get the flag: 
 ```
-p4{I_really_hope_you_automated_this_somehow_otherwise_it_might_be_a_bit_frustrating_to_do_this_manually}`
+p4{I_really_hope_you_automated_this_somehow_otherwise_it_might_be_a_bit_frustrating_to_do_this_manually}
 ```
 
 For more details take a look at [elementary_crack.py](./elementary_crack.py)
