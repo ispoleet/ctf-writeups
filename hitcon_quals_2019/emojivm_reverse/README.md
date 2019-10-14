@@ -387,7 +387,7 @@ into a single one.
 
 The biggest portion of the program is to print the banner. Then it asks for the key. The it creates
 4 global arrays. as follows:
-````
+```
 	gptr_0 --> buffer to print to stdout (allocated at the beginning)
     gptr_1 --> key
     gptr_2 --> const
