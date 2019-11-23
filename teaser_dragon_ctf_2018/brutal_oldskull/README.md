@@ -8,7 +8,7 @@ The '90s called and wanted their crackme back. It's basically a walk in a park.
 ___
 ### Solution
 
-![solution](solution.jpg)
+![solution](solution.png)
 
 
 The first skip the GUI and find where the flag is being checked. The actual flag checking starts at 
