@@ -584,7 +584,7 @@ main
                      -
                      - Putting everything together, this function takes as input a list `L` and two
                      - numbers `i` and `j` and checks if:
-                     -      PRN_(40 + j).index(i) >= PRNG_40 + j).index(L.index(j))
+                     -      PRN_{40 + j}.index(i) >= PRNG_{40 + j}.index(L.index(j))
                      -}
                     (>>>) (??) . t <<< (. (+) 40)
                 ]
