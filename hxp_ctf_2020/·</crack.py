@@ -153,7 +153,8 @@ if __name__ == "__main__":
     # Here we have another problem: We want to find perm_x.index(j), where `j`
     # is a constant number. However `perm_x` is an array of symbolic variables.
     # To solve this problem we have to notice that if `perm_x.index(j) == k`
-    # then it means that the symbolic variable P_j must be `k`.
+    # then it means that the symbolic variable `P_j` (located at the j-th
+    # position of the array must be `k`.
     #
     # Since we do not know which is the correct value for `k`, we just have to
     # try them all (they are 40) and combine them with a logic OR. That is,

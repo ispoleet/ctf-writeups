@@ -663,6 +663,36 @@ all entries are `True`. Each entry is the **logic OR** of `3` expressions:
 3. LCG_{40 + j}.index(i) >= LCG_{40 + j}.index(perm.index(j))
 ```
 
+The
+[Linear Congruential Generator](https://en.wikipedia.org/wiki/Linear_congruential_generator)(LCG)
+for the program is defined below:
+```python
+# The Linear Congruential Generator (LCG) of the program (generates pseudo-random
+# numbers). Numbers are generated into blocks of 40. The number in each block transformed
+# into a valid permutation of numbers 0-39. The `index` corresponds to which block to
+# generate.
+def lcg(index):
+    seed = 44
+    key = []
+
+    # To get the i-th entry we need to get all previous i-1 entries first.
+    for i in range(index+1):
+        prng = []
+
+        # First, generate 40 pseudo-random numbers.
+        for j in range(40):
+            y = ((seed*1337 + 42) % 400013)
+            prng.append(y)
+            seed = y
+    
+    # Then transform these numbers into a valid permutation.
+    perm = []
+    for nxt in sorted(prng):
+        perm.append(prng.index(nxt))
+
+    return perm
+```
+
 That is, we essentially have a [3-SAT](https://en.wikipedia.org/wiki/Boolean_satisfiability_problem) 
 problem, which is the base problems for the NP-Completeness. Below is exactly how the `40x40`
 boolean array for a given permutation `inp` is generated:
