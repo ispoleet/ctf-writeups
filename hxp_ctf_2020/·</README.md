@@ -726,6 +726,6 @@ Then we feed this key into AES countermode along with the ciphertext:
 
 And we get the flag: `hxp{r34dAb1liTy_1s_p01nTl3s5}'`
 
-For more details, please take a look at the [crack](./crack) file.
+For more details, please take a look at the [crack](./crack.py) file.
 
 ___
