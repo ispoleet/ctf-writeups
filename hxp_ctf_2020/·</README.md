@@ -758,4 +758,9 @@ And we get the flag: `hxp{r34dAb1liTy_1s_p01nTl3s5}'`
 
 For more details, please take a look at the [crack](./crack.py) file.
 
+```
+ispo@ispo-glaptop:~/ctf/hxp_2020/·<$ echo "[37,33,4,3,38,23,14,9,36,12,0,22,39,32,16,19,35,5,6,27,25,8,13,31,30,24,34,11,29,21,26,2,7,17,1,10,20,18,15,28]" | './·<.hs'
+hxp{r34dAb1liTy_1s_p01nTl3s5}
+```
 ___
+
