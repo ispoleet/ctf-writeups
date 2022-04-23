@@ -1,6 +1,7 @@
 *.idb
 *.i64
 INCOMPLETE/
+INTERNAL/
 OTHER/
 
 
