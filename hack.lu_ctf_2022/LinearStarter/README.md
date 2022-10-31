@@ -97,6 +97,6 @@ otp[5] = 23594281354816491687755064935408616862
 
 Finally, we XOR it with the `enc` to get the flag: `flag{lin3ar_congru3nce_should_only_be_4_s1de_dish}`
 
-For more details, please take a look at the [linear_starter_crack.py](./linear_starter_crack.py).
+For more details, please take a look at the [linearstarter_crack.py](./linearstarter_crack.py).
 ___
 
