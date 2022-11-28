@@ -1,0 +1,23 @@
+File that need to be patched: /usr/local/go/src/crypto/cipher/xor_amd64.go
+--- a/xor_amd64.go	2022-11-15 15:46:06.200937756 +0800
++++ b/xor_amd64.go	2022-11-15 15:46:24.410938067 +0800
+@@ -15,7 +15,8 @@
+ 		return 0
+ 	}
+ 	_ = dst[n-1]
+-	xorBytesSSE2(&dst[0], &a[0], &b[0], n) // amd64 must have SSE2
++	//xorBytesSSE2(&dst[0], &a[0], &b[0], n) // amd64 must have SSE2
++	safeXORBytes(dst, a, b, n)
+ 	return n
+ }
+ 
+@@ -25,3 +26,9 @@
+ 
+ //go:noescape
+ func xorBytesSSE2(dst, a, b *byte, n int)
++
++func safeXORBytes(dst, a, b []byte, n int) {
++	for i := 0; i < n; i++ {
++		dst[i] = a[i] ^ b[i]
++	}
++}
