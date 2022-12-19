@@ -1751,7 +1751,7 @@ I tried to do this by hand but I failed. After some research I found that this i
 [Masyu](https://en.wikipedia.org/wiki/Masyu) puzzle. The solution to this puzzle is shown below:
 
 
-![image](images/solution.jpeg)
+![image](images/solution.jpg)
 
 
 Once we have that, it is simple to move back and  find the set of points
