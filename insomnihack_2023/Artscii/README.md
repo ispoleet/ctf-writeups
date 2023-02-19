@@ -102,7 +102,7 @@ We brute force each character and we check **how many columns** matches with the
 The character that matches the most columns is the correct one. We repeated the same process for the
 3rd line of the output and get the flag.
 
-For more details, please refer to [artscii_crack.py](./artascii_crack.py) file.
+For more details, please refer to [artscii_crack.py](./artscii_crack.py) file.
 
 So, the flag is: `INS{MISC_MAYHEM_A7R93Y4E7H}`
 
