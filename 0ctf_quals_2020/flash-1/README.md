@@ -1079,7 +1079,7 @@ Let's look at them one by one:
 
 This is stack-based VM machine. Instructions are fairly simple, so we can easily write a
 disassembler for it. For more details, please refer to the
-[flash_vm_dsiasm.py](./flash_vm_dsiasm.py) script.
+[flash_vm_disasm.py](./flash_vm_disasm.py) script.
 
 
 ### Reversing the VM Program
