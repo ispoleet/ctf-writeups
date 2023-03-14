@@ -239,7 +239,7 @@ exchanged with the server:
 ![image](images/pcap2.png)
 
 
-### The Failed approach
+### The Failed Approach
 
 In the pcap file there are 772 messages exchanged. The public exponent `e` is also `777`, so I
 thought it cannot be a coincidence. I spend hours looking for various RSA attacks on how to
@@ -251,7 +251,7 @@ Given that the primary category of this challenge is "Misc", there must be somet
 was missing.
 
 
-### The Correct approach
+### The Correct Approach
 
 I start looking in the code more carefully until I reached `u_cmp_subdomain_probably`. This function
 does more than a `strcmp`:
@@ -391,7 +391,7 @@ domain = b'xn--ls8haaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.xn--l
 for i, b in enumerate(domain): ida_bytes.patch_byte(idaapi.get_reg_val('rdi') + i, b)
 ```
 
-![image](images/ida.png)
+![image](images/ida1.png)
 
 
 Then something really interesting happens:
