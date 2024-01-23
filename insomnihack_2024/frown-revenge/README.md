@@ -1,4 +1,4 @@
-## Insomni'Hack Teaser 2024 - frown (RE 102)
+## Insomni'Hack Teaser 2024 - frown revenge (RE 102)
 ##### 20/01 - 21/01/2024 (24hr)
 ___
 
