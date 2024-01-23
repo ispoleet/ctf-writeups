@@ -31,7 +31,7 @@ After the Frida server is spawned with press the `p` key to pause. We run our sc
 and we see there is only one active process named `Gadget`:
 ```
 [+] Enumerating process: Process(pid=18, name="Gadget", parameters={})
-``
+```
 
 Then we can connect to the server from our local machine:
 ```
