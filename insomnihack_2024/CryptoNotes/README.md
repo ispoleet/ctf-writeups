@@ -1,4 +1,4 @@
-## Insomni'Hack Teaser 2024 - frown (RE 57)
+## Insomni'Hack Teaser 2024 - CryptoNotes (mobile 345)
 ##### 20/01 - 21/01/2024 (24hr)
 ___
 
