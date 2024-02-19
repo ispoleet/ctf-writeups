@@ -196,6 +196,6 @@ For more details please refer to the [Pwn App source code](./CryptoNotesPwn).
 
 PS: Challenge author confirmed that this was the correct way to solve this challenge: 
 
-![image](images/remote_server.png)
+![image](images/confirmation.png)
 
 ___
