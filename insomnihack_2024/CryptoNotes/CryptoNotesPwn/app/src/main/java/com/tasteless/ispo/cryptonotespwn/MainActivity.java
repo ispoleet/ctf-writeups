@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
       finish();
     }
 
-    /* The garbage collector is not always triggered for every intent,
+    /* The garbage collector is not always triggered for every intent we send,
      * so the exploit doesn't always work at first. We have to try it 4-5 times. */
     for (int i=0; i<10; ++i) {
        String cfg = "{\'ALGO\':[69,76,71,79,49],\'IN\':\'this is a notes\'}";
