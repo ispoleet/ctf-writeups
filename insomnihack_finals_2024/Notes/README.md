@@ -221,6 +221,7 @@ as `generateFlag` and `MD5` that are not used at all. That makes sense because t
 description clearly states that: `[...] I know it's not done yet [...]`.
 
 We type a random password and we get the `Wrong passphrase` toast:
+
 ![image](./images/passphrase_wrong.png =400x)
 
 
@@ -331,6 +332,10 @@ We try the second approach and after a minute, we get the correct passphrase (an
 ```
 letsyouupdateyourfunNotesandmore
 ```
+
+We can also verify it in the app:
+
+![image](./images/passphrase_correct.png)
 
 For more details, please refer to the [notes_crack.py](./notes_crack.py) file.
 
