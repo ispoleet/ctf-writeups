@@ -222,7 +222,7 @@ description clearly states that: `[...] I know it's not done yet [...]`.
 
 We type a random password and we get the `Wrong passphrase` toast:
 
-![image](./images/passphrase_wrong.png =400x)
+![image](./images/passphrase_wrong.png)
 
 
 Looking at the code, when the Activity starts, it loads `note` object from `storage.json`:
