@@ -1,4 +1,4 @@
-##  Insomni'Hack CTF Finals 2023 - Notes (mobile, warmup)
+##  Insomni'Hack CTF Finals 2024 - Notes (mobile, warmup)
 ##### 26/04/2024 (10hr)
 ___
 
