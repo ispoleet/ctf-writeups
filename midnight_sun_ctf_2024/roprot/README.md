@@ -1,5 +1,5 @@
 ## Midnight Sun CTF 2024 - roprot (Reversing 417)
-##### 20/04 - 21/04/2022 (24hr)
+##### 20/04 - 21/04/2024 (24hr)
 ___
 
 ### Description
