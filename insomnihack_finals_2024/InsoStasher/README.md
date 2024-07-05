@@ -19,16 +19,16 @@ ___
 This challenge was a super simple Android App. In the **home** screen, it presents some random,
 composite words:
 
-![image](images/home.png | width=400)
+<img src="images/home.png" width="400">
 
 You have the option to like some of these words. All the words that you like appear in the
 **favorites** page.
 
-![image](images/favorites.png | width=400)
+<img src="images/favorites.png" width="400">
 
 Finally, there is also a **notes** page, where you can encrypt a message of your choice:
 
-![image](images/notes.png | width=400)
+<img src="images/notes.png" width="400">
 
 The goal is to decrypt the encrypted note that is already stored there:
 ```
