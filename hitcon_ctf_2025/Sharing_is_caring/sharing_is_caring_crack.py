@@ -54,7 +54,7 @@ def find_y_coord(x):
 
 # ----------------------------------------------------------------------------------------
 if __name__ == "__main__":
-    print('[+] Flare say crack started.')
+    print('[+] Sharing is caring crack started.')
 
     flag = ''
     for x in [4919, 57005, 48879]: # func_1(22), func_1(24), func_1(26)
@@ -71,7 +71,7 @@ if __name__ == "__main__":
 """
 ┌─[22:18:20]─[ispo@ispo-glaptop2]─[~/ctf/hitcon_quals_2025/Sharing_is_caring]
 └──> ./sharing_is_caring_crack.py 
-[+] Flare say crack started.
+[+] Sharing is caring crack started.
 [+] y coordinate for x =  4919: b'hitcon{Like_I_said_....._sharing_is_cari'
 [+] y coordinate for x = 57005: b'ng_and_caring_is_finding_the_right_share'
 [+] y coordinate for x = 48879: b'_4f63bf95789178799874ddf1c1bd6ad6b6297b}'
