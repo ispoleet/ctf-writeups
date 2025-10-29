@@ -599,7 +599,7 @@ def f_chk(arg):
 
 This is interesting. `f_chk()` starts by building a `val_dict`, a dictionary in the form:
 `{h: (u1, u2)}`. Dictionary has **6** entries: The **3** input values go into `u1` parameters of
-**3** entries.
+**3** user-input entries.
 
 Then we have the first check: The *DSA signature verification*. The parameters `u1` and `u2` are
 used directly to compute `u`. Then function computes the signature `r` of **3** fixed messages and
@@ -624,7 +624,7 @@ order does not matter):
     mix_pairs = [fix_pairs[0], fix_pairs[2], fix_pairs[1]]
 ```
 
-That is we can compute the curve using these **3** points. We also know the `x` coordinates of the
+That is, we can compute the curve using these **3** points. We also know the `x` coordinates of the
 points in the curve:
 ```python
     if f_chk(
