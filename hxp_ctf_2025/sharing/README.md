@@ -27,7 +27,7 @@ $ ./sharing/sharing foo
 :(
 ```
 
-We start from main:
+We start from `main`:
 ```c
 int __fastcall main(int argc, const char **argv, char **argp) {
   /* ... */
@@ -366,7 +366,7 @@ LSBytes of `rax` which are then converted into a **6** byte vector.
 In the inner loop, **7** consecutive results `u_affine_transformation()` results are added together
 and the result goes to the next row of `a1_out`.
 
-However, there is something very important: **One the even rows, a constant vector is subtracted
+However, there is something very important: **On the even rows, a constant vector is subtracted
 from the result**. We express this as a matrix where the odd rows are zero.
 
 To get the constants from the functions, we set a breakpoint at the beginning of 
@@ -719,7 +719,7 @@ column of `A` plus `b`. We already know `b` so we can subtract it and recover th
 The full code looks like this:
 ```python
 def recover_affine_tr(row, const, fixed, t_vec1, t_vec2):
-    """ """
+    """Recovers A and b for a single affine transformation on main thread."""
     # Compute the final value of the affine transformation (verification only).
     s1 = affine_tr(row, const, fixed, t_vec1, t_vec2)
 
@@ -745,6 +745,8 @@ def recover_affine_tr(row, const, fixed, t_vec1, t_vec2):
 
     return S, b
 ```
+___
+
 
 ### The Big Affine Transformation
 
@@ -1001,9 +1003,10 @@ void __fastcall u_poly_division_2_THREAD(__int64 a1, __int64 a2) {
 }
 ```
 
-We do not have to reverse engineer `u_affine_transformation_THREAD()`. We know it is an affine
-transformation so we can simply emulate it with unicorn (or patch values in the debugger) and
-follow the same process as in `recover_affine_tr()`.
+> [!NOTE]
+> We do not have to reverse engineer `u_affine_transformation_THREAD()`. We know it is an affine
+> transformation so we can simply emulate it with unicorn (or patch values in the debugger) and
+> follow the same process as in `recover_affine_tr()`.
 
 I decided to reverse engineer it (big mistake as I wasted a lot of time). Here it is:
 ```python
@@ -1073,7 +1076,7 @@ so it directly depends on the flag. So recovering the affine transformation is m
 the unknown has to be the flag vector and not the `row` which is a constant:
 ```python
 def recover_affine_tr_other(row, const, fixed, t_vec1, t_vec2, fixed_other):
-    """ """
+    """Recovers A and b for a single affine transformation on the other thread."""
     # Compute the final value of the affine transformation (verification only).
 
     s1 = affine_tr_other(row, const, fixed, t_vec1, t_vec2)
@@ -1183,11 +1186,11 @@ To get the flag the following condition must be true:
 
 Let's solve the system:
 ```
-u1 + u2 = 0 =>
-A1*x + b1 - m1 + M*(A2*x + b2 - m2) = 0       =>
-(A1 + M*A2)*x + b1 - m1 + M*b2 - M*m2 = 0     =>
-(A1 + M*A2)*x = -(b1 - m1 + M*b2 - M*m2)      =>
-x = (A1 + M*A2)^-1 *(-(b1 - m1 + M*b2 - M*m2))
+u1 + u2 = 0                                     =>
+A1*x + b1 - m1 + M*(A2*x + b2 - m2) = 0         =>
+(A1 + M*A2)*x + b1 - m1 + M*b2 - M*m2 = 0       =>
+(A1 + M*A2)*x = -(b1 - m1 + M*b2 - M*m2)        =>
+x = (A1 + M*A2)^-1 * (-(b1 - m1 + M*b2 - M*m2))
 ```
 
 After we find `x` we subtract the original `array` and we get the flag.

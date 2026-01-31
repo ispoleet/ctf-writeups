@@ -229,7 +229,7 @@ def affine_tr_other(row, const, fixed, t_vec1, t_vec2):
 
 # ----------------------------------------------------------------------------------------
 def recover_affine_tr(row, const, fixed, t_vec1, t_vec2):
-    """ """
+    """Recovers A and b for a single affine transformation on main thread."""
     # Compute the final value of the affine transformation (verification only).
     s1 = affine_tr(row, const, fixed, t_vec1, t_vec2)
 
@@ -258,7 +258,7 @@ def recover_affine_tr(row, const, fixed, t_vec1, t_vec2):
 
 # ----------------------------------------------------------------------------------------
 def recover_affine_tr_other(row, const, fixed, t_vec1, t_vec2, fixed_other):
-    """ """
+    """Recovers A and b for a single affine transformation on the other thread."""
     # Compute the final value of the affine transformation (verification only).
 
     s1 = affine_tr_other(row, const, fixed, t_vec1, t_vec2)
