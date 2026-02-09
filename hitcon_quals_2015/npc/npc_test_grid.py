@@ -30,6 +30,8 @@ One way to preserve the length of (r, c) to 1:
     * (r, c) must "lose":
         * (r,   c-1) must be 1, AND
         * (r-1, c  ) must be 1
+    * (r+1, c) must be 0 AND
+    * (r, c+1) must be 0.        
 
 One way to preserve the length of (r, c) to X (where X > 1)
     * (r, c) must be 0 (by definition)
@@ -55,8 +57,9 @@ However, this is **NOT** the only way to force a path length on a given cell:
     Let's say we want length of (r, c) to be 1. According to our rules, (r, c-1) must be 1,
     otherwise (r, c) will "win".
 
-    But if (r, c-1) is already 0 and has a length of e.g., 10, then (r, c) will "lose", so its
-    length will remain 1.
+    But if (r, c-1) is already 0 and has a length of e.g., 10, then (r, c) will "lose" and 
+    its length will remain 1. However the "j1_int" will be updated so program will use the
+    length of (r, c-1) for the final comparson against X.
 '''
 # Test grid. Having alternating 0's and 1's forces all path lengths to be 1.
 flag_grid = [

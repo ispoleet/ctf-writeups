@@ -747,6 +747,10 @@ After this code, the `main()` performs the first check:
         nxt2 = *v71;
         if ( *v71 != idx1 )                     // same as before!
         {
+          fixed_vec_2nd_val = &fixed_vec_begin[j1_];
+          j1_int = 4LL * nxt2;
+          v74 = (array_1 + j1_int);
+          v75 = *(&array_1->array_1 + j1_int);
           /*
            *
            * Same path claiming code with 10 nested if's ending up calling u_claim_bigger_path_RECURSIVE()
@@ -768,7 +772,14 @@ After this code, the `main()` performs the first check:
 This check uses the `fixed_vec` we generated before. We iterate over each cell `(r, c)` again.
 The first requirement is that **every nonzero value of `fixed_vec` needs to map on a zero value in
 `flag_buf`**. The second requirement is that **the path length (in `array_2`) for this cell needs
-to match this nonzero value of `fixed_vec`**.
+to match this nonzero value of `fixed_vec`**. However, based on the "winning" cells, the value of
+`j1_int` is updated each time we encounter a connected cell with a greater length, so at the end
+we compare the target length against the length of the connected cell that holds the longest path.
+We explain this better in the next section.
+
+In other words, **we inspect all path lengths of all cells that are connected together and we
+return the longest path, which is the length of the path that connects all these cells together**.
+
 
 #### Forcing Lengths on Flag Grids
 
@@ -788,6 +799,8 @@ One way to preserve the length of (r, c) to 1:
     * (r, c) must "lose":
         * (r,   c-1) must be 1, AND
         * (r-1, c  ) must be 1
+    * (r+1, c) must be 0 AND
+    * (r, c+1) must be 0.
 
 One way to preserve the length of (r, c) to X (where X > 1)
     * (r, c) must be 0 (by definition)
@@ -813,8 +826,9 @@ However, this is **NOT** the only way to force a path length on a given cell:
     Let's say we want length of (r, c) to be 1. According to our rules, (r, c-1) must be 1,
     otherwise (r, c) will "win".
 
-    But if (r, c-1) is already 0 and has a length of e.g., 10, then (r, c) will "lose", so its
-    length will remain 1.
+    But if (r, c-1) is already 0 and has a length of e.g., 10, then (r, c) will "lose" and 
+    its length will remain 1. However the "j1_int" will be updated so program will use the
+    length of (r, c-1) for the final comparson against X.
 ```
 
 Having these rules in mind, we can craft a grid where cell `(0, 6)` has a length of **6** and
@@ -874,11 +888,12 @@ This gives us:
 ```
 
 Okay, after all this, what this code **really** does? Well, program looks for a connected "area"
-that contains the cell `(r, c)` (it does not have to start from there) and can be "claimed" by
-that cell.
+that contains the cell `(r, c)` (it does not have to start from there) and has a total length of 
+`fixed_vec[r*20 + c]`. However, the total length might not be in `array_2[r*20 + c]` but in an
+connected cell `(r', c')` which is **before** `(r, c)`, i.e., `array_2[r'*20 + c']`.
 
 I quickly realized that forcing all cells (according to `fixed_vec`) to have a specific `array_2`
-value, is hard and there are several tweaks.
+value, is hard as there are several naunces and tweaks around it.
 
 But even worse, the problem has more constraints. Let's move on with the rest of the checks:
 ```c
