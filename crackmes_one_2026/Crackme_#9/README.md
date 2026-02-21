@@ -275,7 +275,7 @@ cannot be decompiled so we will work directly with its assembly:
 .text:00402EF0 ; END OF FUNCTION CHUNK FOR u_REVERSE_ME
 ```
 
-First of all there is an **anti-debugging** check in `u_NtQueryInformationProcess_wrapper():
+First of all there is an **anti-debugging** check in `u_NtQueryInformationProcess_wrapper()`:
 ```c
 char u_NtQueryInformationProcess_wrapper()
 {
