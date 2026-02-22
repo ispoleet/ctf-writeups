@@ -165,6 +165,9 @@ The `u_debug_trap()` causes an `int 3` exception:
 This interrupt is obviously handled by the program so we cannot ignore it. The `.pc` segment
 gets `RWX` permissions from `VirtualProtect()` before the call to `u_debug_trap()`, so the
 logic says that this handler is responsible for decrypting the functions at `.pc`.
+
+> [!NOTE]
+> This technique is called [nanomites](https://github.com/Fatmike-GH/Nanomites).
 ___
 
 
@@ -760,7 +763,7 @@ int __thiscall u_EXCEPTION_GUARD_PAGE_handler(obj *this, _EXCEPTION_RECORD *pRec
 ```
 
 > [!NOTE]
-> This technique is called [nanomites](https://github.com/Fatmike-GH/Nanomites).
+> This technique is called [JitDecrypter](https://github.com/Fatmike-GH/JitDecrypter).
 ___
 
 
@@ -1006,7 +1009,7 @@ bool __thiscall u_ENCRYPTED_VALIDATOR(_DWORD *this, char *serial) {
     while ( 1 ) {
       while ( 1 ) {
         while ( 1 ) {
-          // This is decoy.
+          // RECALCULATE HASH; Substitute last byte with 0x90 (nop)
           chacha_key_obj = u_get_chacha_key_obj();
           u_sha256_integrity_check(chacha_key_obj);
           if ( status )
