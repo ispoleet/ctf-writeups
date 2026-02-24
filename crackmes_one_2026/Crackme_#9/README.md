@@ -164,10 +164,7 @@ The `u_debug_trap()` causes an `int 3` exception:
 
 This interrupt is obviously handled by the program so we cannot ignore it. The `.pc` segment
 gets `RWX` permissions from `VirtualProtect()` before the call to `u_debug_trap()`, so the
-logic says that this handler is responsible for decrypting the functions at `.pc`.
-
-> [!NOTE]
-> This technique is called [nanomites](https://github.com/Fatmike-GH/Nanomites).
+logic says that this handler is responsible for decrypting the (encrypted) functions at `.pc`.
 ___
 
 
@@ -956,8 +953,289 @@ c:  83 7d 08 00             cmp    DWORD PTR [ebp+0x8],0x0
 ```
 
 We follow the same process and we decrypt the whole segment.
+___
 
-For more details, please refer to the [crackme_9_func_decryptor.py](./crackme_9_func_decryptor.py) script.
+
+### Fixing `int 3` instructions
+
+After we decrypt the whole segment there is another problem:
+```assembly
+.pc:0040A025                      u_ENCRYPTED_VALIDATOR:
+.pc:0040A025 55                     push    ebp
+.pc:0040A026 8B EC                  mov     ebp, esp
+.pc:0040A028 83 EC 20               sub     esp, 20h
+.pc:0040A02B 53                     push    ebx
+.pc:0040A02C 56                     push    esi
+.pc:0040A02D 57                     push    edi
+.pc:0040A02E 89 4D EC               mov     [ebp-14h], ecx
+.pc:0040A031 83 7D 08 00            cmp     dword ptr [ebp+8], 0
+.pc:0040A035 CC                     int     3                             ; Trap to Debugger
+.pc:0040A036
+.pc:0040A036                      loc_40A036:                             ; CODE XREF: .pc:loc_40A036↑j
+.pc:0040A036 79 FF                  jns     short near ptr loc_40A036+1
+.pc:0040A038 75 08                  jnz     short near ptr loc_40A040+2
+.pc:0040A03A E8 F2 F6 FF FF         call    strlen
+.pc:0040A03F 59                     pop     ecx
+.pc:0040A040
+.pc:0040A040                      loc_40A040:                             ; CODE XREF: .pc:0040A038↑j
+.pc:0040A040 83 F8 13               cmp     eax, 13h
+.pc:0040A043 CC                     int     3                             ; Trap to Debugger
+.pc:0040A043                      ; ---------------------------------------------------------------------------
+.pc:0040A044 C6                     db 0C6h
+.pc:0040A045                      ; ---------------------------------------------------------------------------
+.pc:0040A045 32 C0                  xor     al, al
+.pc:0040A047 CC                     int     3                             ; Trap to Debugger
+.pc:0040A048 29 69 28               sub     [ecx+28h], ebp
+.pc:0040A04B CC                     int     3                             ; Trap to Debugger
+.pc:0040A04C C7 45 FC 00 00 00 00   mov     dword ptr [ebp-4], 0
+.pc:0040A053 C7 45 F8 00 00 00 00   mov     dword ptr [ebp-8], 0
+.pc:0040A05A C7 45 F0 00 00 00 00   mov     dword ptr [ebp-10h], 0
+.pc:0040A061 C7 45 F4 BE BA FE CA   mov     dword ptr [ebp-0Ch], 0CAFEBABEh
+.pc:0040A068 E8 0A 94 FF FF         call    sub_403477
+.pc:0040A06D 8B C8                  mov     ecx, eax
+.pc:0040A06F E8 41 04 00 00         call    sub_40A4B5
+.pc:0040A074 33 C0                  xor     eax, eax
+.pc:0040A076 83 F8 00               cmp     eax, 0
+.pc:0040A079 CC                     int     3                             ; Trap to Debugger
+.pc:0040A079                      ; ---------------------------------------------------------------------------
+.pc:0040A07A 87                     db  87h
+.pc:0040A07B                      ; ---------------------------------------------------------------------------
+.pc:0040A07B CC                     int     3                             ; Trap to Debugger
+.pc:0040A07C 83 7D FC 00            cmp     dword ptr [ebp-4], 0
+.pc:0040A080 CC                     int     3                             ; Trap to Debugger
+.pc:0040A080                      ; ---------------------------------------------------------------------------
+.pc:0040A081 03                     db    3
+.pc:0040A082 33 C0                  xor     eax, eax
+.pc:0040A084 83 F8 21               cmp     eax, 21h ; '!'
+.pc:0040A087 CC                     int     3                             ; Trap to Debugger
+.pc:0040A087                      ; ---------------------------------------------------------------------------
+.pc:0040A088 26                     db  26h ; &
+.pc:0040A089 CC                     int     3                             ; Trap 
+```
+
+The decrypted code is full of `int 3` instructions. In fact, **every jump instruction
+has been substituted with an `int 3`**. The exception handler is responsible for replacing
+the `int 3` instruction with the appropriate jump instruction.
+
+If we code go back to `u_EXCEPTION_BREAKPOINT_handler()`, there is a call to
+`u_calc_next_eip()` at `4045F3h`:
+```c
+char __thiscall u_calc_next_eip(obj_seh *this, _CONTEXT *pContext) {
+  /* ... */
+  ctx = pContext;
+  // jmp_fix <0A000h, 1, 2Fh, 2>
+  jmp_entr = u_stl_map_lookup(this, LOBYTE(pContext->Eip) - this->pc_base);
+  jmp_entr_ = jmp_entr;
+  if ( !jmp_entr )
+    return 0;                                   // not found
+  if ( u_take_jump_or_not(jmp_entr, ctx) )
+    next_eip = jmp_entr_->sz + jmp_entr_->jmp_off;// jump taken
+  else
+    next_eip = jmp_entr_->sz;                   // jump not taken
+  u_set_eip(this, &pContext, ctx->Eip + next_eip);
+  return 1;
+}
+```
+
+This function calculates the address of the next instruction and assigns it to `eip`, so
+after the interrupt the execution continues from there. The important function is
+`u_take_jump_or_not()` which decides whether a jump needs to be taken or not and based
+on the saved `Eflags` register:
+```c
+bool __stdcall u_take_jump_or_not(jmp_fix *a1, _CONTEXT *pContext) {
+  DWORD EFlags; // ecx
+  bool result; // al
+  char v4; // dl
+  DWORD v5; // eax
+
+  EFlags = pContext->EFlags;
+  switch ( a1->cond )
+  {
+    case 1:
+      EFlags >>= 6;
+      goto LABEL_12;
+    case 2:
+      return 1;
+    case 3:
+      EFlags >>= 7;
+      goto LABEL_3;
+    case 4:
+      goto LABEL_12;
+    case 5:
+      v4 = 1;
+      if ( (EFlags & 0x40) == 0 && (((EFlags >> 7) ^ (pContext->EFlags >> 11)) & 1) == 0 )
+        return 0;
+      return v4;
+    case 6:
+      return (EFlags & 0x41) == 0;
+    case 7:
+      LOBYTE(v5) = ~(EFlags >> 11);
+      return ((EFlags >> 7) ^ v5) & 1;
+    case 8:
+      EFlags >>= 2;
+      goto LABEL_3;
+    case 9:
+      EFlags >>= 11;
+      goto LABEL_3;
+    case 0xA:
+      return (EFlags & 0x41) != 0;
+    case 0xB:
+      return pContext->Ecx == 0;
+    case 0xC:
+      EFlags >>= 2;
+      goto LABEL_12;
+    case 0xD:
+      EFlags >>= 6;
+      goto LABEL_3;
+    case 0xE:
+      v5 = EFlags >> 11;
+      return ((EFlags >> 7) ^ v5) & 1;
+    case 0xF:
+      EFlags >>= 7;
+      goto LABEL_12;
+    case 0x10:
+      EFlags >>= 11;
+LABEL_12:
+      LOBYTE(EFlags) = ~EFlags;
+      goto LABEL_3;
+    case 0x11:
+      v4 = 1;
+      if ( (EFlags & 0x40) != 0 || (((EFlags >> 7) ^ (pContext->EFlags >> 11)) & 1) != 0 )
+        return 0;
+      return v4;
+    case 0x12:
+LABEL_3:
+      result = EFlags & 1;
+      break;
+    default:
+      result = 0;
+      break;
+  }
+  return result;
+}
+```
+
+We can rewrite this into python:
+```python
+# Logic extracted from u_take_jump_or_not() at 404166h
+JCC_COND = {    
+    1 : ['JNE',   b'\x75', b'\x0F\x85'], # EFlags >> 6 (ZF); Inverted (~ZF) -> ZF == 0
+    2 : ['JMP',   b'\xEB', b'\xE9'],     # return 1 -> Always True
+    3 : ['JS',    b'\x78', b'\x0F\x88'], # EFlags >> 7 (SF); Normal -> SF == 1
+    4 : ['JNC',   b'\x73', b'\x0F\x83'], # EFlags (CF); Inverted (~CF) -> CF == 0
+    5 : ['JLE',   b'\x7E', b'\x0F\x8E'], # Complex (ZF=1 or SF!=OF) -> Signed <=
+    6 : ['JA',    b'\x77', b'\x0F\x87'], # (CF | ZF) == 0 -> Unsigned >
+    7 : ['JGE',   b'\x7D', b'\x0F\x8D'], # SF == OF -> Signed >=    
+    8 : ['JP',    b'\x7A', b'\x0F\x8A'], # EFlags >> 2 (PF); Normal -> PF == 1
+    9 : ['JO',    b'\x70', b'\x0F\x80'], # EFlags >> 11 (OF); Normal -> OF == 1
+    10: ['JBE',   b'\x76', b'\x0F\x86'], # (CF | ZF) != 0 -> Unsigned <=
+    11: ['JECXZ', b'\xE3', None],        #
+    12: ['JNP',   b'\x7B', b'\x0F\x8B'], # EFlags >> 2 (PF); Inverted (~PF) -> PF == 0
+    13: ['JE',    b'\x74', b'\x0F\x84'], # EFlags >> 6 (ZF); Normal -> ZF == 1
+    14: ['JL',    b'\x7C', b'\x0F\x8C'], # SF != OF -> Signed <
+    15: ['JNS',   b'\x79', b'\x0F\x89'], # EFlags >> 7 (SF); Inverted (~SF) -> SF == 0
+    16: ['JNO',   b'\x71', b'\x0F\x81'], # EFlags >> 11 (OF); Inverted (~OF) -> OF == 0
+    17: ['JG',    b'\x7F', b'\x0F\x8F'], # Complex !(ZF=0 & SF=OF) -> Signed >
+    18: ['JC',    b'\x72', b'\x0F\x82'], # EFlags (CF); Normal -> CF == 1
+}
+```
+
+This function takes as input a special object (I called it `"jmp_fix"`):
+```
+00000000 jmp_fix         struc ; (sizeof=0x10, copyof_78) ; XREF: jmp_tbl/r
+00000000 idx             dd ?
+00000004 cond            dd ?
+00000008 jmp_off         dd ?
+0000000C sz              dd ?
+00000010 jmp_fix         ends
+```
+
+There is a is large hashmap that is initialized at the beginning and contains all
+`jmp_fix` entries:
+```python
+# Columns are: insn address, jump condition, jump offset, insn size.
+# Get values from `u_build_hash_map()`.
+JCC_MAP = [
+    # .....
+    (0xA025, 0x9, 0x80, 0x2),
+    (0xA026, 0x10, 0x2E, 0x2),
+    (0xA027, 0x6, 0x3, 0x2),
+    (0xA028, 0x8, 0x2F, 0x2),
+    (0xA029, 0x0F, 0x58, 0x2),
+    (0xA02A, 0x12, 0x27, 0x2),
+    (0xA02B, 0x7, 0x96, 0x2),
+    (0xA02C, 0x0C, 0x67, 0x2),
+    (0xA02D, 0x4, 0x65, 0x2),
+    (0xA02E, 0x0D, 0x2D, 0x2),
+    (0xA02F, 0x9, 0x39, 0x2),
+    (0xA030, 0x6, 0x35, 0x2),
+    (0xA031, 0x10, 0x66, 0x2),
+    (0xA032, 0x0A, 0x46, 0x2),
+    (0xA033, 0x0D, 0x5C, 0x2),
+    (0xA034, 0x6, 0x9C, 0x2),
+    (0xA035, 0x0D, 0x0E, 0x2),  # <------
+    (0xA036, 0x10, 0x43, 0x2),
+    (0xA037, 0x0A, 0x2E, 0x2),
+    (0xA038, 0x10, 0x8C, 0x2),
+    (0xA039, 0x9, 0x14, 0x2),
+    (0xA03A, 0x0D, 0x8D, 0x2),
+    (0xA03B, 0x0A, 0x28, 0x2),
+    (0xA03C, 0x7, 0x63, 0x2),
+    (0xA03D, 0x0E, 0x2C, 0x2),
+    (0xA03E, 0x5, 0x4D, 0x2),
+    (0xA03F, 0x0E, 0x60, 0x2),
+    (0xA040, 0x0D, 0x9F, 0x2),
+    (0xA041, 0x0C, 0x7E, 0x2),
+    (0xA042, 0x7, 0x21, 0x2),
+    (0xA043, 0x0D, 0x7, 0x2),  # <------
+    (0xA044, 0x0C, 0x0B, 0x2),
+    (0xA045, 0x12, 0x48, 0x2),
+    (0xA046, 0x6, 0x29, 0x2),
+    (0xA047, 0x2, 0x17B, 0x5),
+    (0xA048, 0x3, 0x35, 0x2),
+    (0xA049, 0x0D, 0x3, 0x2),
+    (0xA04A, 0x5, 0x60, 0x2),
+    # .....
+    (0xA5F8, 0x7, 0x18, 0x2),
+    (0xA5F9, 0x3, 0x20, 0x2),
+    (0xA5FA, 0x12, 0x77, 0x2),
+    (0xA5FB, 0x5, 0x4E, 0x2),
+    (0xA5FC, 0x7, 0x92, 0x2),
+    (0xA5FD, 0x7, 0x80, 0x2),
+    (0xA5FE, 0x0D, 0x32, 0x2),
+    (0xA5FF, 0x0D, 0x2C, 0x2),
+]    
+```
+
+As you can see, there is one entry for each address, but most of them are junk; Only the
+entries that are mapped to an address with an `int 3` instruction are used.
+
+Let's see an example: The first `int 3` instruction is at address `40A035h`. The
+exception handler selects the entry `(0xA035, 0x0D, 0x0E, 0x2)` by calling function
+`u_stl_map_lookup()` at `4042CAh`:
+```c
+int __thiscall u_stl_map_lookup(_DWORD *this, char a2) {
+  _DWORD *v2; // esi
+  int v3; // eax
+
+  v2 = this + 16;
+  v3 = std::_Tree<std::_Tset_traits<FName,UserInfoSortingFunction,std::allocator<FName>,0>>::_Find<FName>(&a2);
+  if ( v3 == *v2 )
+    return 0;
+  else
+    return *(v3 + 20);
+}
+```
+
+Based on the condition `0x0D`, we select the correct entry from `JCC_COND`, which is
+a `JE` (jump equal). The next entry in `jmp_fix` is the offset (`0x0E`), so the 
+`int 3` will be substituted with an `je 0xe`. The size of the instruction is `0x2` bytes
+(given by the last column of `jmp_fix`).
+
+This process repeats every time an `int 3` instruction is encountered.
+
+> [!NOTE]
+> This technique is called [nanomites](https://github.com/Fatmike-GH/Nanomites).
 
 We have to do some manual work to fix some of the jumps, so the **correct** decrypted
 code is:
@@ -974,6 +1252,8 @@ decr = bytes.fromhex('C7 01 47 BB 5D 86 8B C1 C7 41 04 90 B1 6E 0A C7 41 08 33 6
 for i, d in enumerate(decr):
     ida_bytes.patch_byte(0x40A000 + i, d)
 ```
+
+For more details, please refer to the [crackme_9_func_decryptor.py](./crackme_9_func_decryptor.py) script.
 ___
 
 
