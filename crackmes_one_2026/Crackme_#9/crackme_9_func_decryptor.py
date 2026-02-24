@@ -1666,8 +1666,8 @@ if __name__ == "__main__":
     #
     # Here, we substitute the first CC instruction with a jmp to the
     # address 0x17. However, in address 0x16 we have another CC instruction
-    # which is never be executed (or substituted). If we substitute it, we
-    # will destroy the byte xx at address 0x17.
+    # which is never executed (or substituted). If we substitute it, we will
+    # destroy the byte xx at address 0x17.
     #
     # At this point I was too tired to think of a good heuristic, so I did
     # this job manually. The program just does all candidate jump

@@ -956,7 +956,7 @@ We follow the same process and we decrypt the whole segment.
 ___
 
 
-### Fixing `int 3` instructions
+### Fixing the `int 3` Instructions
 
 After we decrypt the whole segment there is another problem:
 ```assembly
@@ -1237,8 +1237,22 @@ This process repeats every time an `int 3` instruction is encountered.
 > [!NOTE]
 > This technique is called [nanomites](https://github.com/Fatmike-GH/Nanomites).
 
-We have to do some manual work to fix some of the jumps, so the **correct** decrypted
-code is:
+
+Unfortunately, it is not straightforward to replace all `int 3` instructions
+with jump instructions. The problem is that **not all `int 3` instructions need to be
+substituted**. Consider this for example:
+```
+  .pc:00010:    CC ~> jmp 0x17
+  ... 
+  .pc:00016:    CC ~> should be ignored
+  .pc:00017:    xx
+```
+
+Here, we substitute the first CC instruction with a `jmp` to the address `0x17`. However,
+in address `0x16` we have another `int 3` instruction which is never executed (or substituted). If we substitute it, we will destroy the byte `xx` at address `0x17`.
+
+So the approach is to substitute everything and then do some manual work to revert some of the 
+jumps, back to their original bytes. The **correct** decrypted code is:
 ```
 # decr_correct = [ida_bytes.get_byte(i) for i in range(0x40A000, 0x40A600)]
 # print(' '.join(f'{x:02X}' for x in decr_correct))
