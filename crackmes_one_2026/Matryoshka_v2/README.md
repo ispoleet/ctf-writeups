@@ -314,7 +314,7 @@ The next matryoshka is exactly the same with the `Doll.dll` (the obfuscation ran
 a lot, but the clean shellcode is the same, except the constants in `buf[0:4]`). So we can
 repeat the same process for the next doll until we decrypt all of them:
 
-![alt text](images/flowchart.png "")
+![alt text](images/flowchart.png ""){:width="50%"}
 
 We run the [main.py](./main.py) script and after **50** dolls we get the final dll which also
 contains the flag:
